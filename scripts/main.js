@@ -20,3 +20,41 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+// Smooth scroll and animation triggers
+const observerOptions = {
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.section').forEach(section => {
+    observer.observe(section);
+});
+
+// Navbar scroll effect
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll) {
+        navbar.style.transform = 'translateY(-100%)';
+    } else {
+        navbar.style.transform = 'translateY(0)';
+    }
+    
+    if (currentScroll <= 0) {
+        navbar.classList.remove('scrolled');
+    } else {
+        navbar.classList.add('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+});
