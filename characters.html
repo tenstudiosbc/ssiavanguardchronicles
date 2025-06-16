@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Characters - SSIA Vanguard Chronicles</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/characters.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">SSIA Vanguard Chronicles</div>
+        <div class="nav-items">
+            <a href="index.html">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="#features">Features</a>
+            <a href="characters.html">Characters</a>
+            <a href="contact.html">Contact</a>
+            <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" class="cta-button">Play Now</a>
+        </div>
+    </nav>
+
+    <div class="characters-container">
+        <h1>Meet the Characters</h1>
+        
+        <div class="character-grid">
+            <div class="character-card" data-character="char1">
+                <div class="character-image">
+                    <img src="images/characters/char1.jpg" alt="Character 1">
+                </div>
+                <div class="character-info">
+                    <h2>Character Name 1</h2>
+                    <p class="character-role">Role/Class</p>
+                    <p class="character-desc">Brief character description goes here.</p>
+                    <button class="read-more-btn">Read More</button>
+                </div>
+            </div>
+
+            <!-- Add more character cards following the same structure -->
+        </div>
+    </div>
+
+    <div id="character-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-character-content">
+                <!-- Character details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Ten Studios BC. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/characters.js"></script>
+</body>
+</html>
