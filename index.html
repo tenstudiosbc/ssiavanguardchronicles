@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SSIA Vanguard Chronicles - A tactical RPG game">
+    <meta name="description" content="SSIA Vanguard Chronicles - An epic tactical RPG with deep strategy gameplay">
     <title>SSIA Vanguard Chronicles</title>
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2C3E50">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <header class="header">
         <nav class="nav container">
             <a href="/" class="nav-logo">SSIA</a>
@@ -27,8 +30,8 @@
         </nav>
     </header>
 
-    <main>
-        <section class="hero section">
+    <main id="main-content">
+        <section class="hero" aria-label="Welcome">
             <div class="container">
                 <h1 class="animate">SSIA Vanguard Chronicles</h1>
                 <p class="animate">A tactical RPG adventure</p>
@@ -36,7 +39,7 @@
             </div>
         </section>
 
-        <section id="about" class="section">
+        <section id="about" class="section" aria-label="About">
             <div class="container">
                 <h2 class="animate">About the Game</h2>
                 <div class="grid">
@@ -53,12 +56,12 @@
         </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <p>&copy; 2025 TSBC Games. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="scripts/main.js"></script>
+    <script src="scripts/main.js" type="module"></script>
 </body>
 </html>

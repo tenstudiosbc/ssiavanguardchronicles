@@ -1,78 +1,78 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+// Modern JS with better organization and error handling
+const App = {
+  init() {
+    this.attachEventListeners();
+    this.setupIntersectionObserver();
+    this.setupNavigation();
+  },
+
+  attachEventListeners() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', this.handleSmoothScroll);
     });
-});
 
-// Add scroll animation for elements
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        if (sectionTop < windowHeight * 0.75) {
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-        }
-    });
-});
+    window.addEventListener('scroll', this.handleScroll);
+  },
 
-// Smooth scroll and animation triggers
-const observerOptions = {
-    threshold: 0.1
-};
+  setupIntersectionObserver() {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '50px'
+    };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+          entry.target.classList.add('visible');
         }
-    });
-}, observerOptions);
+      });
+    }, observerOptions);
 
-document.querySelectorAll('.section').forEach(section => {
-    observer.observe(section);
-});
+    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+  },
 
-// Navbar scroll effect
-let lastScroll = 0;
-const handleScroll = () => {
-    const navbar = document.querySelector('.navbar');
-    const currentScroll = window.pageYOffset;
+  handleSmoothScroll(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    const targetElement = document.querySelector(targetId);
 
-    if (currentScroll > lastScroll) {
-        navbar.style.transform = 'translateY(-100%)';
-    } else {
-        navbar.style.transform = 'translateY(0)';
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
-    
-    if (currentScroll <= 0) {
-        navbar.classList.remove('scrolled');
-    } else {
-        navbar.classList.add('scrolled');
+  },
+
+  setupNavigation() {
+    const nav = {
+      header: document.querySelector('.header'),
+      hamburger: document.querySelector('.hamburger'),
+      menu: document.querySelector('.nav-menu'),
+      lastScroll: 0
+    };
+
+    if (nav.hamburger && nav.menu) {
+      nav.hamburger.addEventListener('click', () => this.toggleMenu(nav));
+      document.addEventListener('click', (e) => this.handleClickOutside(e, nav));
     }
-    
-    lastScroll = currentScroll;
+  },
+
+  toggleMenu(nav) {
+    nav.hamburger.classList.toggle('active');
+    nav.menu.classList.toggle('active');
+  },
+
+  handleClickOutside(e, nav) {
+    if (!e.target.closest('.nav')) {
+      nav.hamburger?.classList.remove('active');
+      nav.menu?.classList.remove('active');
+    }
+  }
 };
 
-window.addEventListener('scroll', handleScroll);
-
-// Mobile menu
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-
-const toggleMenu = () => {
-  hamburger.classList.toggle('active');
-  navMenu.classList.toggle('active');
-};
-
-hamburger.addEventListener('click', toggleMenu);
-
-// Close menu when clicking outside
+// Initialize app when DOM is ready
+document.addEventListener('DOMContentLoaded', () => App.init());
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.nav')) {
     hamburger.classList.remove('active');
