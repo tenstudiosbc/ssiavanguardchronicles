@@ -58,3 +58,18 @@ window.addEventListener('scroll', () => {
     
     lastScroll = currentScroll;
 });
+
+// Mobile menu toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const navItems = document.querySelector('.nav-items');
+
+menuToggle.addEventListener('click', () => {
+    navItems.classList.toggle('active');
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.navbar')) {
+        navItems.classList.remove('active');
+    }
+});
