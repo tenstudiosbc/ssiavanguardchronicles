@@ -3,15 +3,19 @@ const characters = {
         name: "Hannabi Ingrid Stephanie",
         role: "Hydro/Sword - Tank & Support",
         rarity: 5,
+        maxLevel: 99,
         element: "Hydro",
-        weapon: "Sword",
-        fullDescription: "A powerful frontline tank with exceptional defensive capabilities and healing support. With her high DEF of 134, she excels at protecting the team while providing crucial healing support.",
+        weapon: {
+            type: "Sword",
+            icon: "images/weapons/sword.png"
+        },
         stats: {
             defense: 134,
             healing: 90,
-            control: 70
+            control: 70,
+            hp: 12500,
+            attack: 1450
         },
-        synergy: "Works best with Cryo (Fritz) for Freeze and Pyro (Jones) for Vaporize.",
         abilities: [
             "Heal (Support)",
             "Water (Hydro attack)",
@@ -22,58 +26,73 @@ const characters = {
         name: "Jones Harrison",
         role: "Pyro/Glock-18 - Main DPS",
         rarity: 5,
+        maxLevel: 99,
         element: "Pyro",
-        weapon: "Glock-18",
-        fullDescription: "A powerful DPS unit specializing in both single-target and AoE fire damage. His versatile kit makes him a cornerstone of many team compositions.",
-        stats: {
-            attack: 95,
-            aoe: 85,
-            precision: 80
+        weapon: {
+            type: "Glock-18",
+            icon: "images/weapons/gun.png"
         },
-        synergy: "Works well with Geo (Eric) for stable frontline and Hydro (Hannabi) for Vaporize combos.",
-        abilities: [
-            "Fire (Single target)",
-            "Flame (AoE)",
-            "Vaporize Combo"
-        ]
+        stats: {
+            attack: 2100,
+            defense: 850,
+            hp: 9800,
+            critRate: 65,
+            critDamage: 180
+        }
     },
     fritz: {
         name: "Fritz Viermitz",
         role: "Cryo/Glock-18 - Hybrid Damage & Control",
         rarity: 5,
+        maxLevel: 99,
         element: "Cryo",
-        weapon: "Glock-18",
-        fullDescription: "A control specialist who excels at slowing enemies with Blizzard while maintaining consistent damage output. Perfect for tactical combat situations.",
-        stats: {
-            control: 90,
-            damage: 75,
-            utility: 85
+        weapon: {
+            type: "Glock-18",
+            icon: "images/weapons/gun.png"
         },
-        synergy: "Pairs perfectly with Hannabi for Freeze combos.",
-        abilities: [
-            "Blizzard (Cryo AoE)",
-            "Crowd Control",
-            "Freeze Combo"
-        ]
+        stats: {
+            attack: 1850,
+            defense: 920,
+            hp: 10200,
+            critRate: 55,
+            critDamage: 150
+        }
     },
-    player: {
-        name: "You (The Player)",
-        role: "Geo - Flexible Utility",
-        rarity: 5,
-        element: "Geo",
-        weapon: "Variable",
-        fullDescription: "A balanced support character with the ability to reinforce shields and provide tactical advantages. Highly adaptable to different combat situations.",
-        stats: {
-            adaptability: 95,
-            support: 85,
-            defense: 80
+    margaret: {
+        name: "Margaret Stephanie",
+        role: "Polearm - Support DPS",
+        rarity: 4,
+        maxLevel: 99,
+        element: "Anemo",
+        weapon: {
+            type: "Polearm",
+            icon: "images/weapons/polearm.png"
         },
-        synergy: "Works best alongside Jones (Pyro) for Burn damage and Cryo (Fritz) for Shatter.",
-        abilities: [
-            "Shield Reinforcement",
-            "Geo Mechanics",
-            "Tactical Support"
-        ]
+        stats: {
+            attack: 1650,
+            defense: 780,
+            hp: 8900,
+            critRate: 45,
+            critDamage: 130
+        }
+    },
+    kenziet: {
+        name: "Kenziet Felicia-Harrison",
+        role: "Electro/Katana - Main DPS",
+        rarity: 5,
+        maxLevel: 99,
+        element: "Electro",
+        weapon: {
+            type: "Katana",
+            icon: "images/weapons/katana.png"
+        },
+        stats: {
+            attack: 2200,
+            defense: 780,
+            hp: 9500,
+            critRate: 72,
+            critDamage: 195
+        }
     }
 };
 
@@ -87,38 +106,40 @@ document.querySelectorAll('.read-more-btn').forEach(button => {
 
 function showCharacterDetails(charId) {
     const char = characters[charId];
-    const modal = document.getElementById('character-modal');
-    const content = modal.querySelector('.modal-character-content');
-    
-    const stars = '★'.repeat(char.rarity);
-    
-    content.innerHTML = `
-        <h2>${char.name}</h2>
-        <div class="rarity">${stars}</div>
-        <p class="character-role">${char.role}</p>
-        <div class="character-full-desc">
-            <p>${char.fullDescription}</p>
+    const content = `
+        <div class="char-header">
+            <div class="weapon-icon">
+                <img src="${char.weapon.icon}" alt="${char.weapon.type}">
+            </div>
+            <div class="char-title">
+                <h2>${char.name}</h2>
+                <div class="rarity">${'★'.repeat(char.rarity)}</div>
+                <div class="level">Max Level: ${char.maxLevel}</div>
+            </div>
         </div>
-        <div class="character-stats">
-            <h3>Stats</h3>
-            <div class="stats-grid">
-                <div class="stat">
-                    <label>Strength</label>
-                    <div class="stat-bar" style="width: ${char.stats.strength}%"></div>
+        <div class="stats-container">
+            <div class="stat-group">
+                <h3>Base Stats</h3>
+                <div class="stat-bar">
+                    <span>HP</span>
+                    <div class="bar" style="width: ${char.stats.hp/100}px"></div>
+                    <span>${char.stats.hp}</span>
                 </div>
-                <div class="stat">
-                    <label>Speed</label>
-                    <div class="stat-bar" style="width: ${char.stats.speed}%"></div>
+                <div class="stat-bar">
+                    <span>ATK</span>
+                    <div class="bar" style="width: ${char.stats.attack/10}px"></div>
+                    <span>${char.stats.attack}</span>
                 </div>
-                <div class="stat">
-                    <label>Intelligence</label>
-                    <div class="stat-bar" style="width: ${char.stats.intelligence}%"></div>
+                <div class="stat-bar">
+                    <span>DEF</span>
+                    <div class="bar" style="width: ${char.stats.defense/5}px"></div>
+                    <span>${char.stats.defense}</span>
                 </div>
             </div>
         </div>
     `;
     
-    modal.style.display = 'block';
+    document.querySelector('.modal-character-content').innerHTML = content;
 }
 
 document.querySelector('.close-btn').addEventListener('click', function() {
