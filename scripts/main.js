@@ -40,7 +40,7 @@ document.querySelectorAll('.section').forEach(section => {
 
 // Navbar scroll effect
 let lastScroll = 0;
-window.addEventListener('scroll', () => {
+const handleScroll = () => {
     const navbar = document.querySelector('.navbar');
     const currentScroll = window.pageYOffset;
 
@@ -57,7 +57,9 @@ window.addEventListener('scroll', () => {
     }
     
     lastScroll = currentScroll;
-});
+};
+
+window.addEventListener('scroll', handleScroll);
 
 // Mobile menu toggle
 const menuToggle = document.querySelector('.menu-toggle');
