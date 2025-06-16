@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SSIA Vanguard Chronicles</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSIA Vanguard Chronicles</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <header>
-    <h1>SSIA Vanguard Chronicles</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Characters</a>
-      <a href="#">Story</a>
-      <a href="#">Media</a>
+    <nav class="navbar">
+        <div class="nav-brand">SSIA Vanguard Chronicles</div>
+        <div class="nav-items">
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#screenshots">Screenshots</a>
+            <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" class="cta-button">Play Now</a>
+        </div>
     </nav>
-  </header>
 
-  <main>
-    <section class="intro">
-      <h2>Welcome to the Official Site</h2>
-      <p>Explore the world of Sierra Liudoxoya, follow the SSIA Vanguard, uncover mysteries, and more!</p>
-      <button id="exploreBtn">Explore Now</button>
+    <header class="hero">
+        <h1>SSIA Vanguard Chronicles</h1>
+        <p>A thrilling strategy RPG where every decision shapes your destiny</p>
+    </header>
+
+    <section id="about" class="section">
+        <h2>About the Game</h2>
+        <p>Embark on an epic journey in SSIA Vanguard Chronicles, where you'll lead your team through intense tactical battles and strategic decisions. Build your forces, upgrade your equipment, and face challenging encounters in this immersive RPG experience.</p>
     </section>
 
-    <section class="news">
-      <h2>Latest News</h2>
-      <ul id="newsList">
-        <!-- JS will inject news here -->
-      </ul>
+    <section id="features" class="section">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Strategic Combat</h3>
+                <p>Master tactical turn-based battles</p>
+            </div>
+            <div class="feature-card">
+                <h3>Character Development</h3>
+                <p>Customize and upgrade your team</p>
+            </div>
+            <div class="feature-card">
+                <h3>Rich Storyline</h3>
+                <p>Immerse yourself in an engaging narrative</p>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer>
-    <p>&copy; 2025 TSBC | SSIA Vanguard Chronicles</p>
-  </footer>
+    <footer class="footer">
+        <p>&copy; 2024 Ten Studios BC. All rights reserved.</p>
+    </footer>
 
-  <script src="script.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
