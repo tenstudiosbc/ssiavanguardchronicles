@@ -1,122 +1,122 @@
 /* Base styles */
 :root {
-    --primary-color: #2C3E50;
-    --secondary-color: #E74C3C;
-    --accent-color: #3498DB;
-    --text-color: #2C3E50;
-    --background-color: #ECF0F1;
+  --primary: #2C3E50;
+  --secondary: #E74C3C;
+  --accent: #3498DB;
+  --text: #333;
+  --bg: #f5f7fa;
+  --white: #fff;
 }
 
 /* Mobile-first approach */
 body {
-    overflow-x: hidden;
-    width: 100%;
-    min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* Global styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--background-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
 }
 
-/* Navbar styles */
-.navbar {
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+.header {
+  background: var(--white);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+.nav-menu {
+  display: none;
+}
+
+.nav-menu.active {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  padding: 1rem;
+}
+
+.hamburger {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .nav-menu {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 5%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    animation: fadeInDown 0.5s ease;
+    gap: 2rem;
+  }
+  
+  .hamburger {
+    display: none;
+  }
 }
 
-.nav-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
+/* Responsive sections */
+.section {
+  padding: 4rem 0;
+  margin-top: 60px;
 }
 
-.nav-items {
-    display: flex;
-    align-items: center;
+.grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
 }
 
-.nav-items a {
-    margin-left: 2rem;
-    text-decoration: none;
-    color: var(--text-color);
-    position: relative;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s ease;
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }
 
-.nav-items a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--gradient-secondary);
-    transition: width 0.3s ease;
+/* Components */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  background: var(--primary);
+  color: var(--white);
+  text-decoration: none;
+  transition: 0.3s ease;
 }
 
-.nav-items a:hover::after {
-    width: 100%;
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-
-/* Mobile menu */
-@media screen and (max-width: 768px) {
-    .nav-items {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        transition: 0.3s;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2rem;
-    }
-
-    .nav-items.active {
-        left: 0;
-    }
-
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav-items a {
-        margin: 1rem 0;
-        font-size: 1.2rem;
-    }
-}
-
-/* Call to action button */
-.cta-button {
-    background: var(--gradient-primary);
-    color: white !important;
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cta-button:hover {

@@ -2,63 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="SSIA Vanguard Chronicles - An epic tactical RPG with deep strategy gameplay. Join Hannabi, Jones, Fritz and others in their epic journey.">
-    <meta name="keywords" content="SSIA Vanguard Chronicles, RPG, tactical game, strategy game">
-    <meta name="theme-color" content="#2C3E50">
-    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SSIA Vanguard Chronicles - A tactical RPG game">
     <title>SSIA Vanguard Chronicles</title>
     <link rel="stylesheet" href="styles/main.css">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+    <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">SSIA Vanguard Chronicles</div>
-        <button class="menu-toggle" aria-label="Toggle navigation">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <div class="nav-items">
-            <a href="#about">About</a>
-            <a href="#features">Features</a>
-            <a href="characters.html">Characters</a>
-            <a href="contact.html">Contact</a>
-            <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" class="cta-button">Play Now</a>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <img src="images/hero-banner.jpg" alt="SSIA Vanguard Chronicles Hero Banner">
-        <h1>SSIA Vanguard Chronicles</h1>
-        <p>A thrilling strategy RPG where every decision shapes your destiny</p>
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="nav-logo">SSIA</a>
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#about">About</a></li>
+                <li><a href="#characters">Characters</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#play" class="btn">Play Now</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <section id="about" class="section">
-        <h2>About the Game</h2>
-        <p>Embark on an epic journey in SSIA Vanguard Chronicles, where you'll lead your team through intense tactical battles and strategic decisions. Build your forces, upgrade your equipment, and face challenging encounters in this immersive RPG experience.</p>
-    </section>
+    <main>
+        <section class="hero section">
+            <div class="container">
+                <h1 class="animate">SSIA Vanguard Chronicles</h1>
+                <p class="animate">A tactical RPG adventure</p>
+                <a href="#play" class="btn animate">Start Playing</a>
+            </div>
+        </section>
 
-    <section id="features" class="section">
-        <h2>Features</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>Strategic Combat</h3>
-                <p>Master tactical turn-based battles</p>
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="animate">About the Game</h2>
+                <div class="grid">
+                    <div class="animate">
+                        <h3>Strategic Combat</h3>
+                        <p>Master tactical turn-based battles</p>
+                    </div>
+                    <div class="animate">
+                        <h3>Rich Story</h3>
+                        <p>Immerse yourself in an epic narrative</p>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card">
-                <h3>Character Development</h3>
-                <p>Customize and upgrade your team</p>
-            </div>
-            <div class="feature-card">
-                <h3>Rich Storyline</h3>
-                <p>Immerse yourself in an engaging narrative</p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer class="footer">
-        <p>&copy; 2025 TSBC Games. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2025 TSBC Games. All rights reserved.</p>
+        </div>
     </footer>
 
     <script src="scripts/main.js"></script>

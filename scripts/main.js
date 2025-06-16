@@ -61,17 +61,44 @@ const handleScroll = () => {
 
 window.addEventListener('scroll', handleScroll);
 
-// Mobile menu toggle
-const menuToggle = document.querySelector('.menu-toggle');
-const navItems = document.querySelector('.nav-items');
+// Mobile menu
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
 
-menuToggle.addEventListener('click', () => {
-    navItems.classList.toggle('active');
+const toggleMenu = () => {
+  hamburger.classList.toggle('active');
+  navMenu.classList.toggle('active');
+};
+
+hamburger.addEventListener('click', toggleMenu);
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav')) {
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
+  }
 });
 
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.navbar')) {
-        navItems.classList.remove('active');
+// Intersection Observer for animations
+const observerCallback = (entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
     }
+  });
+};
+
+const observer = new IntersectionObserver(observerCallback, {
+  threshold: 0.1
+});
+
+document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+// Lazy loading images
+document.querySelectorAll('img[data-src]').forEach(img => {
+  img.setAttribute('src', img.getAttribute('data-src'));
+  img.onload = () => {
+    img.removeAttribute('data-src');
+  };
 });
