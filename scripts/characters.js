@@ -9,6 +9,7 @@ const characters = {
             type: "Sword",
             icon: "images/weapons/sword.png"
         },
+        portrait: "images/characters/hannabi.jpg",
         stats: {
             defense: 134,
             healing: 90,
@@ -32,6 +33,7 @@ const characters = {
             type: "Glock-18",
             icon: "images/weapons/gun.png"
         },
+        portrait: "images/characters/jones.jpg",
         stats: {
             attack: 2100,
             defense: 850,
