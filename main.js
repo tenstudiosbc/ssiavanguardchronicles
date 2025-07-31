@@ -4,25 +4,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelector(".nav-links");
   const header = document.querySelector("header");
 
-  toggleButton.addEventListener("click", () => {
+  // Handle navigation toggle
+  toggleButton?.addEventListener("click", (e) => {
+    e.stopPropagation();
     navLinks.classList.toggle("show");
   });
 
   // Close menu when clicking outside
   document.addEventListener("click", (e) => {
-    if (!header.contains(e.target) && navLinks.classList.contains("show")) {
+    if (!header.contains(e.target)) {
       navLinks.classList.remove("show");
     }
   });
 
-  // Smooth scroll for navigation links
+  // Add scroll padding for fixed header
+  document.documentElement.style.setProperty(
+    '--scroll-padding',
+    header.offsetHeight + 'px'
+  );
+
+  // Handle smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-        behavior: 'smooth'
-      });
-      if (navLinks.classList.contains("show")) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const headerOffset = header.offsetHeight;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition - headerOffset;
+
+        window.scrollBy({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        
         navLinks.classList.remove("show");
       }
     });
