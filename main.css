@@ -1,102 +1,95 @@
 /* === Variables === */
 :root {
-  --primary: #00c8ff;
-  --primary-dark: #0099bb;
-  --bg-dark: #0f1218;
-  --bg-darker: #090b10;
-  --text-light: #eaeaea;
-  --text-muted: #999;
-  --border-color: #1e2a38;
-  --card-bg: rgba(255, 255, 255, 0.05);
+  --primary-color: #4a90e2;
+  --secondary-color: #34495e;
+  --accent-color: #e74c3c;
+  --text-color: #2c3e50;
+  --background-color: #f5f6fa;
 }
 
 /* === Base Reset === */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 body {
   font-family: 'Poppins', sans-serif;
-  background: radial-gradient(ellipse at top, #0f1218 0%, #090b10 100%);
-  color: #eaeaea;
   line-height: 1.6;
+  background: var(--background-color);
+  color: var(--text-color);
 }
 
 /* === Header & Navigation === */
-header {
+.glass-header {
   position: fixed;
   width: 100%;
-  z-index: 1000;
-  background: rgba(15, 17, 25, 0.95);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  padding: 1rem 2rem;
-  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  padding: 1rem 0;
 }
 
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.nav-toggle {
-  display: none;
-  background: transparent;
-  border: none;
-  color: var(--primary);
+.logo {
+  font-family: 'Cinzel', serif;
   font-size: 1.5rem;
-  padding: 0.5rem;
+  color: var(--primary-color);
 }
 
 .nav-links {
   display: flex;
   gap: 2rem;
-  margin: 0;
-  padding: 0;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
 }
 
 /* === Hero Section === */
 .hero {
-  padding-top: 80px;
-  min-height: 100vh;
+  height: 100vh;
+  background: url('path-to-your-hero-image.jpg') center/cover no-repeat;
+  position: relative;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+  justify-content: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 4rem 1rem;
+  text-align: center;
+  color: white;
+  z-index: 1;
+  padding: 2rem;
 }
-.hero h1 {
-  font-size: 3.5rem;
-  color: #00c8ff;
-  text-shadow: 0 0 10px #00c8ff;
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: 4rem;
   margin-bottom: 1rem;
-}
-.hero p {
-  font-size: 1.2rem;
-  color: #c4eaff;
-  margin-bottom: 2rem;
-}
-.btn-primary {
-  background: #00c8ff;
-  color: #0e1118;
-  padding: 0.75rem 1.5rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-.btn-primary:hover {
-  background: #00a6d9;
-  transform: translateY(-2px);
 }
 
 /* === Main Content === */
@@ -106,77 +99,84 @@ main {
   padding: 2rem 1rem;
 }
 
-/* === Section Headers === */
-section h2 {
-  color: #00c8ff;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #1e2a38;
-  padding-bottom: 0.5rem;
-  font-size: 1.8rem;
-}
-
-/* === Feature List & Region List === */
-section ul {
-  list-style: disc;
-  padding-left: 2rem;
-}
-
-/* === Character Grid (optional for future) === */
-.character-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-.character-card {
-  flex: 1 1 280px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  padding: 1rem;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 20px rgba(0, 200, 255, 0.05);
-  transition: transform 0.3s ease;
-}
-.character-card:hover {
-  transform: translateY(-5px);
-}
-.character-card h3 {
-  margin-bottom: 0.5rem;
-  color: #ffffff;
-}
-.character-card p {
-  color: #cccccc;
-}
-
-/* === Character Profile === */
-.character-profile {
-  background: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.character-header {
-  background: linear-gradient(90deg, var(--bg-dark), var(--bg-darker));
+/* === Section Cards === */
+.section-card {
+  background: white;
+  border-radius: 1rem;
   padding: 2rem;
-  border-bottom: 1px solid var(--border-color);
+  margin: 2rem auto;
+  max-width: 1200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.character-info {
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: minmax(250px, 1fr) 3fr;
-  gap: 2rem;
+/* === Buttons === */
+.btn-primary {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 2rem;
+  transition: transform 0.3s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
 }
 
-.character-stats {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 1.5rem;
-    border-radius: 10px;
+/* === Banner Images === */
+.banner-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  margin: 1rem 0;
 }
 
-.character-stats p {
-    margin-bottom: 1rem;
+/* === Animations === */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+  }
+
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
 }
 
 .character-description h3 {

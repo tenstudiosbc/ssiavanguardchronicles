@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="SSIA: Vanguard Chronicles — Official Lore and Banner Events" />
   <title>SSIA: Vanguard Chronicles</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-  <header>
+  <header class="glass-header">
     <div class="nav-container">
-      <h1>SSIA: VC</h1>
-      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <h1 class="logo">SSIA: VC</h1>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
       <nav>
         <ul class="nav-links">
           <li><a href="#overview">Overview</a></li>
@@ -26,65 +28,69 @@
   </header>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero parallax">
+      <div class="hero-overlay"></div>
       <div class="hero-content reveal">
-        <h1>Vanguard Chronicles</h1>
-        <p>Experience the next evolution in tactical RPG combat</p>
-        <a href="#overview" class="btn-primary">Begin Your Journey</a>
+        <h1 class="hero-title">Vanguard Chronicles</h1>
+        <p class="hero-subtitle">Experience the next evolution in tactical RPG combat</p>
+        <a href="#overview" class="btn-primary pulse">Begin Your Journey</a>
       </div>
     </section>
 
-    <section id="overview" class="reveal">
-      <h2>Overview</h2>
-      <p>
-        Experience a 2D, gacha‑style, turn‑based RPG set in the SSIA Universe. Step into the shoes of a fallen agent, mastering elemental powers and strategic combat in Sierra Liudoxoya.
-      </p>
-      <p>
-        Bellemaire Chapter 1: ”kicks off in the capital, Bellemaire—combining dialogue choices, tactical battles, and elemental exploration.”
-      </p>
-    </section>
+    <div class="content-wrapper">
+      <section id="overview" class="section-card reveal">
+        <h2>Overview</h2>
+        <p>
+          Experience a 2D, gacha‑style, turn‑based RPG set in the SSIA Universe. Step into the shoes of a fallen agent, mastering elemental powers and strategic combat in Sierra Liudoxoya.
+        </p>
+        <p>
+          Bellemaire Chapter 1: ”kicks off in the capital, Bellemaire—combining dialogue choices, tactical battles, and elemental exploration.”
+        </p>
+      </section>
 
-    <section id="features" class="reveal">
-      <h2>Key Features</h2>
-      <ul>
-        <li>Seven elemental types: Pyro, Hydro, Electro, Cryro, Geo, Spectro & Void</li>
-        <li>Gacha mechanics drive character and weapon draws</li>
-        <li>Choice-driven dialogue shapes your journey</li>
-        <li>Combat training with Fritz unlocks quests</li>
-      </ul>
-    </section>
+      <section id="features" class="section-card reveal">
+        <h2>Key Features</h2>
+        <ul>
+          <li>Seven elemental types: Pyro, Hydro, Electro, Cryro, Geo, Spectro & Void</li>
+          <li>Gacha mechanics drive character and weapon draws</li>
+          <li>Choice-driven dialogue shapes your journey</li>
+          <li>Combat training with Fritz unlocks quests</li>
+        </ul>
+      </section>
 
-    <section id="banner-event" class="reveal">
-      <h2>Upcoming Banner Event</h2>
-      <img 
+      <section id="banner-event" class="section-card reveal">
+        <div class="banner-container">
+          <h2>Upcoming Banner Event</h2>
+          <img 
   src="https://img.itch.zone/aW1nLzIxNTk3MzY5LnBuZw==/original/JIeDFJ.png" 
   alt="Timidity In Purity Banner Art" 
   class="animated-banner"
   style="max-width: 100%; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.25);" 
 />
-      <p>
-        Launching <strong>August 17, 2025 @ 9:00 AM GMT+7</strong>: the <strong>“Timidity In Purity”</strong> Concedation banner will feature the following:
-      </p>
-      <ul>
-        <li><strong>5★ Hannabi Ingrid Stephanie</strong> (Hydro / Sword)</li>
-        <li><strong>4★ Nexon Dyke Martinez</strong> (Geo / Gauntlet)</li>
-        <li><strong>4★ Margaret Stephanie</strong> (Cryo / Polearm)</li>
-        <li><strong>4★ RogerShin</strong> (Aero / Gauntlet)</li>
-      </ul>
-      <p>Banner runs from Aug 17 to Sep 30, 2025</p>
-    </section>
+          <p>
+            Launching <strong>August 17, 2025 @ 9:00 AM GMT+7</strong>: the <strong>“Timidity In Purity”</strong> Concedation banner will feature the following:
+          </p>
+          <ul>
+            <li><strong>5★ Hannabi Ingrid Stephanie</strong> (Hydro / Sword)</li>
+            <li><strong>4★ Nexon Dyke Martinez</strong> (Geo / Gauntlet)</li>
+            <li><strong>4★ Margaret Stephanie</strong> (Cryo / Polearm)</li>
+            <li><strong>4★ RogerShin</strong> (Aero / Gauntlet)</li>
+          </ul>
+          <p>Banner runs from Aug 17 to Sep 30, 2025</p>
+        </div>
+      </section>
 
-    <section id="media" class="reveal">
-      <h2>Media & Launcher</h2>
-      <p>
-        Download the Public Preview (approx. 303 MB), explore the Launcher in open beta, and view official screenshots on our
-        <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" target="_blank" rel="noopener noreferrer">Itch.io page</a>.
-      </p>
-    </section>
+      <section id="media" class="section-card reveal">
+        <h2>Media & Launcher</h2>
+        <p>
+          Download the Public Preview (approx. 303 MB), explore the Launcher in open beta, and view official screenshots on our
+          <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" target="_blank" rel="noopener noreferrer">Itch.io page</a>.
+        </p>
+      </section>
+    </div>
   </main>
 
-  <footer>
+  <footer class="glass-footer">
     <p>&copy; 2025 TSBC Games. Built with 💙 by Naufal Ammariiq & Team</p>
   </footer>
 
