@@ -274,3 +274,48 @@ nav ul.show {
     padding: 2rem 1rem;
   }
 }
+
+/* === Specifications Section === */
+.specs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 1.5rem 0;
+}
+
+.specs-column {
+    background: rgba(74, 144, 226, 0.05);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+.specs-column h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-family: 'Cinzel', serif;
+}
+
+.specs-column ul {
+    list-style: none;
+}
+
+.specs-column ul li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.engine-info {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.engine-info p {
+    margin: 0.5rem 0;
+}
+
+.engine-info small {
+    color: #666;
+    font-size: 0.85rem;
+}
