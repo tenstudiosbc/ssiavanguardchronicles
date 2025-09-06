@@ -1045,3 +1045,15 @@ input:checked + .toggle-slider:before {
     padding: 2rem;
 }
 
+/* === Experimental Features === */
+#elemental-chart,
+#discussions {
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+}
+
+#elemental-chart[style*="display: block"],
+#discussions[style*="display: block"] {
+    display: block !important;
+}
+

@@ -217,11 +217,9 @@ function initializeChartToggle() {
 
 // Discussions functionality
 async function fetchGitHubDiscussions() {
-    const owner = 'tenstudiosbc';
-    const repo = 'ssiavanguardchronicles';
     const query = `
     query {
-        repository(owner: "${owner}", name: "${repo}") {
+        repository(owner: "${config.REPO_OWNER}", name: "${config.REPO_NAME}") {
             discussions(first: 6, orderBy: {field: CREATED_AT, direction: DESC}) {
                 nodes {
                     id
@@ -245,13 +243,21 @@ async function fetchGitHubDiscussions() {
         const response = await fetch('https://api.github.com/graphql', {
             method: 'POST',
             headers: {
-                'Authorization': `bearer ${atob('Z2hwX3lvdXJfZ2l0aHViX3Rva2VuX2hlcmU=')}`,
+                'Authorization': `bearer ${config.GITHUB_TOKEN}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ query })
         });
 
+        if (!response.ok) {
+            throw new Error(`GitHub API error: ${response.status}`);
+        }
+
         const data = await response.json();
+        if (data.errors) {
+            throw new Error(data.errors[0].message);
+        }
+
         return data.data.repository.discussions.nodes;
     } catch (error) {
         console.error('Error fetching discussions:', error);
@@ -383,7 +389,6 @@ class ExperimentalFeature {
         this.section = document.getElementById(section);
         this.toggle = document.getElementById(`${id}-toggle`);
         this.isEnabled = localStorage.getItem(`${id}Enabled`) === 'true';
-        this.isInitialized = false;
     }
 
     init() {
@@ -391,141 +396,61 @@ class ExperimentalFeature {
 
         // Set initial state
         this.toggle.checked = this.isEnabled;
-        this.section.classList.toggle('enabled', this.isEnabled);
+        this.section.style.display = this.isEnabled ? 'block' : 'none';
 
         // Add event listener
         this.toggle.addEventListener('change', () => {
             this.isEnabled = this.toggle.checked;
-            localStorage.setItem(`${id}Enabled`, this.isEnabled);
-            this.section.classList.toggle('enabled', this.isEnabled);
+            this.section.style.display = this.isEnabled ? 'block' : 'none';
+            localStorage.setItem(`${this.id}Enabled`, this.isEnabled);
 
-            if (this.isEnabled && !this.isInitialized) {
-                this.initialize();
+            if (this.isEnabled) {
+                this.onEnable();
             }
         });
 
         // Initialize if enabled
         if (this.isEnabled) {
-            this.initialize();
+            this.onEnable();
         }
     }
 
-    initialize() {
-        // Override in specific features
+    onEnable() {
+        // Override in child classes
     }
 }
 
-class DiscussionsFeature extends ExperimentalFeature {
-    async fetchDiscussions() {
-        const query = `
-        query {
-            repository(owner: "${config.REPO_OWNER}", name: "${config.REPO_NAME}") {
-                discussions(first: 6, orderBy: {field: CREATED_AT, direction: DESC}) {
-                    nodes {
-                        title
-                        url
-                        author {
-                            login
-                            avatarUrl
-                        }
-                        createdAt
-                        body
-                    }
-                }
-            }
-        }`;
-
-        try {
-            const response = await fetch('https://api.github.com/graphql', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `bearer ${config.GITHUB_TOKEN}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ query })
-            });
-
-            if (!response.ok) {
-                throw new Error(`GitHub API error: ${response.status}`);
-            }
-
-            const data = await response.json();
-            if (data.errors) {
-                throw new Error(data.errors[0].message);
-            }
-
-            return data.data.repository.discussions.nodes;
-        } catch (error) {
-            console.error('Error fetching discussions:', error);
-            throw error;
-        }
-    }
-
-    async initialize() {
-        if (this.isInitialized) return;
-
-        const discussionsGrid = document.querySelector('.discussions-grid');
-        const loadingElement = document.querySelector('.discussions-loading');
-
-        try {
-            const discussions = await this.fetchDiscussions();
-            loadingElement.style.display = 'none';
-
-            if (discussions.length === 0) {
-                discussionsGrid.innerHTML = '<p class="no-discussions">No discussions found. Be the first to start one!</p>';
-                return;
-            }
-
-            discussionsGrid.innerHTML = discussions.map(discussion => `
-                <a href="${discussion.url}" class="discussion-card" target="_blank" rel="noopener noreferrer">
-                    <h3 class="discussion-title">${this.escapeHtml(discussion.title)}</h3>
-                    <div class="discussion-meta">
-                        <img src="${discussion.author.avatarUrl}" alt="${this.escapeHtml(discussion.author.login)}">
-                        <span>${this.escapeHtml(discussion.author.login)}</span>
-                        <span>•</span>
-                        <span>${new Date(discussion.createdAt).toLocaleDateString()}</span>
-                    </div>
-                    <p class="discussion-preview">${this.escapeHtml(discussion.body.substring(0, 150))}...</p>
-                </a>
-            `).join('');
-
-            this.isInitialized = true;
-        } catch (error) {
-            console.error('Error loading discussions:', error);
-            loadingElement.innerHTML = '<p>Failed to load discussions. Please try again later.</p>';
-        }
-    }
-
-    escapeHtml(unsafe) {
-        return unsafe
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-}
-
-class ElementalChartFeature extends ExperimentalFeature {
+class ChartFeature extends ExperimentalFeature {
     constructor() {
         super('chart', 'elemental-chart');
     }
 
-    initialize() {
-        if (this.isInitialized) return;
-        
+    onEnable() {
         initializeElementalChart();
         initializeTeamBuilder();
-        
-        this.isInitialized = true;
     }
 }
 
-// Initialize experimental features
-document.addEventListener('DOMContentLoaded', () => {
-    const discussions = new DiscussionsFeature();
-    const elementalChart = new ElementalChartFeature();
+class DiscussionsFeature extends ExperimentalFeature {
+    constructor() {
+        super('discussions', 'discussions');
+    }
 
-    discussions.init();
-    elementalChart.init();
+    onEnable() {
+        if (!this.section.dataset.loaded) {
+            displayDiscussions();
+            this.section.dataset.loaded = 'true';
+        }
+    }
+}
+
+// Initialize features
+document.addEventListener('DOMContentLoaded', () => {
+    const chartFeature = new ChartFeature();
+    const discussionsFeature = new DiscussionsFeature();
+
+    chartFeature.init();
+    discussionsFeature.init();
 });
+
+// Remove old initialization code
