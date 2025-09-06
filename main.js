@@ -416,8 +416,49 @@ class ExperimentalFeature {
 }
 
 class DiscussionsFeature extends ExperimentalFeature {
-    constructor() {
-        super('discussions', 'discussions');
+    async fetchDiscussions() {
+        const query = `
+        query {
+            repository(owner: "${config.REPO_OWNER}", name: "${config.REPO_NAME}") {
+                discussions(first: 6, orderBy: {field: CREATED_AT, direction: DESC}) {
+                    nodes {
+                        title
+                        url
+                        author {
+                            login
+                            avatarUrl
+                        }
+                        createdAt
+                        body
+                    }
+                }
+            }
+        }`;
+
+        try {
+            const response = await fetch('https://api.github.com/graphql', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `bearer ${config.GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query })
+            });
+
+            if (!response.ok) {
+                throw new Error(`GitHub API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data.errors) {
+                throw new Error(data.errors[0].message);
+            }
+
+            return data.data.repository.discussions.nodes;
+        } catch (error) {
+            console.error('Error fetching discussions:', error);
+            throw error;
+        }
     }
 
     async initialize() {
@@ -452,45 +493,6 @@ class DiscussionsFeature extends ExperimentalFeature {
         } catch (error) {
             console.error('Error loading discussions:', error);
             loadingElement.innerHTML = '<p>Failed to load discussions. Please try again later.</p>';
-        }
-    }
-
-    async fetchDiscussions() {
-        const query = `
-        query {
-            repository(owner: "${REPO_OWNER}", name: "${REPO_NAME}") {
-                discussions(first: 6, orderBy: {field: CREATED_AT, direction: DESC}) {
-                    nodes {
-                        title
-                        url
-                        author {
-                            login
-                            avatarUrl
-                        }
-                        createdAt
-                        body
-                    }
-                }
-            }
-        }`;
-
-        try {
-            const response = await fetch('https://api.github.com/graphql', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `bearer ${GITHUB_TOKEN}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ query })
-            });
-
-            if (!response.ok) throw new Error('Network response was not ok');
-            
-            const data = await response.json();
-            return data.data.repository.discussions.nodes;
-        } catch (error) {
-            console.error('Error fetching discussions:', error);
-            return [];
         }
     }
 
