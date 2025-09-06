@@ -204,17 +204,46 @@
         </div>
       </section>
 
-      <section id="posts" class="section-card reveal">
-        <h2>Latest Updates</h2>
-        <div class="posts-container">
-          <div id="posts-grid" class="posts-grid">
-            <!-- Posts will be loaded here via JavaScript -->
+      <section id="elemental-chart" class="section-card reveal">
+        <h2>Elemental Counter Chart</h2>
+        <div class="chart-container">
+          <div class="element-grid">
+            <div class="element pyro">
+              <h3>Pyro</h3>
+              <p>Strong against: Aero, Spectro</p>
+              <p>Weak against: Hydro, Geo</p>
+            </div>
+            <div class="element hydro">
+              <h3>Hydro</h3>
+              <p>Strong against: Pyro, Electro</p>
+              <p>Weak against: Aero, Void</p>
+            </div>
+            <div class="element electro">
+              <h3>Electro</h3>
+              <p>Strong against: Hydro, Void</p>
+              <p>Weak against: Geo, Spectro</p>
+            </div>
+            <div class="element geo">
+              <h3>Geo</h3>
+              <p>Strong against: Electro, Pyro</p>
+              <p>Weak against: Spectro, Aero</p>
+            </div>
+            <div class="element aero">
+              <h3>Aero</h3>
+              <p>Strong against: Geo, Hydro</p>
+              <p>Weak against: Pyro, Void</p>
+            </div>
+            <div class="element void">
+              <h3>Void</h3>
+              <p>Strong against: Aero, Hydro</p>
+              <p>Weak against: Electro, Spectro</p>
+            </div>
+            <div class="element spectro">
+              <h3>Spectro</h3>
+              <p>Strong against: Void, Geo</p>
+              <p>Weak against: Electro, Pyro</p>
+            </div>
           </div>
-        </div>
-        <div class="posts-footer">
-          <a href="/admin" class="btn-primary admin-btn">
-            Manage Posts
-          </a>
         </div>
       </section>
     </div>
@@ -264,9 +293,9 @@
     <div class="feature-toggles">
       <h4>Experimental Features</h4>
       <label class="feature-toggle">
-        <span>Community Posts</span>
+        <span>Elemental Counter Chart</span>
         <div class="toggle-switch">
-          <input type="checkbox" id="posts-toggle">
+          <input type="checkbox" id="chart-toggle">
           <span class="toggle-slider"></span>
         </div>
       </label>
@@ -279,10 +308,6 @@
 
   <script src="main.js"></script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</body>
-</html>
-
-  <script src="main.js"></script>
 </body>
 </html>
 

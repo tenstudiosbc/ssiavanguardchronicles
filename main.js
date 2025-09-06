@@ -185,9 +185,27 @@ function initializeFeatureToggles() {
     });
 }
 
+// Elemental Chart Toggle
+function initializeChartToggle() {
+    const chartToggle = document.getElementById('chart-toggle');
+    const chartSection = document.getElementById('elemental-chart');
+    
+    // Load saved preference
+    const chartEnabled = localStorage.getItem('chartEnabled') === 'true';
+    chartToggle.checked = chartEnabled;
+    chartSection.classList.toggle('enabled', chartEnabled);
+
+    // Toggle handler
+    chartToggle.addEventListener('change', (e) => {
+        const isEnabled = e.target.checked;
+        chartSection.classList.toggle('enabled', isEnabled);
+        localStorage.setItem('chartEnabled', isEnabled);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    // ...existing code...
     initializeFeatureToggles();
+    initializeChartToggle();
 });
 
 // Initialize discussions when DOM is loaded
