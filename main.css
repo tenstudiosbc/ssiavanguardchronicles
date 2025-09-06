@@ -833,13 +833,12 @@ input:checked + .toggle-slider:before {
 
 /* === Elemental Chart Section === */
 #elemental-chart {
-    display: none; /* Hidden by default */
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    display: none;
 }
 
-#elemental-chart[style*="display: block"] {
-    opacity: 1;
+#elemental-chart.enabled {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
 }
 
 .chart-container {
@@ -962,3 +961,4 @@ input:checked + .toggle-slider:before {
     background: var(--card-bg);
     border-radius: 0.5rem;
 }
+

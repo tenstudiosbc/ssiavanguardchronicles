@@ -190,24 +190,21 @@ function initializeChartToggle() {
     const chartToggle = document.getElementById('chart-toggle');
     const chartSection = document.getElementById('elemental-chart');
     
-    // Ensure chart is hidden by default
-    chartSection.style.display = 'none';
-    
     // Load saved preference
     const chartEnabled = localStorage.getItem('chartEnabled') === 'true';
-    chartToggle.checked = chartEnabled;
     
-    // Initial visibility
+    // Set initial state
+    chartToggle.checked = chartEnabled;
     if (chartEnabled) {
-        chartSection.style.display = 'block';
+        chartSection.classList.add('enabled');
         initializeElementalChart();
         initializeTeamBuilder();
     }
 
     // Toggle handler
-    chartToggle.addEventListener('change', (e) => {
-        const isEnabled = e.target.checked;
-        chartSection.style.display = isEnabled ? 'block' : 'none';
+    chartToggle.addEventListener('change', () => {
+        const isEnabled = chartToggle.checked;
+        chartSection.classList.toggle('enabled', isEnabled);
         localStorage.setItem('chartEnabled', isEnabled);
         
         if (isEnabled && !chartSection.dataset.initialized) {
