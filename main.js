@@ -192,3 +192,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initialize discussions when DOM is loaded
 document.addEventListener('DOMContentLoaded', displayDiscussions);
+
+// Posts Management
+async function loadPosts() {
+    const postsGrid = document.getElementById('posts-grid');
+    
+    try {
+        const response = await fetch('/_posts/index.json');
+        const posts = await response.json();
+        
+        posts.slice(0, 3).forEach(post => {
+            const postCard = `
+                <article class="post-card">
+                    ${post.thumbnail ? `<img src="${post.thumbnail}" alt="${post.title}">` : ''}
+                    <div class="post-content">
+                        <h3>${post.title}</h3>
+                        <div class="post-meta">
+                            <span>${post.author}</span>
+                            <span>•</span>
+                            <span>${new Date(post.date).toLocaleDateString()}</span>
+                        </div>
+                        <div class="post-excerpt">
+                            ${post.excerpt || post.body.substring(0, 150)}...
+                        </div>
+                        <a href="${post.url}" class="post-link">Read More →</a>
+                    </div>
+                </article>
+            `;
+            postsGrid.insertAdjacentHTML('beforeend', postCard);
+        });
+    } catch (error) {
+        console.error('Error loading posts:', error);
+        postsGrid.innerHTML = '<p>Failed to load updates. Please try again later.</p>';
+    }
+}
+
+// Initialize Netlify Identity
+if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+        if (!user) {
+            window.netlifyIdentity.on("login", () => {
+                document.location.href = "/admin/";
+            });
+        }
+    });
+}

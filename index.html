@@ -207,18 +207,13 @@
       <section id="posts" class="section-card reveal">
         <h2>Latest Updates</h2>
         <div class="posts-container">
-          <div class="posts-loading">
-            <div class="loading-spinner"></div>
-            <p>Loading discussions...</p>
+          <div id="posts-grid" class="posts-grid">
+            <!-- Posts will be loaded here via JavaScript -->
           </div>
-          <div class="posts-grid"></div>
         </div>
         <div class="posts-footer">
-          <a href="https://github.com/tenstudiosbc/ssiavanguardchronicles/discussions" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             class="btn-primary">
-            View All Updates
+          <a href="/admin" class="btn-primary admin-btn">
+            Manage Posts
           </a>
         </div>
       </section>
@@ -281,6 +276,11 @@
   <footer class="glass-footer">
     <p>&copy; 2025 TSBC Games. Built with 💙 by Naufal Ammariiq & Team</p>
   </footer>
+
+  <script src="main.js"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</body>
+</html>
 
   <script src="main.js"></script>
 </body>
