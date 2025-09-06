@@ -833,11 +833,13 @@ input:checked + .toggle-slider:before {
 
 /* === Elemental Chart Section === */
 #elemental-chart {
-    display: none;
+    display: none; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-#elemental-chart.enabled {
-    display: block;
+#elemental-chart[style*="display: block"] {
+    opacity: 1;
 }
 
 .chart-container {

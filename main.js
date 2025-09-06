@@ -190,12 +190,16 @@ function initializeChartToggle() {
     const chartToggle = document.getElementById('chart-toggle');
     const chartSection = document.getElementById('elemental-chart');
     
+    // Ensure chart is hidden by default
+    chartSection.style.display = 'none';
+    
     // Load saved preference
     const chartEnabled = localStorage.getItem('chartEnabled') === 'true';
     chartToggle.checked = chartEnabled;
-    chartSection.classList.toggle('enabled', chartEnabled);
-
+    
+    // Initial visibility
     if (chartEnabled) {
+        chartSection.style.display = 'block';
         initializeElementalChart();
         initializeTeamBuilder();
     }
@@ -203,12 +207,13 @@ function initializeChartToggle() {
     // Toggle handler
     chartToggle.addEventListener('change', (e) => {
         const isEnabled = e.target.checked;
-        chartSection.classList.toggle('enabled', isEnabled);
+        chartSection.style.display = isEnabled ? 'block' : 'none';
         localStorage.setItem('chartEnabled', isEnabled);
         
-        if (isEnabled) {
+        if (isEnabled && !chartSection.dataset.initialized) {
             initializeElementalChart();
             initializeTeamBuilder();
+            chartSection.dataset.initialized = 'true';
         }
     });
 }
