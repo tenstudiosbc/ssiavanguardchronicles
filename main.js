@@ -371,3 +371,159 @@ if (window.netlifyIdentity) {
         }
     });
 }
+
+// Experimental Features Management
+const GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN'; // Replace with your actual token
+const REPO_OWNER = 'tenstudiosbc';
+const REPO_NAME = 'ssiavanguardchronicles';
+
+class ExperimentalFeature {
+    constructor(id, section) {
+        this.id = id;
+        this.section = document.getElementById(section);
+        this.toggle = document.getElementById(`${id}-toggle`);
+        this.isEnabled = localStorage.getItem(`${id}Enabled`) === 'true';
+        this.isInitialized = false;
+    }
+
+    init() {
+        if (!this.toggle || !this.section) return;
+
+        // Set initial state
+        this.toggle.checked = this.isEnabled;
+        this.section.classList.toggle('enabled', this.isEnabled);
+
+        // Add event listener
+        this.toggle.addEventListener('change', () => {
+            this.isEnabled = this.toggle.checked;
+            localStorage.setItem(`${id}Enabled`, this.isEnabled);
+            this.section.classList.toggle('enabled', this.isEnabled);
+
+            if (this.isEnabled && !this.isInitialized) {
+                this.initialize();
+            }
+        });
+
+        // Initialize if enabled
+        if (this.isEnabled) {
+            this.initialize();
+        }
+    }
+
+    initialize() {
+        // Override in specific features
+    }
+}
+
+class DiscussionsFeature extends ExperimentalFeature {
+    constructor() {
+        super('discussions', 'discussions');
+    }
+
+    async initialize() {
+        if (this.isInitialized) return;
+
+        const discussionsGrid = document.querySelector('.discussions-grid');
+        const loadingElement = document.querySelector('.discussions-loading');
+
+        try {
+            const discussions = await this.fetchDiscussions();
+            loadingElement.style.display = 'none';
+
+            if (discussions.length === 0) {
+                discussionsGrid.innerHTML = '<p class="no-discussions">No discussions found. Be the first to start one!</p>';
+                return;
+            }
+
+            discussionsGrid.innerHTML = discussions.map(discussion => `
+                <a href="${discussion.url}" class="discussion-card" target="_blank" rel="noopener noreferrer">
+                    <h3 class="discussion-title">${this.escapeHtml(discussion.title)}</h3>
+                    <div class="discussion-meta">
+                        <img src="${discussion.author.avatarUrl}" alt="${this.escapeHtml(discussion.author.login)}">
+                        <span>${this.escapeHtml(discussion.author.login)}</span>
+                        <span>•</span>
+                        <span>${new Date(discussion.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <p class="discussion-preview">${this.escapeHtml(discussion.body.substring(0, 150))}...</p>
+                </a>
+            `).join('');
+
+            this.isInitialized = true;
+        } catch (error) {
+            console.error('Error loading discussions:', error);
+            loadingElement.innerHTML = '<p>Failed to load discussions. Please try again later.</p>';
+        }
+    }
+
+    async fetchDiscussions() {
+        const query = `
+        query {
+            repository(owner: "${REPO_OWNER}", name: "${REPO_NAME}") {
+                discussions(first: 6, orderBy: {field: CREATED_AT, direction: DESC}) {
+                    nodes {
+                        title
+                        url
+                        author {
+                            login
+                            avatarUrl
+                        }
+                        createdAt
+                        body
+                    }
+                }
+            }
+        }`;
+
+        try {
+            const response = await fetch('https://api.github.com/graphql', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `bearer ${GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query })
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const data = await response.json();
+            return data.data.repository.discussions.nodes;
+        } catch (error) {
+            console.error('Error fetching discussions:', error);
+            return [];
+        }
+    }
+
+    escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+}
+
+class ElementalChartFeature extends ExperimentalFeature {
+    constructor() {
+        super('chart', 'elemental-chart');
+    }
+
+    initialize() {
+        if (this.isInitialized) return;
+        
+        initializeElementalChart();
+        initializeTeamBuilder();
+        
+        this.isInitialized = true;
+    }
+}
+
+// Initialize experimental features
+document.addEventListener('DOMContentLoaded', () => {
+    const discussions = new DiscussionsFeature();
+    const elementalChart = new ElementalChartFeature();
+
+    discussions.init();
+    elementalChart.init();
+});
