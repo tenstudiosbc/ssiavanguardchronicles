@@ -215,145 +215,113 @@ function initializeChartToggle() {
     });
 }
 
-// Element interactions and team synergy
-const elementData = {
-    pyro: { strong: ['aero', 'spectro'], weak: ['hydro', 'geo'] },
-    hydro: { strong: ['pyro', 'electro'], weak: ['aero', 'void'] },
-    electro: { strong: ['hydro', 'void'], weak: ['geo', 'spectro'] },
-    geo: { strong: ['electro', 'pyro'], weak: ['spectro', 'aero'] },
-    aero: { strong: ['geo', 'hydro'], weak: ['pyro', 'void'] },
-    void: { strong: ['aero', 'hydro'], weak: ['electro', 'spectro'] },
-    spectro: { strong: ['void', 'geo'], weak: ['electro', 'pyro'] }
-};
+// Discussions functionality
+async function fetchGitHubDiscussions() {
+    const owner = 'tenstudiosbc';
+    const repo = 'ssiavanguardchronicles';
+    const query = `
+    query {
+        repository(owner: "${owner}", name: "${repo}") {
+            discussions(first: 6, orderBy: {field: CREATED_AT, direction: DESC}) {
+                nodes {
+                    id
+                    title
+                    url
+                    author {
+                        login
+                        avatarUrl
+                    }
+                    createdAt
+                    body
+                    category {
+                        name
+                    }
+                }
+            }
+        }
+    }`;
 
-function initializeElementalChart() {
-    const elements = document.querySelectorAll('.element');
-    
-    elements.forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            const elementType = element.classList[1];
-            highlightInteractions(elementType);
+    try {
+        const response = await fetch('https://api.github.com/graphql', {
+            method: 'POST',
+            headers: {
+                'Authorization': `bearer ${atob('Z2hwX3lvdXJfZ2l0aHViX3Rva2VuX2hlcmU=')}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query })
         });
+
+        const data = await response.json();
+        return data.data.repository.discussions.nodes;
+    } catch (error) {
+        console.error('Error fetching discussions:', error);
+        return [];
+    }
+}
+
+function displayDiscussions() {
+    const discussionsGrid = document.querySelector('.discussions-grid');
+    const loadingElement = document.querySelector('.discussions-loading');
+
+    fetchGitHubDiscussions().then(discussions => {
+        loadingElement.style.display = 'none';
         
-        element.addEventListener('mouseleave', () => {
-            resetHighlights();
-        });
+        if (discussions.length === 0) {
+            discussionsGrid.innerHTML = '<p class="no-discussions">No discussions found. Be the first to start one!</p>';
+            return;
+        }
+
+        discussionsGrid.innerHTML = discussions.map(discussion => `
+            <a href="${discussion.url}" class="discussion-card" target="_blank" rel="noopener noreferrer">
+                <h3 class="discussion-title">${discussion.title}</h3>
+                <div class="discussion-meta">
+                    <img src="${discussion.author.avatarUrl}" alt="${discussion.author.login}">
+                    <span>${discussion.author.login}</span>
+                    <span>•</span>
+                    <span>${new Date(discussion.createdAt).toLocaleDateString()}</span>
+                    <span>•</span>
+                    <span>${discussion.category.name}</span>
+                </div>
+                <p class="discussion-preview">${discussion.body.substring(0, 150)}...</p>
+            </a>
+        `).join('');
+    }).catch(error => {
+        loadingElement.innerHTML = '<p>Failed to load discussions. Please try again later.</p>';
     });
 }
 
-function highlightInteractions(elementType) {
-    const data = elementData[elementType];
-    data.strong.forEach(type => {
-        document.querySelector(`.${type}`).classList.add('advantaged');
-    });
-    data.weak.forEach(type => {
-        document.querySelector(`.${type}`).classList.add('disadvantaged');
-    });
-}
-
-function resetHighlights() {
-    document.querySelectorAll('.element').forEach(element => {
-        element.classList.remove('advantaged', 'disadvantaged');
-    });
-}
-
-// Team Builder functionality
-function initializeTeamBuilder() {
-    const teamSlots = document.querySelectorAll('.team-slot');
-    const characters = document.querySelectorAll('.character-option');
+// Initialize discussions toggle
+function initializeDiscussionsToggle() {
+    const discussionsToggle = document.getElementById('discussions-toggle');
+    const discussionsSection = document.getElementById('discussions');
     
-    let currentTeam = new Array(4).fill(null);
-
-    characters.forEach(char => {
-        char.addEventListener('click', () => {
-            const emptySlot = Array.from(teamSlots).find(slot => !slot.dataset.character);
-            if (emptySlot) {
-                addToTeam(char.dataset.character, char.dataset.element, emptySlot);
-                updateTeamSynergy();
-            }
-        });
-    });
-
-    teamSlots.forEach(slot => {
-        slot.addEventListener('click', () => {
-            if (slot.dataset.character) {
-                removeFromTeam(slot);
-                updateTeamSynergy();
-            }
-        });
-    });
-}
-
-function addToTeam(character, element, slot) {
-    slot.dataset.character = character;
-    slot.dataset.element = element;
-    slot.innerHTML = `
-        <div class="team-member ${element}">
-            <span>${character}</span>
-            <small>${element}</small>
-        </div>
-    `;
-}
-
-function removeFromTeam(slot) {
-    slot.dataset.character = '';
-    slot.dataset.element = '';
-    slot.innerHTML = '<div class="empty-slot">+</div>';
-}
-
-function updateTeamSynergy() {
-    const teamSlots = document.querySelectorAll('.team-slot');
-    const elements = Array.from(teamSlots)
-        .map(slot => slot.dataset.element)
-        .filter(Boolean);
+    // Load saved preference
+    const discussionsEnabled = localStorage.getItem('discussionsEnabled') === 'true';
+    discussionsToggle.checked = discussionsEnabled;
+    discussionsSection.classList.toggle('enabled', discussionsEnabled);
     
-    const synergies = calculateTeamSynergy(elements);
-    displaySynergies(synergies);
-}
+    if (discussionsEnabled && !discussionsSection.dataset.loaded) {
+        displayDiscussions();
+        discussionsSection.dataset.loaded = 'true';
+    }
 
-function calculateTeamSynergy(elements) {
-    let synergies = [];
-    
-    // Check for elemental resonance
-    const elementCounts = elements.reduce((acc, elem) => {
-        acc[elem] = (acc[elem] || 0) + 1;
-        return acc;
-    }, {});
-
-    // Add resonance bonuses
-    Object.entries(elementCounts).forEach(([element, count]) => {
-        if (count >= 2) {
-            synergies.push(`${element.charAt(0).toUpperCase() + element.slice(1)} Resonance`);
+    // Toggle handler
+    discussionsToggle.addEventListener('change', (e) => {
+        const isEnabled = e.target.checked;
+        discussionsSection.classList.toggle('enabled', isEnabled);
+        localStorage.setItem('discussionsEnabled', isEnabled);
+        
+        if (isEnabled && !discussionsSection.dataset.loaded) {
+            displayDiscussions();
+            discussionsSection.dataset.loaded = 'true';
         }
     });
-
-    // Check for special combinations
-    if (elements.includes('hydro') && elements.includes('electro')) {
-        synergies.push('Electro-Charged');
-    }
-    if (elements.includes('pyro') && elements.includes('hydro')) {
-        synergies.push('Vaporize');
-    }
-    // Add more combinations as needed
-
-    return synergies;
-}
-
-function displaySynergies(synergies) {
-    const synergyDisplay = document.querySelector('.team-synergy');
-    if (synergies.length) {
-        synergyDisplay.innerHTML = `
-            <h4>Team Synergies:</h4>
-            <ul>${synergies.map(s => `<li>${s}</li>`).join('')}</ul>
-        `;
-    } else {
-        synergyDisplay.innerHTML = '<p>No active synergies</p>';
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeFeatureToggles();
     initializeChartToggle();
+    initializeDiscussionsToggle();
 });
 
 // Initialize discussions when DOM is loaded
