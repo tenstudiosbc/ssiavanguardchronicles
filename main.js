@@ -81,17 +81,19 @@ const elementData = {
 function initializeElementalChart() {
     const elements = document.querySelectorAll('.element');
     
+    // Add element-specific classes
     elements.forEach(element => {
+        const type = element.querySelector('h3').textContent.toLowerCase();
+        element.classList.add(type);
+        
         element.addEventListener('mouseenter', () => {
-            const elementType = element.classList[1];
-            const data = elementData[elementType];
-            
+            const data = elementData[type];
             if (data) {
-                data.strong.forEach(type => {
-                    document.querySelector(`.${type}`).classList.add('advantaged');
+                data.strong.forEach(strongType => {
+                    document.querySelector(`.${strongType}`).classList.add('advantaged');
                 });
-                data.weak.forEach(type => {
-                    document.querySelector(`.${type}`).classList.add('disadvantaged');
+                data.weak.forEach(weakType => {
+                    document.querySelector(`.${weakType}`).classList.add('disadvantaged');
                 });
             }
         });
@@ -104,7 +106,7 @@ function initializeElementalChart() {
     });
 }
 
-// Initialize when DOM is loaded
+// Initialize features
 document.addEventListener('DOMContentLoaded', () => {
     const loader = document.querySelector('.loading-overlay');
     
