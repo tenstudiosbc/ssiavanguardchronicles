@@ -349,9 +349,18 @@
     <p>&copy; 2025 TSBC Games. Built with 💙 by Naufal Ammariiq & Team</p>
   </footer>
 
+  <!-- Load config before main script -->
+  <script>
+    // Fallback if config.js fails to load
+    window.config = window.config || {
+      GITHUB_TOKEN: '',
+      REPO_OWNER: 'tenstudiosbc',
+      REPO_NAME: 'ssiavanguardchronicles',
+      isConfigured: () => false
+    };
+  </script>
   <script src="config.js"></script>
   <script src="main.js"></script>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </body>
 </html>
 
