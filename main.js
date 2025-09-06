@@ -66,3 +66,53 @@ function reveal() {
 
 window.addEventListener('scroll', reveal);
 reveal(); // Initial check
+
+// Element interactions
+const elementData = {
+    pyro: { strong: ['aero', 'spectro'], weak: ['hydro', 'geo'] },
+    hydro: { strong: ['pyro', 'electro'], weak: ['aero', 'void'] },
+    electro: { strong: ['hydro', 'void'], weak: ['geo', 'spectro'] },
+    geo: { strong: ['electro', 'pyro'], weak: ['spectro', 'aero'] },
+    aero: { strong: ['geo', 'hydro'], weak: ['pyro', 'void'] },
+    void: { strong: ['aero', 'hydro'], weak: ['electro', 'spectro'] },
+    spectro: { strong: ['void', 'geo'], weak: ['electro', 'pyro'] }
+};
+
+function initializeElementalChart() {
+    const elements = document.querySelectorAll('.element');
+    
+    elements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            const elementType = element.classList[1];
+            const data = elementData[elementType];
+            
+            if (data) {
+                data.strong.forEach(type => {
+                    document.querySelector(`.${type}`).classList.add('advantaged');
+                });
+                data.weak.forEach(type => {
+                    document.querySelector(`.${type}`).classList.add('disadvantaged');
+                });
+            }
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            document.querySelectorAll('.element').forEach(el => {
+                el.classList.remove('advantaged', 'disadvantaged');
+            });
+        });
+    });
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.querySelector('.loading-overlay');
+    
+    // Ensure all content is loaded
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            loader.classList.add('hidden');
+        }, 1000); // Show loader for at least 1 second
+    });
+    initializeElementalChart();
+});

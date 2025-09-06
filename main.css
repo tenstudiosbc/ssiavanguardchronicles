@@ -766,12 +766,8 @@ nav ul.show {
 
 /* === Elemental Chart Section === */
 #elemental-chart {
-    display: none;
-}
-
-#elemental-chart.enabled {
     display: block;
-    animation: fadeIn 0.3s ease-in;
+    opacity: 1;
 }
 
 .chart-container {
@@ -785,15 +781,9 @@ nav ul.show {
 }
 
 .element {
-    padding: 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Element interactions */
-.element {
+    background: var(--card-bg);
+    border: 2px solid var(--primary-color);
     transition: all 0.3s ease;
-    cursor: pointer;
 }
 
 .element:hover {
@@ -802,15 +792,15 @@ nav ul.show {
 }
 
 .element.advantaged {
-    border-width: 3px;
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
     transform: scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 255, 0, 0.15);
 }
 
 .element.disadvantaged {
-    border-style: dashed;
+    border-color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
     opacity: 0.8;
-    box-shadow: 0 6px 12px rgba(255, 0, 0, 0.15);
 }
 
 .element h3 {
@@ -1089,6 +1079,16 @@ nav ul.show {
 
 /* Animation Fixes */
 .element,
+.discussion-card {
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.element:hover,
+.discussion-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
 .discussion-card {
     transform: translateY(0);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
