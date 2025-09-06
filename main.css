@@ -1049,11 +1049,56 @@ input:checked + .toggle-slider:before {
 #elemental-chart,
 #discussions {
     display: none;
-    animation: fadeIn 0.3s ease-in;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 #elemental-chart[style*="display: block"],
 #discussions[style*="display: block"] {
     display: block !important;
+    opacity: 1;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .element-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-slots {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .discussions-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .discussions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .new-discussion-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .discussion-card {
+        padding: 1rem;
+    }
+}
+
+/* Animation Fixes */
+.element,
+.discussion-card {
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.element:hover,
+.discussion-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 

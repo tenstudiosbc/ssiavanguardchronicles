@@ -389,6 +389,7 @@ class ExperimentalFeature {
         this.section = document.getElementById(section);
         this.toggle = document.getElementById(`${id}-toggle`);
         this.isEnabled = localStorage.getItem(`${id}Enabled`) === 'true';
+        this.isInitialized = false;
     }
 
     init() {
@@ -396,27 +397,35 @@ class ExperimentalFeature {
 
         // Set initial state
         this.toggle.checked = this.isEnabled;
-        this.section.style.display = this.isEnabled ? 'block' : 'none';
-
-        // Add event listener
-        this.toggle.addEventListener('change', () => {
-            this.isEnabled = this.toggle.checked;
+        
+        // Initial display
+        requestAnimationFrame(() => {
             this.section.style.display = this.isEnabled ? 'block' : 'none';
-            localStorage.setItem(`${this.id}Enabled`, this.isEnabled);
-
             if (this.isEnabled) {
                 this.onEnable();
             }
         });
 
-        // Initialize if enabled
-        if (this.isEnabled) {
-            this.onEnable();
-        }
+        // Toggle handler
+        this.toggle.addEventListener('change', () => {
+            this.isEnabled = this.toggle.checked;
+            
+            if (this.isEnabled) {
+                this.section.style.display = 'block';
+                // Force reflow
+                this.section.offsetHeight;
+                this.onEnable();
+            } else {
+                this.section.style.display = 'none';
+            }
+            
+            localStorage.setItem(`${this.id}Enabled`, this.isEnabled);
+        });
     }
 
     onEnable() {
-        // Override in child classes
+        if (this.isInitialized) return;
+        this.isInitialized = true;
     }
 }
 
@@ -444,13 +453,17 @@ class DiscussionsFeature extends ExperimentalFeature {
     }
 }
 
-// Initialize features
+// Update initialization
 document.addEventListener('DOMContentLoaded', () => {
-    const chartFeature = new ChartFeature();
-    const discussionsFeature = new DiscussionsFeature();
+    const features = [
+        new ChartFeature(),
+        new DiscussionsFeature()
+    ];
 
-    chartFeature.init();
-    discussionsFeature.init();
+    // Initialize features after a small delay to ensure smooth transitions
+    setTimeout(() => {
+        features.forEach(feature => feature.init());
+    }, 100);
 });
 
 // Remove old initialization code
