@@ -1,3 +1,15 @@
+// Loading Handler
+document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.querySelector('.loading-overlay');
+    
+    // Ensure all content is loaded
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            loader.classList.add('hidden');
+        }, 1000); // Show loader for at least 1 second
+    });
+});
+
 // Mobile menu toggle
 const navToggle = document.querySelector('.nav-toggle');
 const navLinks = document.querySelector('.nav-links');
