@@ -1,182 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="SSIA: Vanguard Chronicles — Official Lore and Banner Events" />
+  <meta name="description" content="SSIA: Vanguard Chronicles — A Tactical RPG Experience" />
   <title>SSIA: Vanguard Chronicles</title>
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="main.css" />
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="./styles/base.css">
+  <link rel="stylesheet" href="./styles/components.css">
+  <link rel="stylesheet" href="./styles/elements.css">
+  <link rel="stylesheet" href="./styles/themes.css">
 </head>
 <body>
-  <div class="loading-overlay">
-    <div class="loading-content">
-      <div class="loading-spinner"></div>
-      <h2>SSIA: Vanguard Chronicles</h2>
-      <p>Loading your experience...</p>
-    </div>
+  <!-- Loader -->
+  <div class="loader">
+    <div class="loader__spinner"></div>
+    <h1 class="loader__title">SSIA: Vanguard Chronicles</h1>
   </div>
-  <header class="glass-header">
-    <div class="nav-container">
-      <h1 class="logo">SSIA:Vanguard Chronicles</h1>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span><span></span><span></span>
-      </button>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#overview">Overview</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#specifications">Specifications</a></li>
-          <li><a href="#characters">Characters</a></li>
-          <li><a href="#banner-event">Events</a></li>
-          <li><a href="#elemental-chart">Elements</a></li>
-          <li><a href="#media">Media</a></li>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav container">
+      <a href="#" class="nav__logo">SSIA:VC</a>
+      <div class="nav__menu">
+        <ul class="nav__list">
+          <li><a href="#home" class="nav__link">Home</a></li>
+          <li><a href="#features" class="nav__link">Features</a></li>
+          <li><a href="#characters" class="nav__link">Characters</a></li>
+          <li><a href="#elements" class="nav__link">Elements</a></li>
+          <li><a href="#specifications" class="nav__link">Specs</a></li>
+          <li><a href="#download" class="nav__link">Download</a></li>
         </ul>
-      </nav>
-    </div>
+        <button class="nav__toggle" aria-label="Toggle menu">
+          <span></span>
+        </button>
+      </div>
+    </nav>
   </header>
 
-  <main>
-    <section class="hero parallax">
-      <div class="hero-overlay"></div>
-      <div class="hero-content reveal">
-        <h1 class="hero-title">SSIA:Vanguard Chronicles</h1>
-        <p class="hero-subtitle">Experience the next evolution in tactical RPG combat</p>
-        <a href="#overview" class="btn-primary pulse">Begin Your Journey</a>
+  <main class="main">
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero__container container">
+        <h1 class="hero__title">Welcome to Vanguard Chronicles</h1>
+        <p class="hero__subtitle">Master the elements. Forge your destiny.</p>
+        <a href="#download" class="button button--primary">Begin Your Journey</a>
       </div>
     </section>
 
-    <div class="content-wrapper">
-      <section id="overview" class="section-card reveal">
-        <h2>Overview</h2>
-        <p>
-          Experience a 2D, gacha‑style, turn‑based RPG set in the SSIA Universe. Step into the shoes of a fallen agent, mastering elemental powers and strategic combat in Sierra Liudoxoya.
-        </p>
-        <p>
-          Bellemaire Chapter 1: ”kicks off in the capital, Bellemaire—combining dialogue choices, tactical battles, and elemental exploration.”
-        </p>
-      </section>
-
-      <section id="features" class="section-card reveal">
-        <h2>Key Features</h2>
-        <ul>
-          <li>Seven elemental types: Pyro, Hydro, Electro, Cryro, Geo, Spectro & Void</li>
-          <li>Gacha mechanics drive character and weapon draws</li>
-          <li>Choice-driven dialogue shapes your journey</li>
-          <li>Combat training with Fritz unlocks quests</li>
-        </ul>
-      </section>
-
-      <section id="characters" class="section-card reveal">
-        <h2>Featured Characters</h2>
-        <div class="character-grid">
-          <div class="character-card">
-            <div class="character-video">
-              <iframe 
-                src="https://www.youtube.com/embed/2zhMXLjiBpc" 
-                title="Hannabi Ingrid Stephanie Character Demo"
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-              </iframe>
-            </div>
-            <div class="character-info">
-              <h3>Hannabi Ingrid Stephanie</h3>
-              <p class="character-title">Serenity Of Timidity</p>
-              <ul class="character-details">
-                <li><strong>Element:</strong> Hydro</li>
-                <li><strong>Weapon:</strong> Sword</li>
-                <li><strong>Rarity:</strong> ★★★★★</li>
-              </ul>
-            </div>
+    <!-- Features Section -->
+    <section id="features" class="features section">
+      <div class="container">
+        <h2 class="section__title">Game Features</h2>
+        <div class="features__grid">
+          <div class="feature__item">
+            <h3 class="feature__title">Dynamic Combat System</h3>
+            <p class="feature__description">Experience a fast-paced and strategic combat system that puts you in control.</p>
           </div>
-
-          <div class="character-card">
-            <div class="character-video">
-              <iframe 
-                src="https://www.youtube.com/embed/mdZTcMRFOCM" 
-                title="Kenziet Felicia-Harrison Character Demo"
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-              </iframe>
-            </div>
-            <div class="character-info">
-              <h3>Kenziet Felicia-Harrison</h3>
-              <p class="character-title">Vixen Temptress</p>
-              <ul class="character-details">
-                <li><strong>Element:</strong> Electro</li>
-                <li><strong>Weapon:</strong> Katana</li>
-                <li><strong>Rarity:</strong> ★★★★★</li>
-              </ul>
-            </div>
+          <div class="feature__item">
+            <h3 class="feature__title">Elemental Interactions</h3>
+            <p class="feature__description">Utilize the unique properties of each element to gain the upper hand in battles.</p>
+          </div>
+          <div class="feature__item">
+            <h3 class="feature__title">Rich Storyline</h3>
+            <p class="feature__description">Immerse yourself in a captivating story filled with intriguing characters and challenging quests.</p>
+          </div>
+          <div class="feature__item">
+            <h3 class="feature__title">Character Customization</h3>
+            <p class="feature__description">Create and customize your own characters to suit your playstyle and preferences.</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="banner-event" class="section-card reveal">
-        <div class="banner-container">
-          <h2>Current Banner Event</h2>
-          <img 
-  src="https://img.itch.zone/aW1nLzIxNTk3MzY5LnBuZw==/original/JIeDFJ.png" 
-  alt="Timidity In Purity Banner Art" 
-  class="animated-banner"
-  style="max-width: 100%; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.25);" 
-/>
-          <p>
-            Launching <strong>August 17, 2025 @ 9:00 AM GMT+7</strong>: the <strong>“Timidity In Purity”</strong> Concedation banner will feature the following:
-          </p>
+    <!-- Characters Section -->
+    <section id="characters" class="characters section">
+      <div class="container">
+        <h2 class="section__title">Featured Characters</h2>
+        <div class="characters__grid"></div>
+      </div>
+    </section>
+
+    <!-- Elements Section -->
+    <section id="elements" class="elements section">
+      <div class="container">
+        <h2 class="section__title">Elemental System</h2>
+        <div class="elements__grid">
+          <!-- Elements will be dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Specifications Section -->
+    <section id="specifications" class="section-card reveal">
+      <h2>System Specifications</h2>
+      <div class="specs-container">
+        <div class="specs-column">
+          <h3>Minimum Requirements</h3>
           <ul>
-            <li><strong>5★ Hannabi Ingrid Stephanie</strong> (Hydro / Sword)</li>
-            <li><strong>4★ Nexon Dyke Martinez</strong> (Geo / Gauntlet)</li>
-            <li><strong>4★ Margaret Stephanie</strong> (Cryo / Polearm)</li>
-            <li><strong>4★ RogerShin</strong> (Aero / Gauntlet)</li>
+            <li><strong>OS:</strong> Windows 7/8/8.1/10/11 (32bit/64bit)</li>
+            <li><strong>Processor:</strong> Intel Pentium 4 2.0 GHz or better</li>
+            <li><strong>Memory:</strong> 1 GB RAM</li>
+            <li><strong>Graphics:</strong> DirectX 9/OpenGL 4.1 capable GPU</li>
+            <li><strong>Storage:</strong> 500 MB available space</li>
+            <li><strong>DirectX:</strong> Version 9.0c</li>
           </ul>
-          <p>Banner runs from Aug 17 to Sep 30, 2025</p>
         </div>
-      </section>
+        <div class="specs-column">
+          <h3>Recommended Requirements</h3>
+          <ul>
+            <li><strong>OS:</strong> Windows 10/11 (64bit)</li>
+            <li><strong>Processor:</strong> Intel Core i3 or better</li>
+            <li><strong>Memory:</strong> 4 GB RAM</li>
+            <li><strong>Graphics:</strong> DirectX 11 capable GPU</li>
+            <li><strong>Storage:</strong> 1 GB available space</li>
+            <li><strong>DirectX:</strong> Version 11</li>
+          </ul>
+        </div>
+      </div>
+      <div class="engine-info">
+        <p><strong>Engine:</strong> RPG Maker VX Ace</p>
+        <p><small>Note: Game performance may vary based on system configuration and installed RTP (Runtime Package)</small></p>
+      </div>
+    </section>
 
-      <section id="specifications" class="section-card reveal">
-        <h2>System Specifications</h2>
-        <div class="specs-container">
-          <div class="specs-column">
-            <h3>Minimum Requirements</h3>
-            <ul>
-              <li><strong>OS:</strong> Windows 7/8/8.1/10/11 (32bit/64bit)</li>
-              <li><strong>Processor:</strong> Intel Pentium 4 2.0 GHz or better</li>
-              <li><strong>Memory:</strong> 1 GB RAM</li>
-              <li><strong>Graphics:</strong> DirectX 9/OpenGL 4.1 capable GPU</li>
-              <li><strong>Storage:</strong> 500 MB available space</li>
-              <li><strong>DirectX:</strong> Version 9.0c</li>
-            </ul>
-          </div>
-          <div class="specs-column">
-            <h3>Recommended Requirements</h3>
-            <ul>
-              <li><strong>OS:</strong> Windows 10/11 (64bit)</li>
-              <li><strong>Processor:</strong> Intel Core i3 or better</li>
-              <li><strong>Memory:</strong> 4 GB RAM</li>
-              <li><strong>Graphics:</strong> DirectX 11 capable GPU</li>
-              <li><strong>Storage:</strong> 1 GB available space</li>
-              <li><strong>DirectX:</strong> Version 11</li>
-            </ul>
-          </div>
-        </div>
-        <div class="engine-info">
-          <p><strong>Engine:</strong> RPG Maker VX Ace</p>
-          <p><small>Note: Game performance may vary based on system configuration and installed RTP (Runtime Package)</small></p>
-        </div>
-      </section>
-
-      <section id="media" class="section-card reveal">
-        <h2>Media & Launcher</h2>
-        <div class="download-container">
-          <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles/download/eyJleHBpcmVzIjoxNzU3MTMzNjI0LCJpZCI6MzU0NDI1NH0%3d.NKMwmJjDxqxKrnyCA0grK%2bn0vV4%3d" 
-             class="download-btn" 
+    <!-- Download Section -->
+    <section id="download" class="download section">
+      <div class="container">
+        <h2 class="section__title">Download Now</h2>
+        <div class="download__content">
+          <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles/download/latest" 
+             class="button button--cta"
              target="_blank" 
              rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="download-icon">
-              <path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
+            Download Game (303 MB)
+          </a>
+          <p class="download__info">
+            View more on our 
+            <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" 
+               target="_blank" 
+               rel="noopener noreferrer">Itch.io page</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__copy">&copy; 2025 TSBC Games</p>
+      <div class="footer__socials">
+        <a href="https://discord.gg/UXFnKk9BWg" class="footer__social">Discord</a>
+        <a href="mailto:ssiavc.tenstudiosbc@gmail.com" class="footer__social">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Switcher -->
+  <div class="theme-switcher">
+    <button class="theme-switcher__toggle" aria-label="Toggle theme">
+      <svg class="theme-switcher__icon"></svg>
+    </button>
+    <div class="theme-switcher__menu">
+      <!-- Themes will be dynamically populated -->
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="./scripts/main.js"></script>
+</body>
+</html>
+</body>
+</html>
             </svg>
             Download Game (303 MB)
           </a>
