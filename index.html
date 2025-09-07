@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SSIA: Vanguard Chronicles — An immersive tactical RPG experience" />
+  <title>SSIA: Vanguard Chronicles</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="./styles/base.css">
+  <link rel="stylesheet" href="./styles/components.css">
+  <link rel="stylesheet" href="./styles/elements.css">
+  <link rel="stylesheet" href="./styles/themes.css">
+  <link rel="stylesheet" href="./styles/characters.css">
+  <link rel="stylesheet" href="./styles/animations.css">
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader">
+    <div class="loader__spinner"></div>
+    <h1 class="loader__title">SSIA: Vanguard Chronicles</h1>
+  </div>
+
+  <!-- Navigation -->
+  <header class="header">
+    <nav class="nav container">
+      <a href="#" class="nav__logo">SSIA:VC</a>
+      <div class="nav__menu">
+        <ul class="nav__list">
+          <li><a href="#home" class="nav__link">Home</a></li>
+          <li><a href="#story" class="nav__link">Story</a></li>
+          <li><a href="#characters" class="nav__link">Characters</a></li>
+          <li><a href="#elements" class="nav__link">Elements</a></li>
+          <li><a href="#media" class="nav__link">Media</a></li>
+          <li><a href="#download" class="nav__link">Download</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- Hero Section -->
+    <section id="home" class="hero section">
+      <video class="hero__bg" autoplay muted loop playsinline>
+        <source src="./assets/videos/hero-bg.mp4" type="video/mp4">
+      </video>
+      <div class="hero__content container">
+        <h1 class="hero__title">SSIA: Vanguard Chronicles</h1>
+        <p class="hero__subtitle">Forge your destiny in a world of elements</p>
+        <a href="#download" class="button button--primary">Begin Your Journey</a>
+      </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story" class="story section">
+      <div class="container">
+        <h2 class="section__title">Chapter 1: Bellemaire</h2>
+        <div class="story__content">
+          <div class="story__text">
+            <p>As a former SSIA special agent who lost everything in an ambush, you emerge from months of recovery to follow a mysterious lead. Your choices will shape the fate of the realm as ancient shadows rise once more.</p>
+          </div>
+          <div class="story__chapters">
+            <div class="chapter">Act 1: Fracture of the Past</div>
+            <div class="chapter">Act 2: Smoke and Steel</div>
+            <div class="chapter">Act 3: Beneath the Surface</div>
+          </div>
+        </div>
+      </section>
+
+    <!-- Characters Section -->
+    <section id="characters" class="characters section">
+      <div class="container">
+        <h2 class="section__title">Featured Characters</h2>
+        <div class="characters__grid"></div>
+      </div>
+    </section>
+
+    <!-- Elements Section -->
+    <section id="elements" class="elements section">
+      <div class="container">
+        <h2 class="section__title">Elemental System</h2>
+        <div class="elements__grid"></div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download section">
+      <div class="container">
+        <h2 class="section__title">Download Now</h2>
+        <div class="download__content">
+          <div class="specs">
+            <h3>System Requirements</h3>
+            <ul class="specs__list">
+              <li>Windows 7/8/10/11</li>
+              <li>2GB RAM</li>
+              <li>DirectX 9/OpenGL 4.1</li>
+              <li>500 MB storage</li>
+            </ul>
+          </div>
+          <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" 
+             class="button button--cta"
+             target="_blank">
+            Play Free Now
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__copy">&copy; 2025 TSBC Games</p>
+      <div class="footer__socials">
+        <a href="https://discord.gg/UXFnKk9BWg" class="footer__social">Discord</a>
+        <a href="mailto:ssiavc.tenstudiosbc@gmail.com" class="footer__social">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="./scripts/main.js"></script>
+</body>
+</html>
+
