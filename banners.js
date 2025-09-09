@@ -6,7 +6,7 @@ const banners = [
     featured5Star: ["Hannabi Ingrid Stephanie"],
     featured4Star: ["Margaret Stephanie", "Nexon Dyke Martinez", "Rogershin A Ventere"],
     weapons: ["Blue Sword", "White Polearm"],
-    pool: ["Standard 5★ pool", "Event 4★ pool"]
+    pool: ["Featured 5★ pool", "Standard 4★ pool"]
   }
 ];
 
