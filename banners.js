@@ -8,26 +8,27 @@ const banners = [
     weapons: ["Blue Sword", "White Polearm"],
     pool: ["Standard 5★ pool", "Event 4★ pool"]
   }
-  
 ];
 
-// Inject banners dynamically
-const bannerContainer = document.getElementById("banners-container");
+document.addEventListener("DOMContentLoaded", () => {
+  const bannerContainer = document.getElementById("banners-container");
+  if (!bannerContainer) return;
 
-banners.forEach(banner => {
-  const card = document.createElement("div");
-  card.className = "banner-card";
-  card.innerHTML = `
-    <img src="${banner.image}" alt="${banner.title}">
-    <h3>${banner.title}</h3>
-    <p><strong>Duration:</strong> ${banner.duration}</p>
-    <p><strong>Featured 5★:</strong> ${banner.featured5Star.join(", ")}</p>
-    <p><strong>Featured 4★:</strong> ${banner.featured4Star.join(", ")}</p>
-    <p><strong>Weapons:</strong> ${banner.weapons.join(", ")}</p>
-    <p><strong>Pool:</strong> ${banner.pool.join(", ")}</p>
-  `;
-  bannerContainer.appendChild(card);
+  banners.forEach(banner => {
+    const card = document.createElement("div");
+    card.className = "banner-card";
+    card.innerHTML = `
+      <img src="${banner.image}" alt="${banner.title}">
+      <h3>${banner.title}</h3>
+      <p><strong>Duration:</strong> ${banner.duration}</p>
+      <p><strong>Featured 5★:</strong> ${banner.featured5Star.join(", ")}</p>
+      <p><strong>Featured 4★:</strong> ${banner.featured4Star.join(", ")}</p>
+      <p><strong>Weapons:</strong> ${banner.weapons.join(", ")}</p>
+      <p><strong>Pool:</strong> ${banner.pool.join(", ")}</p>
+    `;
+    bannerContainer.appendChild(card);
 
-  // Trigger event for toast
-  document.dispatchEvent(new CustomEvent("bannerLoaded", { detail: { title: banner.title } }));
+    // Trigger event for toast
+    document.dispatchEvent(new CustomEvent("bannerLoaded", { detail: { title: banner.title } }));
+  });
 });
