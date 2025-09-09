@@ -15,7 +15,7 @@ const characters = [
     weapon: "Katana",
     portrait: "https://i.supaimg.com/c2468193-f5cc-4f2e-a07c-1cb6b69efa52.png",
     tags: ["DPS"],
-    bio: "Confident and fiercely protective. Master of behavioral analysis and resilience."
+    bio: "Confident and fiercely protective. Master of behavioral analysis and resilience, Sexy and Seductive."
   },
   {
     name: "Fritz Von Viermitz",
