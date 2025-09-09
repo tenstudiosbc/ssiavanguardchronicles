@@ -71,6 +71,15 @@ const characters = [
     tags: ["Support", "High DEF"],
     bio: "Timid, Reserved and a Kitten, Shes a Probie Special Agent in the team"
   },
+  {
+    name: "Margaret Stephanie",
+    rarity: 4,
+    element: "❄️ Cryo",
+    weapon: "Polearm",
+    potrait:"..",
+    tags: ["Support"],
+    bio: "A loveling Mother, School Counsulor"
+  },  
 ];
 
 // Utility to create star rarity
