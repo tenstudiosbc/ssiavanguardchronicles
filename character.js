@@ -62,6 +62,15 @@ const characters = [
     tags: ["DPS"],
     bio: "Legends say she is the “Eternal Bloom of Sa’Lume”, blessed by mystical waters hidden deep in the desert. Some worship her as a princess of Greenwhale, while others dismiss her as a clever trickster who discovered the fountain of youth. In truth, she’s just human—but her discipline, wit, and mastery of illusions give her the presence of someone immortal."
   },
+  {
+    name: "Hannabi Ingrid Stephanie",
+    rarity: 5,
+    element: "💧 Hydro",
+    weapon: "Sword",
+    portrait: "https://i.supaimg.com/52407d38-a3f4-4e1f-81ff-732bc2128645.png",
+    tags: ["Support", "High DEF"],
+    bio: "Timid, Reserved and a Kitten, Shes a Probie Special Agent in the team"
+  },
 ];
 
 // Utility to create star rarity
