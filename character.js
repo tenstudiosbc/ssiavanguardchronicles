@@ -12,7 +12,7 @@ const characters = [
     rarity: 5,
     element: "⚡ Electro",
     weapon: "Katana",
-    portrait: "https://i.imgur.com/aRmNnWa.png",
+    portrait: "https://i.supaimg.com/3c37a32f-ddf1-4996-aeff-38556a03d9d8.png",
     bio: "Confident and fiercely protective. Master of behavioral analysis and resilience."
   },
   {
