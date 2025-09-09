@@ -5,6 +5,7 @@ const characters = [
     element: "🔥 Pyro",
     weapon: "Pistols",
     portrait: "https://i.imgur.com/xW4XkY3.png",
+    Tags: "DPS",
     bio: "Authoritative yet compassionate leader, skilled in investigations, tactics, and split-second decisions."
   },
   {
@@ -13,6 +14,7 @@ const characters = [
     element: "⚡ Electro",
     weapon: "Katana",
     portrait: "https://i.supaimg.com/3c37a32f-ddf1-4996-aeff-38556a03d9d8.png",
+    Tags: "DPS",
     bio: "Confident and fiercely protective. Master of behavioral analysis and resilience."
   },
   {
@@ -21,6 +23,7 @@ const characters = [
     element: "❄️ Cryo",
     weapon: "SMGs",
     portrait: "https://i.imgur.com/qcGJ6Wz.png",
+    Tags: "Support", "DPS",
     bio: "Calm, strategic, and brilliant in behavioral profiling."
   },
   {
@@ -29,6 +32,7 @@ const characters = [
     element: "🪨 Geo",
     weapon: "Gauntlets",
     portrait: "https://i.imgur.com/0T0i6Mc.png",
+    Tags: "Tanker",
     bio: "Charismatic and agile with strong combat and intel skills."
   },
   {
@@ -37,6 +41,7 @@ const characters = [
     element: "💨 Aero",
     weapon: "Polearm / SMGs",
     portrait: "https://i.imgur.com/JXjWc6A.png",
+    Tags: "Support",
     bio: "Charming, hot, and determined. Leads the Mittlemazigste SSIA Field Office."
   },
   {
@@ -45,7 +50,17 @@ const characters = [
     element: "⚡️ Electro",
     weapon: "Katana",
     portrait: "https://i.imgur.com/0T0i6Mc.png",
+    Tags: "DPS"
     bio: "Kirisame Ayaka is a Youthful Adult Woman, around 30 years old, a model type body, She's a SIRA (Shinkyou Imperial Reconnaissance Agency), she's in a position of Special Agent In Charge,  Always Determined but Softer towards anyone on SIRA, but her fighting Skills with a Katana is another level of Mastery"
+  }, 
+  {
+    name: "Princess Elaria Solenyra",
+    rarity: 5,
+    element: "✨️ Spectro",
+    weapon: "Sword",
+    portrait: "https://i.supaimg.com/5abe95cb-9ce1-4cbd-afd4-f38cd6d0496d.png",
+    Tags: "DPS",
+    bio: "Legends say she is the “Eternal Bloom of Sa’Lume”, blessed by mystical waters hidden deep in the desert. Some worship her as a princess of Greenwhale, while others dismiss her as a clever trickster who discovered the fountain of youth. In truth, she’s just human—but her discipline, wit, and mastery of illusions give her the presence of someone immortal."
   },
 ];
 
@@ -72,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Rarity:</strong> ${createStars(char.rarity)}</p>
         <p><strong>Element:</strong> ${char.element}</p>
         <p><strong>Weapon:</strong> ${char.weapon}</p>
+        <p><strong>Tags:</strong> ${char.Tags}</p>
         <p>${char.bio}</p>
       </div>
     `;
