@@ -46,7 +46,7 @@ const characters = [
     weapon: "Katana",
     portrait: "https://i.imgur.com/0T0i6Mc.png",
     bio: "Kirisame Ayaka is a Youthful Adult Woman, around 30 years old, a model type body, She's a SIRA (Shinkyou Imperial Reconnaissance Agency), she's in a position of Special Agent In Charge,  Always Determined but Softer towards anyone on SIRA, but her fighting Skills with a Katana is another level of Mastery"
-  }
+  },
 ];
 
 // Utility to create star rarity
