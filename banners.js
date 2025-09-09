@@ -2,7 +2,7 @@ const banners = [
   {
     title: "Timidity In Purity",
     duration: "Aug 17 – Sept 30, 2025",
-    image: "https://example.com/banner1.jpg",
+    image: "https://i.supaimg.com/39175f8d-c9cc-4c20-8c9d-2c7546bd901e.png",
     featured5Star: ["Hannabi Ingrid Stephanie"],
     featured4Star: ["Margaret Stephanie", "Nexon Dyke Martinez", "Rogershin A Ventere"],
     weapons: ["Blue Sword", "White Polearm"],
