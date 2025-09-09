@@ -87,6 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const card = document.createElement("div");
     card.className = "character-card";
 
+    // Counters (session-based, reset on refresh)
+    let favCount = 0, likeCount = 0, ownCount = 0;
+
     card.innerHTML = `
       <div class="portrait">
         <img src="${char.portrait}" alt="${char.name}" />
@@ -98,8 +101,36 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Weapon:</strong> ${char.weapon}</p>
         <p><strong>Tags:</strong> ${char.tags.join(", ")}</p>
         <p>${char.bio}</p>
+        <div class="actions">
+          <button class="btn-action fav">❤️ Favorite (<span class="fav-count">0</span>)</button>
+          <button class="btn-action like">👍 Like (<span class="like-count">0</span>)</button>
+          <button class="btn-action own">✅ Owned (<span class="own-count">0</span>)</button>
+        </div>
       </div>
     `;
+
+    // Attach event listeners
+    const favBtn = card.querySelector(".fav");
+    const likeBtn = card.querySelector(".like");
+    const ownBtn = card.querySelector(".own");
+
+    favBtn.addEventListener("click", () => {
+      favCount++;
+      favBtn.querySelector(".fav-count").textContent = favCount;
+      document.dispatchEvent(new CustomEvent("toast", { detail: `${char.name} added to Favorites!` }));
+    });
+
+    likeBtn.addEventListener("click", () => {
+      likeCount++;
+      likeBtn.querySelector(".like-count").textContent = likeCount;
+      document.dispatchEvent(new CustomEvent("toast", { detail: `You liked ${char.name}!` }));
+    });
+
+    ownBtn.addEventListener("click", () => {
+      ownCount++;
+      ownBtn.querySelector(".own-count").textContent = ownCount;
+      document.dispatchEvent(new CustomEvent("toast", { detail: `You own ${char.name}!` }));
+    });
 
     container.appendChild(card);
 
