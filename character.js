@@ -1,11 +1,10 @@
-// character.js
 const characters = [
   {
     name: "Jones Harrison",
     rarity: 5,
     element: "🔥 Pyro",
     weapon: "Pistols",
-    portrait: "https://i.imgur.com/xW4XkY3.png", // example external URL
+    portrait: "https://i.imgur.com/xW4XkY3.png",
     bio: "Authoritative yet compassionate leader, skilled in investigations, tactics, and split-second decisions."
   },
   {
@@ -44,17 +43,12 @@ const characters = [
 
 // Utility to create star rarity
 function createStars(rarity) {
-  let stars = "";
-  for (let i = 0; i < rarity; i++) {
-    stars += "⭐";
-  }
-  return stars;
+  return "⭐".repeat(rarity);
 }
 
 // Inject characters into HTML
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("character-container");
-
+  const container = document.getElementById("characters-container");
   if (!container) return;
 
   characters.forEach(char => {
@@ -75,5 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     container.appendChild(card);
+
+    // Dispatch custom event so index.html can show toast
+    document.dispatchEvent(new CustomEvent("charactersLoaded", { detail: { name: char.name } }));
   });
 });
