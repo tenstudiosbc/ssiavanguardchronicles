@@ -1,3 +1,271 @@
-<html>
-  <h1>This Page is in Undermaintaince</h1>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SSIA Vanguard Chronicles Official Page"
+  <title>SSIA: Vanguard Chronicles - Official Site</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Consolas', 'Courier New', monospace;
+      background: #0a0f14;
+      color: #00ffcc;
+      overflow-x: hidden;
+    }
+    header {
+      background: #001f2d;
+      color: #00ffcc;
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 2px solid #00ffcc;
+      box-shadow: 0 0 15px #00ffcc;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    header p {
+      margin-top: .5rem;
+      font-size: 1.2rem;
+      opacity: 0.85;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: #021219;
+      padding: 0.75rem;
+      border-bottom: 1px solid #00ffcc;
+    }
+    nav a {
+      color: #00ffcc;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    nav a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+    section {
+      padding: 2rem;
+      max-width: 1100px;
+      margin: auto;
+      animation: fadeIn 1.5s ease;
+    }
+    h2 {
+      color: #00ffcc;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #00ffcc;
+      padding-bottom: .5rem;
+      text-transform: uppercase;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      margin-top: 1rem;
+      background: transparent;
+      border: 2px solid #00ffcc;
+      color: #00ffcc;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,255,204,0.4);
+    }
+    .btn:hover {
+      background: #00ffcc;
+      color: #0a0f14;
+      box-shadow: 0 0 20px #00ffcc;
+    }
+    .requirements {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .requirement-box {
+      background: #021219;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid #00ffcc;
+      box-shadow: 0 0 15px rgba(0,255,204,0.2);
+      transition: transform 0.3s ease;
+    }
+    .requirement-box:hover {
+      transform: translateY(-5px);
+    }
+    .characters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .character-card {
+      background: #021219;
+      border: 1px solid #00ffcc;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,255,204,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .character-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ffcc;
+    }
+    .character-card img {
+      max-width: 100%;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    footer {
+      background: #021219;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #00ffcc;
+      border-top: 1px solid #00ffcc;
+    }
+
+    /* Toaster Notification */
+    #toaster {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    .toast {
+      background: #021219;
+      border: 1px solid #00ffcc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 15px rgba(0,255,204,0.4);
+      color: #00ffcc;
+      opacity: 0;
+      animation: slideIn 0.5s forwards, fadeOut 5s forwards;
+    }
+
+    /* Animations */
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #00ffcc; }
+      to { text-shadow: 0 0 20px #00ffee; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      0%, 90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      nav { flex-direction: column; }
+      nav a { margin: 0.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SSIA: Vanguard Chronicles</h1>
+    <p>A Tactical RPG Experience from TSBC</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#download">Download</a>
+    <a href="#requirements">Requirements</a>
+    <a href="#characters">Characters</a>
+  </nav>
+
+  <section id="about">
+    <h2>About the Game</h2>
+    <p><strong>SSIA: Vanguard Chronicles</strong> is a free-to-play 2D tactical RPG built in RPG Maker VX Ace. It features grid-based combat, an Elemental Counter System, branching narrative, gacha mechanics, and ongoing chapter-based updates. Follow the story of a former SSIA agent uncovering corruption and elemental threats across multiple regions of the fictional continent Sierra Liudoxoya.</p>
+  </section>
+
+  <section id="download">
+    <h2>Download</h2>
+    <p>Start your journey now. Available free on itch.io.</p>
+    <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" class="btn" target="_blank">Download on itch.io</a>
+  </section>
+
+  <section id="requirements">
+    <h2>System Requirements</h2>
+    <div class="requirements">
+      <div class="requirement-box">
+        <h3>Minimum</h3>
+        <ul>
+          <li>OS: Windows 7/8/10</li>
+          <li>Processor: Intel Core i3</li>
+          <li>Memory: 2 GB RAM</li>
+          <li>Graphics: Integrated GPU</li>
+          <li>Storage: 1 GB available space</li>
+        </ul>
+      </div>
+      <div class="requirement-box">
+        <h3>Recommended</h3>
+        <ul>
+          <li>OS: Windows 10/11</li>
+          <li>Processor: Intel Core i5 or higher</li>
+          <li>Memory: 4 GB RAM</li>
+          <li>Graphics: Dedicated GPU (NVIDIA/AMD)</li>
+          <li>Storage: 2 GB available space</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="characters">
+    <h2>Characters</h2>
+    <div class="characters" id="characters-container">
+      <!-- Characters dynamically injected -->
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 TenStudios Broadcasting Community. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Toaster -->
+  <div id="toaster"></div>
+
+  <!-- Characters -->
+  <script src="characters.js"></script>
+  <script>
+    // Toaster notification function
+    function showToast(message) {
+      const toaster = document.getElementById('toaster');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerText = message;
+      toaster.appendChild(toast);
+      setTimeout(() => { toaster.removeChild(toast); }, 5000);
+    }
+
+    // Example welcome toast
+    window.onload = () => {
+      showToast('Welcome to SSIA: Vanguard Chronicles Official Page');
+    };
+
+    // Hook into characters.js loader
+    document.addEventListener("charactersLoaded", (e) => {
+      showToast(`${e.detail.name} profile loaded`);
+    });
+  </script>
+</body>
+      </html>
