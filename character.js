@@ -4,7 +4,7 @@ const characters = [
     rarity: 5,
     element: "🔥 Pyro",
     weapon: "Pistols",
-    portrait: "https://i.imgur.com/xW4XkY3.png",
+    portrait: "https://i.supaimg.com/579ea0e6-e34f-4d67-b86a-810acfc4b25c.png",
     tags: ["DPS"],
     bio: "Authoritative yet compassionate leader, skilled in investigations, tactics, and split-second decisions."
   },
@@ -22,7 +22,7 @@ const characters = [
     rarity: 5,
     element: "❄️ Cryo",
     weapon: "SMGs",
-    portrait: "https://i.imgur.com/qcGJ6Wz.png",
+    portrait: "https://i.supaimg.com/19def742-4339-449e-b35f-fdcfd23f8e28.png",
     tags: ["Support", "DPS"],
     bio: "Calm, strategic, and brilliant in behavioral profiling."
   },
@@ -31,7 +31,7 @@ const characters = [
     rarity: 4,
     element: "🪨 Geo",
     weapon: "Gauntlets",
-    portrait: "https://i.imgur.com/0T0i6Mc.png",
+    portrait: "https://i.supaimg.com/ca4b490e-680c-49e5-9973-b4126dac49cf.png",
     tags: ["Tanker"],
     bio: "Charismatic and agile with strong combat and intel skills."
   },
@@ -40,7 +40,7 @@ const characters = [
     rarity: 4,
     element: "💨 Aero",
     weapon: "Polearm / SMGs",
-    portrait: "https://i.imgur.com/JXjWc6A.png",
+    portrait: "https://i.supaimg.com/23ff2094-4eb8-478d-9418-ea51c0a5625b.png",
     tags: ["Support"],
     bio: "Charming, hot, and determined. Leads the Mittlemazigste SSIA Field Office."
   },
@@ -49,7 +49,7 @@ const characters = [
     rarity: 5,
     element: "⚡️ Electro",
     weapon: "Katana",
-    portrait: "https://i.imgur.com/0T0i6Mc.png",
+    portrait: "https://i.supaimg.com/87b28d12-4010-4b07-b0c5-0a18b5cbe72a.png",
     tags: ["DPS"],
     bio: "Kirisame Ayaka is a Youthful Adult Woman, around 30 years old, a model type body, She's a SIRA (Shinkyou Imperial Reconnaissance Agency), she's in a position of Special Agent In Charge, Always Determined but Softer towards anyone on SIRA, but her fighting Skills with a Katana is another level of Mastery"
   }, 
