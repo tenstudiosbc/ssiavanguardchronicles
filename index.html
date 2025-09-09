@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SSIA Vanguard Chronicles Official Page"
   <title>SSIA: Vanguard Chronicles - Official Site</title>
   <style>
     body {
@@ -262,10 +261,10 @@
       showToast('Welcome to SSIA: Vanguard Chronicles Official Page');
     };
 
-    // Hook into characters.js loader
+    // Listen for custom event from characters.js
     document.addEventListener("charactersLoaded", (e) => {
       showToast(`${e.detail.name} profile loaded`);
     });
   </script>
 </body>
-      </html>
+</html>
