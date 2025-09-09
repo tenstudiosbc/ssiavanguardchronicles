@@ -78,6 +78,18 @@ function createStars(rarity) {
   return "⭐".repeat(rarity);
 }
 
+// Save counter to localStorage
+function saveCounter(charName, type, count) {
+  const key = `${charName}_${type}`;
+  localStorage.setItem(key, count);
+}
+
+// Load counter from localStorage
+function loadCounter(charName, type) {
+  const key = `${charName}_${type}`;
+  return parseInt(localStorage.getItem(key) || "0", 10);
+}
+
 // Inject characters into HTML
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("characters-container");
@@ -87,8 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const card = document.createElement("div");
     card.className = "character-card";
 
-    // Counters (session-based, reset on refresh)
-    let favCount = 0, likeCount = 0, ownCount = 0;
+    // Load saved counters
+    let favCount = loadCounter(char.name, "fav");
+    let likeCount = loadCounter(char.name, "like");
+    let ownCount = loadCounter(char.name, "own");
 
     card.innerHTML = `
       <div class="portrait">
@@ -102,9 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Tags:</strong> ${char.tags.join(", ")}</p>
         <p>${char.bio}</p>
         <div class="actions">
-          <button class="btn-action fav">❤️ Favorite (<span class="fav-count">0</span>)</button>
-          <button class="btn-action like">👍 Like (<span class="like-count">0</span>)</button>
-          <button class="btn-action own">✅ Owned (<span class="own-count">0</span>)</button>
+          <button class="btn-action fav">❤️ Favorite (<span class="fav-count">${favCount}</span>)</button>
+          <button class="btn-action like">👍 Like (<span class="like-count">${likeCount}</span>)</button>
+          <button class="btn-action own">✅ Owned (<span class="own-count">${ownCount}</span>)</button>
         </div>
       </div>
     `;
@@ -117,18 +131,21 @@ document.addEventListener("DOMContentLoaded", () => {
     favBtn.addEventListener("click", () => {
       favCount++;
       favBtn.querySelector(".fav-count").textContent = favCount;
+      saveCounter(char.name, "fav", favCount);
       document.dispatchEvent(new CustomEvent("toast", { detail: `${char.name} added to Favorites!` }));
     });
 
     likeBtn.addEventListener("click", () => {
       likeCount++;
       likeBtn.querySelector(".like-count").textContent = likeCount;
+      saveCounter(char.name, "like", likeCount);
       document.dispatchEvent(new CustomEvent("toast", { detail: `You liked ${char.name}!` }));
     });
 
     ownBtn.addEventListener("click", () => {
       ownCount++;
       ownBtn.querySelector(".own-count").textContent = ownCount;
+      saveCounter(char.name, "own", ownCount);
       document.dispatchEvent(new CustomEvent("toast", { detail: `You own ${char.name}!` }));
     });
 
