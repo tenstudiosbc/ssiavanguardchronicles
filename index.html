@@ -96,12 +96,12 @@
     .requirement-box:hover {
       transform: translateY(-5px);
     }
-    .characters {
+    .characters, .banners {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5rem;
     }
-    .character-card {
+    .character-card, .banner-card {
       background: #021219;
       border: 1px solid #00ffcc;
       border-radius: 0.5rem;
@@ -112,11 +112,11 @@
       opacity: 0;
       animation: fadeInUp 1s ease forwards;
     }
-    .character-card:hover {
+    .character-card:hover, .banner-card:hover {
       transform: scale(1.05);
       box-shadow: 0 0 20px #00ffcc;
     }
-    .character-card img {
+    .character-card img, .banner-card img {
       max-width: 100%;
       border-radius: 0.5rem;
       margin-bottom: 0.5rem;
@@ -191,6 +191,7 @@
     <a href="#download">Download</a>
     <a href="#requirements">Requirements</a>
     <a href="#characters">Characters</a>
+    <a href="#banners">Banners</a>
   </nav>
 
   <section id="about">
@@ -237,6 +238,13 @@
     </div>
   </section>
 
+  <section id="banners">
+    <h2>Banner Events</h2>
+    <div class="banners" id="banners-container">
+      <!-- Banners dynamically injected -->
+    </div>
+  </section>
+
   <footer>
     <p>© 2025 TenStudios Broadcasting Community. All Rights Reserved.</p>
   </footer>
@@ -244,8 +252,9 @@
   <!-- Toaster -->
   <div id="toaster"></div>
 
-  <!-- Characters -->
+  <!-- Scripts -->
   <script src="character.js"></script>
+  <script src="banners.js"></script>
   <script>
     // Toaster notification function
     function showToast(message) {
@@ -262,9 +271,12 @@
       showToast('Welcome to SSIA: Vanguard Chronicles Official Page');
     };
 
-    // Listen for custom event from characters.js
+    // Listen for custom events from characters.js and banners.js
     document.addEventListener("charactersLoaded", (e) => {
       showToast(`${e.detail.name} profile loaded`);
+    });
+    document.addEventListener("bannerLoaded", (e) => {
+      showToast(`${e.detail.title} banner loaded`);
     });
   </script>
 </body>
