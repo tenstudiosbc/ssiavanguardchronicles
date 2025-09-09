@@ -76,7 +76,7 @@ const characters = [
     rarity: 4,
     element: "❄️ Cryo",
     weapon: "Polearm",
-    potrait:"https://i.supaimg.com/141eaae9-011c-46c9-bc02-a3efbc9425e4.png",
+    portrait: "https://i.supaimg.com/141eaae9-011c-46c9-bc02-a3efbc9425e4.png",
     tags: ["Support"],
     bio: "A loveling Mother, School Counsulor"
   },  
