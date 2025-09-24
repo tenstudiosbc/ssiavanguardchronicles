@@ -2,6 +2,7 @@ const banners = [
   {
     title: "Timidity In Purity",
     duration: "Aug 17 – Sept 30, 2025",
+    extended: "Oct 6 - Nov 7, 2025",
     image: "https://i.supaimg.com/39175f8d-c9cc-4c20-8c9d-2c7546bd901e.png",
     featured5Star: ["Hannabi Ingrid Stephanie"],
     featured4Star: ["Margaret Stephanie", "Nexon Dyke Martinez", "Rogershin A Ventere"],
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <img src="${banner.image}" alt="${banner.title}">
       <h3>${banner.title}</h3>
       <p><strong>Duration:</strong> ${banner.duration}</p>
+      <p><strong>Extended:</strong> ${banner.extended}</p>
       <p><strong>Featured 5★:</strong> ${banner.featured5Star.join(", ")}</p>
       <p><strong>Featured 4★:</strong> ${banner.featured4Star.join(", ")}</p>
       <p><strong>Weapons:</strong> ${banner.weapons.join(", ")}</p>
