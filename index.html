@@ -2,284 +2,380 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="20241228_080318.png">
   <meta name="description" content="Official SSIA Vanguard Chronicles Page">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SSIA: Vanguard Chronicles - Official Site</title>
+  <!-- Google Fonts for Modern Feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-dark: #05080a;
+      --bg-card: rgba(10, 20, 25, 0.7);
+      --accent: #00ffcc;
+      --accent-glow: rgba(0, 255, 204, 0.3);
+      --text-main: #e0f2f1;
+      --text-dim: #94a3b8;
+      --border-glass: rgba(0, 255, 204, 0.15);
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: 'Consolas', 'Courier New', monospace;
-      background: #0a0f14;
-      color: #00ffcc;
+      font-family: var(--font-heading);
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, #00332c 0%, transparent 50%),
+        linear-gradient(rgba(0, 255, 204, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 30px 30px, 30px 30px;
+      color: var(--text-main);
+      line-height: 1.6;
       overflow-x: hidden;
     }
+
+    /* --- Header & Hero --- */
     header {
-      background: #001f2d;
-      color: #00ffcc;
-      padding: 2rem;
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      border-bottom: 2px solid #00ffcc;
-      box-shadow: 0 0 15px #00ffcc;
+      position: relative;
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-glass);
     }
+
     header h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
       margin: 0;
-      font-size: 2.5rem;
-      animation: glow 2s ease-in-out infinite alternate;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      background: linear-gradient(to bottom, #fff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 20px var(--accent-glow));
     }
+
     header p {
-      margin-top: .5rem;
-      font-size: 1.2rem;
-      opacity: 0.85;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
+
+    /* --- Navigation --- */
     nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5, 8, 10, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-glass);
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      background: #021219;
-      padding: 0.75rem;
-      border-bottom: 1px solid #00ffcc;
+      padding: 1rem;
+      gap: 2rem;
     }
+
     nav a {
-      color: #00ffcc;
-      margin: 0 1rem;
+      color: var(--text-dim);
       text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
-    }
-    nav a:hover {
-      color: #ffffff;
-      text-shadow: 0 0 5px #00ffcc;
-    }
-    section {
-      padding: 2rem;
-      max-width: 1100px;
-      margin: auto;
-      animation: fadeIn 1.5s ease;
-    }
-    h2 {
-      color: #00ffcc;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #00ffcc;
-      padding-bottom: .5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
       text-transform: uppercase;
-    }
-    .btn {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      margin-top: 1rem;
-      background: transparent;
-      border: 2px solid #00ffcc;
-      color: #00ffcc;
-      border-radius: 0.5rem;
-      text-decoration: none;
       transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(0,255,204,0.4);
+      position: relative;
     }
-    .btn:hover {
-      background: #00ffcc;
-      color: #0a0f14;
-      box-shadow: 0 0 20px #00ffcc;
+
+    nav a:hover {
+      color: var(--accent);
     }
-    .requirements {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* --- Sections --- */
+    section {
+      max-width: 1200px;
+      margin: 6rem auto;
+      padding: 0 2rem;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
       gap: 1rem;
     }
-    .requirement-box {
-      background: #021219;
-      padding: 1.5rem;
-      border-radius: 0.5rem;
-      border: 1px solid #00ffcc;
-      box-shadow: 0 0 15px rgba(0,255,204,0.2);
-      transition: transform 0.3s ease;
+
+    h2::before {
+      content: '';
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
     }
-    .requirement-box:hover {
-      transform: translateY(-5px);
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-glass);
+      border-radius: 1rem;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
-    .characters, .banners {
+
+    /* --- Bento Grid / Requirements --- */
+    .requirements-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
     }
-    .character-card, .banner-card {
-      background: #021219;
-      border: 1px solid #00ffcc;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(0,255,204,0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards;
-    }
-    .character-card:hover, .banner-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00ffcc;
-    }
-    .character-card img, .banner-card img {
-      max-width: 100%;
-      border-radius: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    footer {
-      background: #021219;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      color: #00ffcc;
-      border-top: 1px solid #00ffcc;
+
+    .req-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-glass);
+      padding: 2rem;
+      border-radius: 1rem;
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
 
-    /* Toaster Notification */
+    .req-box:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+
+    .req-box h3 {
+      color: var(--accent);
+      margin-top: 0;
+      font-family: var(--font-mono);
+    }
+
+    .req-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .req-box li {
+      margin-bottom: 0.75rem;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.25rem;
+    }
+
+    /* --- Interactive Buttons --- */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      padding: 1rem 2.5rem;
+      background: var(--accent);
+      color: var(--bg-dark);
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    /* --- Character/Banner Grids --- */
+    .dynamic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      transition: all 0.4s ease;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-10px);
+    }
+
+    /* --- Toaster --- */
     #toaster {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-    .toast {
-      background: #021219;
-      border: 1px solid #00ffcc;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 0 15px rgba(0,255,204,0.4);
-      color: #00ffcc;
-      opacity: 0;
-      animation: slideIn 0.5s forwards, fadeOut 5s forwards;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 2000;
     }
 
-    /* Animations */
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #00ffcc; }
-      to { text-shadow: 0 0 20px #00ffee; }
+    .toast {
+      background: rgba(0, 255, 204, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--accent);
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      animation: toastSlide 0.4s ease-out;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes fadeInUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes slideIn {
+
+    @keyframes toastSlide {
       from { transform: translateX(100%); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
     }
-    @keyframes fadeOut {
-      0%, 90% { opacity: 1; }
-      100% { opacity: 0; }
+
+    /* --- Footer --- */
+    footer {
+      padding: 4rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border-glass);
+      color: var(--text-dim);
+      font-size: 0.85rem;
     }
 
-    /* Responsive */
-    @media(max-width: 768px) {
-      header h1 { font-size: 2rem; }
-      nav { flex-direction: column; }
-      nav a { margin: 0.5rem 0; }
+    /* Mobile Adaptations */
+    @media (max-width: 768px) {
+      nav { gap: 1rem; overflow-x: auto; justify-content: flex-start; }
+      header { height: 40vh; }
+      section { margin: 3rem auto; }
     }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>SSIA: Vanguard Chronicles</h1>
-    <p>A Tactical RPG Experience from TSBC</p>
+    <h1>SSIA:VANGUARD<br>CHRONICLES</h1>
+    <p>// 2D RPG GACHA// TURN BASED</p>
   </header>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#download">Download</a>
-    <a href="#requirements">Requirements</a>
-    <a href="#characters">Characters</a>
-    <a href="#banners">Banners</a>
+  <nav id="navbar">
+    <a href="#about">Game Details</a>
+    <a href="#download">Get The Game</a>
+    <a href="#requirements">Specs</a>
+    <a href="#characters">Agents</a>
+    <a href="#banners">Events</a>
     <a href="https://tenstudiosbc.github.io/SSIA-Vanguard-Chronicles-Team-Builder/">Team Builder</a>
   </nav>
 
   <section id="about">
-    <h2>About the Game</h2>
-    <p><strong>SSIA: Vanguard Chronicles</strong> is a free-to-play 2D tactical RPG built in RPG Maker VX Ace. It features grid-based combat, an Elemental Counter System, branching narrative, gacha mechanics, and ongoing chapter-based updates. Follow the story of a former SSIA agent uncovering corruption and elemental threats across multiple regions of the fictional continent Sierra Liudoxoya.</p>
+    <div class="glass-card">
+      <h2>Briefing</h2>
+      <p>Step into the boots of a former <strong>SSIA agent</strong> in a world fractured by elemental chaos. Sierra Liudoxoya is a continent on the brink, and only tactical precision can reveal the truth behind the corruption. Experience high-stakes grid-based combat and a narrative that shifts with your choices.</p>
+    </div>
   </section>
 
-  <section id="download">
-    <h2>Download</h2>
-    <p>Start your journey now. Available free on itch.io. without any donations!</p>
-    <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" class="btn" target="_blank">Download on itch.io</a>
+  <section id="download" style="text-align: center;">
+    <div class="glass-card">
+      <h2>Download</h2>
+      <p style="margin-bottom: 2rem;">Access the latest build of SSIA: Vanguard Chronicles. Available exclusively on itch.io for PC.</p>
+      <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" class="btn-primary" target="_blank">Initiate Download</a>
+    </div>
   </section>
 
   <section id="requirements">
-    <h2>System Requirements</h2>
-    <div class="requirements">
-      <div class="requirement-box">
-        <h3>Minimum</h3>
+    <h2>System Specs</h2>
+    <div class="requirements-grid">
+      <div class="req-box">
+        <h3>MINIMUM_V1.0</h3>
         <ul>
-          <li>OS: Windows 7/8/10</li>
-          <li>Processor: Intel Core i3</li>
-          <li>Memory: 2 GB RAM</li>
-          <li>Graphics: Integrated GPU</li>
-          <li>Storage: 1 GB available space</li>
+          <li><span>OS</span> <span>Windows 7/8/10</span></li>
+          <li><span>CPU</span> <span>Intel Core i3</span></li>
+          <li><span>RAM</span> <span>2 GB</span></li>
+          <li><span>GPU</span> <span>Integrated</span></li>
+          <li><span>HDD</span> <span>1 GB</span></li>
         </ul>
       </div>
-      <div class="requirement-box">
-        <h3>Recommended</h3>
+      <div class="req-box">
+        <h3>RECOMMENDED_PRO</h3>
         <ul>
-          <li>OS: Windows 10/11</li>
-          <li>Processor: Intel Core i5 or higher</li>
-          <li>Memory: 4 GB RAM</li>
-          <li>Graphics: Dedicated GPU (NVIDIA/AMD)</li>
-          <li>Storage: 2 GB available space</li>
+          <li><span>OS</span> <span>Windows 10/11</span></li>
+          <li><span>CPU</span> <span>Intel Core i5+</span></li>
+          <li><span>RAM</span> <span>4 GB</span></li>
+          <li><span>GPU</span> <span>NVIDIA/AMD</span></li>
+          <li><span>HDD</span> <span>2 GB</span></li>
         </ul>
       </div>
     </div>
   </section>
 
   <section id="characters">
-    <h2>Characters</h2>
-    <div class="characters" id="characters-container">
-      <!-- Characters dynamically injected -->
+    <h2>Active Agents</h2>
+    <div class="dynamic-grid" id="characters-container">
+      <!-- Logic to populate from your external scripts -->
+      <div class="card" style="padding: 2rem; text-align: center; color: var(--text-dim);">
+        Connecting to Database...
+      </div>
     </div>
   </section>
 
   <section id="banners">
-    <h2>Banner Events</h2>
-    <div class="banners" id="banners-container">
-      <!-- Banners dynamically injected -->
+    <h2>Operation Banners</h2>
+    <div class="dynamic-grid" id="banners-container">
+      <!-- Logic to populate from your external scripts -->
     </div>
   </section>
 
   <footer>
-    <p>© 2025 TenStudios Broadcasting Community. All Rights Reserved.</p>
+    <p>© 2025 TENSTUDIOS BROADCASTING COMMUNITY. TERMINAL VERSION 2.0.4</p>
   </footer>
 
-  <!-- Toaster -->
   <div id="toaster"></div>
 
-  <!-- Scripts -->
+  <!-- Note: Keep your external scripts to maintain functionality -->
   <script src="character.js"></script>
   <script src="banners.js"></script>
   <script>
-    // Toaster notification function
     function showToast(message) {
       const toaster = document.getElementById('toaster');
       const toast = document.createElement('div');
       toast.className = 'toast';
-      toast.innerText = message;
+      toast.innerText = `> ${message}`;
       toaster.appendChild(toast);
-      setTimeout(() => { toaster.removeChild(toast); }, 5000);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(20px)';
+        setTimeout(() => toast.remove(), 400);
+      }, 4000);
     }
 
-    // Example welcome toast
     window.onload = () => {
-      showToast('Welcome to SSIA: Vanguard Chronicles Official Page');
+      showToast('SYSTEM ONLINE: VANGUARD_CORE_V2');
     };
 
-    // Listen for custom events from characters.js and banners.js
-    document.addEventListener("charactersLoaded", (e) => {
-      showToast(`${e.detail.name} profile loaded`);
-    });
-    document.addEventListener("bannerLoaded", (e) => {
-      showToast(`${e.detail.title} banner loaded`);
-    });
+    document.addEventListener("charactersLoaded", (e) => showToast(`PROFILE_SYNC: ${e.detail.name}`));
+    document.addEventListener("bannerLoaded", (e) => showToast(`EVENT_LOADED: ${e.detail.title}`));
   </script>
 </body>
 </html>
+
