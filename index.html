@@ -113,5 +113,26 @@
       });
     }
   </script>
+  <script>
+    function filterCharacters() {
+  const input = document.getElementById('character-search');
+  const filter = input.value.toUpperCase();
+  const container = document.getElementById('characters-container');
+  const cards = container.getElementsByClassName('character-card');
+
+  for (let i = 0; i < cards.length; i++) {
+    // This assumes your character name is inside an <h3> or has a specific class
+    // Adjust 'h3' if your character.js uses a different tag for the name
+    const nameTag = cards[i].getElementsByTagName("h3")[0];
+    const nameText = nameTag.textContent || nameTag.innerText;
+
+    if (nameText.toUpperCase().indexOf(filter) > -1) {
+      cards[i].style.display = "";
+    } else {
+      cards[i].style.display = "none";
+    }
+  }
+}
+  </script>
 </body>
 </html>
