@@ -196,3 +196,32 @@ footer {
   }
   section { padding: 0 1rem; }
 }
+
+/* --- Search Bar Styling --- */
+.search-container {
+  margin-bottom: 2rem;
+  max-width: 400px;
+}
+
+#character-search {
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 4px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  outline: none;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+#character-search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  background: rgba(10, 25, 30, 0.9);
+}
+
+#character-search::placeholder {
+  color: rgba(0, 255, 204, 0.4);
+}
