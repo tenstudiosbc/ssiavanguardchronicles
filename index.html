@@ -15,7 +15,7 @@
   <style>
     :root {
       --bg-dark: #020406;
-      --bg-card: rgba(13, 17, 23, 0.85);
+      --bg-card: rgba(13, 17, 23, 0.9);
       --accent: #00ffcc;
       --accent-glow: rgba(0, 255, 204, 0.4);
       --text-main: #f0fdfa;
@@ -25,10 +25,7 @@
       --font-mono: 'JetBrains Mono', monospace;
     }
 
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -40,7 +37,7 @@
         linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
       background-size: 100% 100%, 40px 40px, 40px 40px;
       color: var(--text-main);
-      line-height: 1.6;
+      line-height: 1.4;
       overflow-x: hidden;
     }
 
@@ -48,14 +45,14 @@
     nav {
       background: rgba(2, 4, 6, 0.95);
       backdrop-filter: blur(12px);
-      padding: 1.2rem;
+      padding: 0.8rem;
       position: sticky;
       top: 0;
       z-index: 1000;
       border-bottom: 1px solid var(--border-glass);
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1rem;
       flex-wrap: wrap;
     }
 
@@ -63,47 +60,44 @@
       color: var(--text-dim);
       text-decoration: none;
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
 
-    nav a:hover { color: var(--accent); text-shadow: 0 0 8px var(--accent-glow); }
+    nav a:hover { color: var(--accent); }
 
     /* --- Header --- */
     header {
-      padding: 10rem 2rem 5rem;
+      padding: 6rem 1rem 3rem;
       text-align: center;
     }
 
     header h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      line-height: 0.85;
+      font-size: clamp(2rem, 10vw, 4.5rem);
+      line-height: 0.9;
       margin: 0;
-      letter-spacing: -2px;
-      text-shadow: 0 0 30px var(--accent-glow);
+      text-shadow: 0 0 20px var(--accent-glow);
     }
 
     header p {
       font-family: var(--font-mono);
       color: var(--accent);
-      margin-top: 1.5rem;
-      opacity: 0.8;
-      letter-spacing: 2px;
+      font-size: 0.7rem;
+      margin-top: 1rem;
     }
 
-    /* --- Layout Container --- */
+    /* --- Sections --- */
     section {
       max-width: 1200px;
-      margin: 8rem auto;
-      padding: 0 1.5rem;
+      margin: 4rem auto;
+      padding: 0 1rem;
     }
 
     h2 {
-      font-size: 2.2rem;
+      font-size: 1.6rem;
       text-transform: uppercase;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       border-left: 4px solid var(--accent);
       padding-left: 1rem;
     }
@@ -111,40 +105,29 @@
     .glass-card {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
-      padding: 3.5rem;
+      padding: 2.5rem;
       backdrop-filter: blur(10px);
-      clip-path: polygon(0 0, 100% 0, 100% 95%, 98% 100%, 0 100%);
     }
 
-    /* --- Search Bar --- */
-    .search-container {
-      margin-bottom: 4rem;
-      max-width: 600px;
-    }
-
-    .character-search {
+    /* --- Search --- */
+    .search-container { margin-bottom: 2.5rem; }
+    #character-search {
       width: 100%;
-      padding: 18px 30px;
+      padding: 15px 25px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-glass);
       color: var(--accent);
       font-family: var(--font-mono);
       outline: none;
-      transition: all 0.4s ease;
+      font-size: 0.85rem;
       clip-path: polygon(0 0, 96% 0, 100% 20%, 100% 100%, 4% 100%, 0 80%);
     }
 
-    .character-search:focus {
-      background: rgba(0, 255, 204, 0.07);
-      border-color: var(--accent);
-      box-shadow: 0 0 25px var(--accent-glow);
-    }
-
-    /* --- Grid Layout --- */
+    /* --- Grid Layout (PWA Mobile First) --- */
     .dynamic-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 3rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
     }
 
     /* --- Character Cards --- */
@@ -153,205 +136,81 @@
       border: 1px solid var(--border-glass);
       display: flex;
       flex-direction: column;
-      transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
       overflow: hidden;
-      position: relative;
-    }
-
-    .character-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--accent);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 15px var(--accent-glow);
     }
 
     .character-card .portrait {
       width: 100%;
-      aspect-ratio: 1 / 1.1;
+      aspect-ratio: 3 / 4;
+      background: #000;
       overflow: hidden;
-      background: #05070a;
       border-bottom: 1px solid var(--border-glass);
     }
 
-    .character-card .portrait img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.8s ease;
+    .character-card .portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .character-card .info { padding: 1rem; flex-grow: 1; }
+    
+    .character-card h2 { 
+      border: none; padding: 0; margin: 0 0 0.5rem; 
+      font-size: 1rem; white-space: nowrap; 
+      overflow: hidden; text-overflow: ellipsis; 
     }
 
-    .character-card:hover .portrait img { transform: scale(1.05); }
+    .character-card p { margin: 0.3rem 0; font-size: 0.8rem; color: var(--text-dim); }
+    .character-card p strong { color: var(--accent); font-size: 0.65rem; text-transform: uppercase; }
 
-    .character-card .info {
-      padding: 1.8rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .character-card h2 {
-      border: none;
-      padding: 0;
-      margin: 0 0 0.8rem 0;
-      font-size: 1.5rem;
-      letter-spacing: -0.5px;
-    }
-
-    .character-card p {
-      margin: 0.4rem 0;
-      font-size: 0.9rem;
-      color: var(--text-dim);
-    }
-
-    .character-card p strong {
-      color: var(--accent);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* --- Action Buttons --- */
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-      margin-top: 2rem;
-    }
-
+    /* --- Actions --- */
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
     .btn-action {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-glass);
-      color: var(--text-main);
-      padding: 10px;
+      color: #fff;
+      padding: 8px 4px;
+      font-size: 0.6rem;
       font-family: var(--font-mono);
-      font-size: 0.65rem;
       cursor: pointer;
       text-transform: uppercase;
-      transition: all 0.3s;
     }
+    .btn-action.own { grid-column: span 2; border-color: var(--accent); }
 
-    .btn-action:hover {
-      background: var(--accent);
-      color: var(--bg-dark);
-      border-color: var(--accent);
-      box-shadow: 0 0 10px var(--accent-glow);
-    }
-
-    .btn-action.own { grid-column: span 2; font-weight: bold; }
-
-    /* --- Banner Cards (Restored Styles) --- */
+    /* --- Banner Cards --- */
     .banner-card {
+      grid-column: span 2;
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      transition: all 0.3s ease;
-      position: relative;
+      overflow: hidden;
     }
+    .banner-card img { width: 100%; height: 180px; object-fit: cover; }
+    .banner-card h3 { padding: 1rem 1rem 0; margin: 0; color: var(--accent); font-size: 1.2rem; }
+    .banner-card p { padding: 0.2rem 1rem; font-size: 0.8rem; }
 
-    .banner-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
-    }
+    /* --- Requirements --- */
+    .requirements-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    .req-box { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-glass); padding: 1.5rem; }
 
-    .banner-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-bottom: 2px solid var(--accent);
-    }
-
-    .banner-card h3 {
-      margin: 1.5rem 1.5rem 0.5rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      font-size: 1.3rem;
-    }
-
-    .banner-card p {
-      margin: 0.4rem 1.5rem;
-      font-size: 0.85rem;
-      color: var(--text-dim);
-    }
-
-    .banner-card p:last-child {
-      margin-bottom: 2rem;
-    }
-
-    .banner-card strong {
-      color: var(--text-main);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-    }
-
-    /* --- System Requirements --- */
-    .requirements-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-    }
-
-    .req-box {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-glass);
-      padding: 2.5rem;
-      position: relative;
-    }
-
-    .req-box::before {
-      content: "DATA_NODE";
-      position: absolute;
-      top: 0; right: 0;
-      background: var(--accent);
-      color: var(--bg-dark);
-      font-family: var(--font-mono);
-      font-size: 0.5rem;
-      padding: 2px 6px;
+    /* --- Desktop Refinement --- */
+    @media (min-width: 768px) {
+      .dynamic-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; }
+      .banner-card { grid-column: auto; }
+      .requirements-grid { grid-template-columns: 1fr 1fr; }
+      header { padding-top: 10rem; }
+      .character-card h2 { font-size: 1.4rem; }
     }
 
     /* --- Toaster --- */
-    #toaster {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 2000;
-      pointer-events: none;
-    }
-
+    #toaster { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 2000; }
     .toast {
-      background: rgba(2, 4, 6, 0.9);
+      background: rgba(2, 4, 6, 0.95);
       border-left: 4px solid var(--accent);
       color: var(--accent);
-      padding: 1.2rem 2rem;
-      margin-top: 0.8rem;
+      padding: 1rem 1.5rem;
+      margin-top: 0.6rem;
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      animation: toastIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
 
-    @keyframes toastIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    footer {
-      text-align: center;
-      padding: 6rem 2rem;
-      border-top: 1px solid var(--border-glass);
-      opacity: 0.4;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 1px;
-    }
-
-    @media (max-width: 768px) {
-      .requirements-grid { grid-template-columns: 1fr; }
-      header { padding-top: 8rem; }
-      .dynamic-grid { grid-template-columns: 1fr; }
-    }
+    footer { text-align: center; padding: 5rem 1rem; opacity: 0.4; font-size: 0.7rem; border-top: 1px solid var(--border-glass); }
   </style>
 </head>
 <body>
@@ -359,25 +218,20 @@
   <nav>
     <a href="#about">Mission</a>
     <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles">Get The Game</a>
-    <a href="#requirements">Specs</a>
     <a href="#characters">Agents</a>
     <a href="#banners">Events</a>
     <a href="https://tenstudiosbc.github.io/SSIA-Vanguard-Chronicles-Team-Builder/">Team Builder</a>
-    <a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles/devlog">News</a>
   </nav>
 
   <header>
     <h1>SSIA:VANGUARD<br>CHRONICLES</h1>
-    <p>// 2D story-driven // RPG Gacha Game</p>
+    <p>// MOBILE_ACCESS_PROTOCOL // v1.0.0.3</p>
   </header>
 
   <section id="about">
     <div class="glass-card">
       <h2 style="border:none; padding:0; color:var(--accent);">Game Briefing</h2>
-      <p>You're a former SSIA special agent who lost everything in a devastating ambush. As you recover, a mysterious lead pulls you back into the fold — but dark forces are gathering, and your choices will determine the fate of Sierra Liudoxoya.</p>
-      <h2 style="border:none; padding:0; margin-top:2.5rem; color:var(--accent);">Key Features</h2>
-      <p> - 7 Elemental Gemstones (Pyro, Cryo, Hydro, Electro, Void, Spectro and With Elemental Counter System) </p>
-      <p> - Branching Narrative and immersive tactical combat systems.</p>
+      <p>As a former SSIA special agent, you must navigate the gathering dark forces in Sierra Liudoxoya. Your tactical team composition is vital for the survival of the fold.</p>
     </div>
   </section>
 
@@ -389,36 +243,28 @@
     <div class="dynamic-grid" id="characters-container"></div>
   </section>
 
+  <section id="banners">
+    <h2>Active Events</h2>
+    <div class="dynamic-grid" id="banners-container"></div>
+  </section>
+
   <section id="requirements">
     <h2>System Requirements</h2>
     <div class="requirements-grid">
       <div class="req-box">
-        <h3 style="color: var(--accent); font-family: var(--font-mono); margin-top:0;">MIN_SPECS</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span>OS</span> <span>Win 7/8/10</span></li>
-          <li style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span>RAM</span> <span>2 GB</span></li>
-          <li style="display:flex; justify-content:space-between; padding: 8px 0;"><span>DISK</span> <span>1 GB</span></li>
-        </ul>
+        <h3 style="color: var(--accent); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 0;">MIN_SPECS</h3>
+        <p style="font-size: 0.8rem; margin: 0.5rem 0;">Win 7/8/10 • 2GB RAM • 1GB DISK</p>
       </div>
       <div class="req-box">
-        <h3 style="color: var(--accent); font-family: var(--font-mono); margin-top:0;">REC_SPECS</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span>OS</span> <span>Win 10/11</span></li>
-          <li style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span>RAM</span> <span>4 GB</span></li>
-          <li style="display:flex; justify-content:space-between; padding: 8px 0;"><span>DISK</span> <span>2 GB</span></li>
-        </ul>
+        <h3 style="color: var(--accent); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 0;">REC_SPECS</h3>
+        <p style="font-size: 0.8rem; margin: 0.5rem 0;">Win 10/11 • 4GB RAM • 2GB DISK</p>
       </div>
     </div>
   </section>
 
-  <section id="banners">
-    <h2>Concedation Character Banner</h2>
-    <div class="dynamic-grid" id="banners-container"></div>
-  </section>
-
   <footer>
-    <p>© 2025 TENSTUDIOS BROADCASTING COMMUNITY. GitHub Pages Compatible.</p>
-    <p> Progressive Web App Version: 1.0.0.3</p>
+    <p>© 2025 TENSTUDIOS BROADCASTING COMMUNITY</p>
+    <p>PWA Version 1.0.0.3 (Stable)</p>
   </footer>
 
   <div id="toaster"></div>
@@ -435,7 +281,7 @@
       setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 500);
-      }, 3500);
+      }, 3000);
     }
 
     document.addEventListener("charactersLoaded", (e) => showToast(`Syncing ${e.detail.name}...`));
@@ -452,25 +298,36 @@
         const nameTag = cards[i].getElementsByTagName("h2")[0];
         if (nameTag) {
           const nameText = nameTag.textContent || nameTag.innerText;
-          cards[i].style.display = nameText.toUpperCase().includes(filter) ? "" : "none";
+          cards[i].style.display = nameText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
         }
       }
     }
 
+    // PWA & Periodic Sync Registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', async () => {
         try {
           const registration = await navigator.serviceWorker.register('/ssiavanguardchronicles/sw.js');
+          console.log('[PWA]: Service Worker Registered');
+
+          // Check for Periodic Sync permission and register tag
           if ('periodicSync' in registration) {
-            const status = await navigator.permissions.query({ name: 'periodic-background-sync' });
+            const status = await navigator.permissions.query({
+              name: 'periodic-background-sync',
+            });
+
             if (status.state === 'granted') {
-              await registration.periodicSync.register('update-game-data', { minInterval: 24 * 60 * 60 * 1000 });
+              await registration.periodicSync.register('update-game-data', {
+                minInterval: 24 * 60 * 60 * 1000, // Update once per day
+              });
+              console.log('[PWA]: Periodic Sync Registered');
             }
           }
-        } catch (err) { console.log('PWA Sync Offline Mode:', err); }
+        } catch (err) {
+          console.error('[PWA]: Registration Failed', err);
+        }
       });
     }
   </script>
 </body>
 </html>
-
