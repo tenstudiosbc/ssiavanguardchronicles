@@ -33,25 +33,21 @@
 
   <section id="about">
     <div class="glass-card">
-      <h2>Game Briefing</h2>
+      <h2 style="color: var(--accent)">Game Briefing</h2>
       <p>You're a former SSIA special agent who lost everything in a devastating ambush. As you recover, a mysterious lead pulls you back into the fold — but dark forces are gathering, and your choices will determine the fate of Sierra Liudoxoya.</p>
-      <h2>Key Features</h2>
-      <p> - 7 Elemental Gemstones (Pyro, Cryo, Hydro, Electro, Void, Spectro and With Elemental Counter System </p>
+      <h2 style="color: var(--accent)">Key Features</h2>
+      <p> - 7 Elemental Gemstones (Pyro, Cryo, Hydro, Electro, Void, Spectro and With Elemental Counter System) </p>
       <p> - Branching Narrative and etc</p>
     </div>
   </section>
 
   <section id="characters">
-  <h2>Active Personnel</h2>
-  
-  <div class="search-container">
-    <input type="text" id="character-search" placeholder="// SEARCH_AGENT_DATABASE..." onkeyup="filterCharacters()">
-  </div>
-
-  <div class="dynamic-grid" id="characters-container">
+    <h2>Active Personnel</h2>
+    <div class="search-container">
+      <input type="text" id="character-search" placeholder="// SEARCH_AGENT_DATABASE..." onkeyup="filterCharacters()">
     </div>
-</section>
-
+    <div class="dynamic-grid" id="characters-container"></div>
+  </section>
 
   <section id="requirements">
     <h2>System Requirements</h2>
@@ -77,8 +73,7 @@
 
   <section id="banners">
     <h2>Concedation Character Banner</h2>
-    <div class="dynamic-grid" id="banners-container">
-      </div>
+    <div class="dynamic-grid" id="banners-container"></div>
   </section>
 
   <footer>
@@ -107,52 +102,43 @@
     document.addEventListener("bannerLoaded", (e) => showToast(`Updating ${e.detail.title}...`));
   </script>
   <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', async () => {
-      try {
-        const registration = await navigator.serviceWorker.register('/ssiavanguardchronicles/sw.js');
-        console.log('SW Registered!');
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const registration = await navigator.serviceWorker.register('/ssiavanguardchronicles/sw.js');
+          console.log('SW Registered!');
 
-        // Check if Periodic Sync is supported
-        if ('periodicSync' in registration) {
-          const status = await navigator.permissions.query({
-            name: 'periodic-background-sync',
-          });
-
-          if (status.state === 'granted') {
-            await registration.periodicSync.register('update-game-data', {
-              // Try to sync once every 24 hours
-              minInterval: 24 * 60 * 60 * 1000,
+          if ('periodicSync' in registration) {
+            const status = await navigator.permissions.query({
+              name: 'periodic-background-sync',
             });
-            console.log('Periodic Background Sync registered!');
+
+            if (status.state === 'granted') {
+              await registration.periodicSync.register('update-game-data', {
+                minInterval: 24 * 60 * 60 * 1000,
+              });
+              console.log('Periodic Background Sync registered!');
+            }
           }
+        } catch (err) {
+          console.log('Registration failed:', err);
         }
-      } catch (err) {
-        console.log('Registration failed:', err);
-      }
-    });
-  }
-</script>
+      });
+    }
+  </script>
   <script>
     function filterCharacters() {
-  const input = document.getElementById('character-search');
-  const filter = input.value.toUpperCase();
-  const container = document.getElementById('characters-container');
-  const cards = container.getElementsByClassName('character-card');
+      const input = document.getElementById('character-search');
+      const filter = input.value.toUpperCase();
+      const container = document.getElementById('characters-container');
+      const cards = container.getElementsByClassName('character-card');
 
-  for (let i = 0; i < cards.length; i++) {
-    // This assumes your character name is inside an <h3> or has a specific class
-    // Adjust 'h3' if your character.js uses a different tag for the name
-    const nameTag = cards[i].getElementsByTagName("h2")[0];
-    const nameText = nameTag.textContent || nameTag.innerText;
-
-    if (nameText.toUpperCase().indexOf(filter) > -1) {
-      cards[i].style.display = "";
-    } else {
-      cards[i].style.display = "none";
+      for (let i = 0; i < cards.length; i++) {
+        const nameTag = cards[i].getElementsByTagName("h2")[0];
+        const nameText = nameTag.textContent || nameTag.innerText;
+        cards[i].style.display = nameText.toUpperCase().includes(filter) ? "" : "none";
+      }
     }
-  }
-}
   </script>
 </body>
 </html>
