@@ -15,7 +15,7 @@
   <style>
     :root {
       --bg-dark: #020406;
-      --bg-card: rgba(13, 17, 23, 0.8);
+      --bg-card: rgba(13, 17, 23, 0.85);
       --accent: #00ffcc;
       --accent-glow: rgba(0, 255, 204, 0.4);
       --text-main: #f0fdfa;
@@ -46,12 +46,12 @@
 
     /* --- Navigation --- */
     nav {
-      background: rgba(2, 4, 6, 0.9);
-      backdrop-filter: blur(10px);
-      padding: 1rem;
+      background: rgba(2, 4, 6, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 1.2rem;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
       border-bottom: 1px solid var(--border-glass);
       display: flex;
       justify-content: center;
@@ -63,88 +63,252 @@
       color: var(--text-dim);
       text-decoration: none;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
+      letter-spacing: 1px;
       transition: all 0.3s ease;
     }
 
-    nav a:hover {
-      color: var(--accent);
-    }
+    nav a:hover { color: var(--accent); text-shadow: 0 0 8px var(--accent-glow); }
 
     /* --- Header --- */
     header {
-      padding: 8rem 2rem 4rem;
+      padding: 10rem 2rem 5rem;
       text-align: center;
     }
 
     header h1 {
       font-size: clamp(2.5rem, 8vw, 5rem);
-      line-height: 0.9;
+      line-height: 0.85;
       margin: 0;
-      text-shadow: 0 0 20px var(--accent-glow);
+      letter-spacing: -2px;
+      text-shadow: 0 0 30px var(--accent-glow);
     }
 
     header p {
       font-family: var(--font-mono);
       color: var(--accent);
-      margin-top: 1rem;
+      margin-top: 1.5rem;
+      opacity: 0.8;
+      letter-spacing: 2px;
+    }
+
+    /* --- Layout Container --- */
+    section {
+      max-width: 1200px;
+      margin: 8rem auto;
+      padding: 0 1.5rem;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      padding: 3.5rem;
+      backdrop-filter: blur(10px);
+      clip-path: polygon(0 0, 100% 0, 100% 95%, 98% 100%, 0 100%);
     }
 
     /* --- Search Bar --- */
     .search-container {
-      margin-bottom: 3rem;
-      max-width: 500px;
+      margin-bottom: 4rem;
+      max-width: 600px;
     }
 
     #character-search {
       width: 100%;
-      padding: 15px 25px;
+      padding: 18px 30px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-glass);
       color: var(--accent);
       font-family: var(--font-mono);
       outline: none;
       transition: all 0.4s ease;
-      clip-path: polygon(0 0, 95% 0, 100% 25%, 100% 100%, 5% 100%, 0 75%);
+      clip-path: polygon(0 0, 96% 0, 100% 20%, 100% 100%, 4% 100%, 0 80%);
     }
 
     #character-search:focus {
-      background: rgba(0, 255, 204, 0.05);
+      background: rgba(0, 255, 204, 0.07);
       border-color: var(--accent);
-      box-shadow: 0 0 20px var(--accent-glow);
+      box-shadow: 0 0 25px var(--accent-glow);
     }
 
-    /* --- Grid Layouts --- */
+    /* --- Grid Layout --- */
     .dynamic-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 2.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 3rem;
     }
 
-    section {
-      max-width: 1200px;
-      margin: 6rem auto;
-      padding: 0 1.5rem;
-    }
-
-    .glass-card {
+    /* --- Character Cards --- */
+    .character-card {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
-      padding: 3rem;
-      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+      overflow: hidden;
+      position: relative;
     }
 
+    .character-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 15px var(--accent-glow);
+    }
+
+    .character-card .portrait {
+      width: 100%;
+      aspect-ratio: 1 / 1.1;
+      overflow: hidden;
+      background: #05070a;
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .character-card .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .character-card:hover .portrait img { transform: scale(1.05); }
+
+    .character-card .info {
+      padding: 1.8rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .character-card h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 0.8rem 0;
+      font-size: 1.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .character-card p {
+      margin: 0.4rem 0;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    .character-card p strong {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* --- Action Buttons --- */
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-action:hover {
+      background: var(--accent);
+      color: var(--bg-dark);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .btn-action.own { grid-column: span 2; font-weight: bold; }
+
+    /* --- Banner Cards (Restored Styles) --- */
+    .banner-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .banner-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+    }
+
+    .banner-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .banner-card h3 {
+      margin: 1.5rem 1.5rem 0.5rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 1.3rem;
+    }
+
+    .banner-card p {
+      margin: 0.4rem 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .banner-card p:last-child {
+      margin-bottom: 2rem;
+    }
+
+    .banner-card strong {
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    /* --- System Requirements --- */
     .requirements-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      gap: 2.5rem;
     }
 
     .req-box {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border-glass);
-      padding: 2rem;
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .req-box::before {
+      content: "DATA_NODE";
+      position: absolute;
+      top: 0; right: 0;
+      background: var(--accent);
+      color: var(--bg-dark);
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      padding: 2px 6px;
     }
 
     /* --- Toaster --- */
@@ -152,36 +316,41 @@
       position: fixed;
       bottom: 2rem;
       right: 2rem;
-      z-index: 1000;
+      z-index: 2000;
+      pointer-events: none;
     }
 
     .toast {
-      background: var(--bg-card);
-      border: 1px solid var(--accent);
+      background: rgba(2, 4, 6, 0.9);
+      border-left: 4px solid var(--accent);
       color: var(--accent);
-      padding: 1rem;
-      margin-top: 0.5rem;
+      padding: 1.2rem 2rem;
+      margin-top: 0.8rem;
       font-family: var(--font-mono);
       font-size: 0.8rem;
-      transition: opacity 0.5s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: toastIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+
+    @keyframes toastIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
 
     footer {
       text-align: center;
-      padding: 5rem 2rem;
+      padding: 6rem 2rem;
       border-top: 1px solid var(--border-glass);
-      opacity: 0.5;
+      opacity: 0.4;
       font-family: var(--font-mono);
       font-size: 0.7rem;
+      letter-spacing: 1px;
     }
 
     @media (max-width: 768px) {
       .requirements-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 480px) {
+      header { padding-top: 8rem; }
       .dynamic-grid { grid-template-columns: 1fr; }
-      section { padding: 0 1rem; }
     }
   </style>
 </head>
@@ -204,11 +373,11 @@
 
   <section id="about">
     <div class="glass-card">
-      <h2 style="color: var(--accent)">Game Briefing</h2>
+      <h2 style="border:none; padding:0; color:var(--accent);">Game Briefing</h2>
       <p>You're a former SSIA special agent who lost everything in a devastating ambush. As you recover, a mysterious lead pulls you back into the fold — but dark forces are gathering, and your choices will determine the fate of Sierra Liudoxoya.</p>
-      <h2 style="color: var(--accent)">Key Features</h2>
+      <h2 style="border:none; padding:0; margin-top:2.5rem; color:var(--accent);">Key Features</h2>
       <p> - 7 Elemental Gemstones (Pyro, Cryo, Hydro, Electro, Void, Spectro and With Elemental Counter System) </p>
-      <p> - Branching Narrative and immersive tactical combat.</p>
+      <p> - Branching Narrative and immersive tactical combat systems.</p>
     </div>
   </section>
 
@@ -224,19 +393,19 @@
     <h2>System Requirements</h2>
     <div class="requirements-grid">
       <div class="req-box">
-        <h3 style="color: var(--accent); font-family: var(--font-mono);">MIN_SPECS</h3>
+        <h3 style="color: var(--accent); font-family: var(--font-mono); margin-top:0;">MIN_SPECS</h3>
         <ul style="list-style: none; padding: 0;">
-          <li><span>OS</span> <span>Win 7/8/10</span></li>
-          <li><span>RAM</span> <span>2 GB</span></li>
-          <li><span>DISK</span> <span>1 GB</span></li>
+          <li style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span>OS</span> <span>Win 7/8/10</span></li>
+          <li style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span>RAM</span> <span>2 GB</span></li>
+          <li style="display:flex; justify-content:space-between; padding: 8px 0;"><span>DISK</span> <span>1 GB</span></li>
         </ul>
       </div>
       <div class="req-box">
-        <h3 style="color: var(--accent); font-family: var(--font-mono);">REC_SPECS</h3>
+        <h3 style="color: var(--accent); font-family: var(--font-mono); margin-top:0;">REC_SPECS</h3>
         <ul style="list-style: none; padding: 0;">
-          <li><span>OS</span> <span>Win 10/11</span></li>
-          <li><span>RAM</span> <span>4 GB</span></li>
-          <li><span>DISK</span> <span>2 GB</span></li>
+          <li style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span>OS</span> <span>Win 10/11</span></li>
+          <li style="display:flex; justify-content:space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span>RAM</span> <span>4 GB</span></li>
+          <li style="display:flex; justify-content:space-between; padding: 8px 0;"><span>DISK</span> <span>2 GB</span></li>
         </ul>
       </div>
     </div>
@@ -254,12 +423,9 @@
 
   <div id="toaster"></div>
 
-  <!-- Database Scripts -->
   <script src="character.js"></script>
   <script src="banners.js"></script>
-
   <script>
-    // Toast UI logic
     function showToast(message) {
       const toaster = document.getElementById('toaster');
       const toast = document.createElement('div');
@@ -269,13 +435,13 @@
       setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 500);
-      }, 3000);
+      }, 3500);
     }
 
     document.addEventListener("charactersLoaded", (e) => showToast(`Syncing ${e.detail.name}...`));
     document.addEventListener("bannerLoaded", (e) => showToast(`Updating ${e.detail.title}...`));
+    document.addEventListener("toast", (e) => showToast(e.detail));
 
-    // Filter logic
     function filterCharacters() {
       const input = document.getElementById('character-search');
       const filter = input.value.toUpperCase();
@@ -291,28 +457,17 @@
       }
     }
 
-    // PWA & Service Worker Registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', async () => {
         try {
           const registration = await navigator.serviceWorker.register('/ssiavanguardchronicles/sw.js');
-          console.log('SW Registered!');
-
           if ('periodicSync' in registration) {
-            const status = await navigator.permissions.query({
-              name: 'periodic-background-sync',
-            });
-
+            const status = await navigator.permissions.query({ name: 'periodic-background-sync' });
             if (status.state === 'granted') {
-              await registration.periodicSync.register('update-game-data', {
-                minInterval: 24 * 60 * 60 * 1000,
-              });
-              console.log('Periodic Background Sync registered!');
+              await registration.periodicSync.register('update-game-data', { minInterval: 24 * 60 * 60 * 1000 });
             }
           }
-        } catch (err) {
-          console.log('Registration failed:', err);
-        }
+        } catch (err) { console.log('PWA Sync Offline Mode:', err); }
       });
     }
   </script>
