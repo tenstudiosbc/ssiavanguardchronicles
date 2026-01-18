@@ -2,6 +2,7 @@ const CACHE_NAME = 'ssia-vanguard-v1';
 const ASSETS = [
   '/ssiavanguardchronicles/',
   '/ssiavanguardchronicles/index.html',
+  '/ssiavanguardchronicles/style.css',
   '/ssiavanguardchronicles/character.js',
   '/ssiavanguardchronicles/banners.js',
   '/ssiavanguardchronicles/20241228_080318.png',
