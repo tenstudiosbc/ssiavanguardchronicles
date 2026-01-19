@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ssia-vanguard-v1';
+const CACHE_NAME = 'ssia-vanguard-v1.0.0.3';
 const ASSETS = [
   '/ssiavanguardchronicles/',
   '/ssiavanguardchronicles/index.html',
