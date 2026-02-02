@@ -8,6 +8,16 @@ const banners = [
     featured4Star: ["Margaret Stephanie", "Nexon Dyke Martinez", "Rogershin A Ventere"],
     weapons: ["Blue Sword", "White Polearm"],
     pool: ["Featured 5★ pool", "Standard 4★ pool"]
+  },
+  {
+    title: "Vixen Temptress",
+    duration: "Feb 3 – Mar 30, 2025",
+    extended: "N/a",
+    image: "",
+    featured5Star: ["Kenziet Felicia-Harrison"],
+    featured4Star: ["Lucia Hoenigsmen", "Nexon Dyke Martinez", "Rogershin A Ventere"],
+    weapons: ["Red Katana"],
+    pool: ["Featured 5★ pool", "Standard 4★ pool"]
   }
 ];
 
