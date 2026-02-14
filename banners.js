@@ -1,19 +1,9 @@
 const banners = [
   {
-    title: "Timidity In Purity",
-    duration: "Aug 17 – Sept 30, 2025",
-    extended: "Oct 6 - Nov 7, 2025",
-    image: "https://i.supaimg.com/39175f8d-c9cc-4c20-8c9d-2c7546bd901e.png",
-    featured5Star: ["Hannabi Ingrid Stephanie"],
-    featured4Star: ["Margaret Stephanie", "Nexon Dyke Martinez", "Rogershin A Ventere"],
-    weapons: ["Blue Sword", "White Polearm"],
-    pool: ["Featured 5★ pool", "Standard 4★ pool"]
-  },
-  {
     title: "Vixen Temptress",
     duration: "Feb 3 – Mar 30, 2025",
     extended: "N/a",
-    image: "",
+    image: "https://i.supaimg.com/d0616997-0bed-4319-ab3e-cd6a433794e9/9180bf62-25b2-429f-bd9c-e1405c3d3d82.png",
     featured5Star: ["Kenziet Felicia-Harrison"],
     featured4Star: ["Lucia Hoenigsmen", "Nexon Dyke Martinez", "Rogershin A Ventere"],
     weapons: ["Red Katana"],
