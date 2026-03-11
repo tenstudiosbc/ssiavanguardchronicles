@@ -1,6 +1,6 @@
 const banners = [
   {
-    title: "Vixen Temptress Phass 1",
+    title: "Vixen Temptress Phase 1",
     duration: "Feb 3 – Mar 30, 2025",
     extended: "N/a",
     image: "https://i.supaimg.com/d0616997-0bed-4319-ab3e-cd6a433794e9/9180bf62-25b2-429f-bd9c-e1405c3d3d82.png",
