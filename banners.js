@@ -1,10 +1,10 @@
 const banners = [
   {
-    title: "Vixen Temptress Phase 1",
-    duration: "Feb 3 – Mar 30, 2025",
+    title: "Justice Will Prevail Phase 2",
+    duration: "Mar 3 – Jun 1, 2026",
     extended: "N/a",
-    image: "https://i.supaimg.com/d0616997-0bed-4319-ab3e-cd6a433794e9/9180bf62-25b2-429f-bd9c-e1405c3d3d82.png",
-    featured5Star: ["Kenziet Felicia-Harrison"],
+    image: "https://i.supaimg.com/b3da42ad-02aa-4f1a-b499-acc775586122/ff9f5f07-969e-46af-b55c-598ca53af100.png",
+    featured5Star: ["Jones Harrison"],
     featured4Star: ["Lucia Hoenigsmen", "Nexon Dyke Martinez"],
     weapons: ["Red Katana"],
     pool: ["Featured 5★ pool", "Standard 4★ pool"]
