@@ -2,7 +2,7 @@
   "name": "SSIA: Vanguard Chronicles",
   "short_name": "SSIA Vanguard",
   "description": "Official Page for SSIA Vanguard Chronicles Game",
-  "start_url": "/ssiavanguardchronicles/",
+  "start_url": "https://ssiavc.tenstudiosbc.my.id//",
   "display": "standalone",
   "background_color": "#05080a",
   "theme_color": "#00ffcc",
