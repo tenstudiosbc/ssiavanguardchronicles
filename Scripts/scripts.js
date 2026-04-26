@@ -153,21 +153,3 @@ const observer = new IntersectionObserver(
 );
 
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-
-/* ─── PWA SERVICE WORKER ─── */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      const reg = await navigator.serviceWorker.register('/ssiavanguardchronicles/sw.js');
-      console.log('[PWA] Service Worker registered');
-      if ('periodicSync' in reg) {
-        const status = await navigator.permissions.query({ name: 'periodic-background-sync' });
-        if (status.state === 'granted') {
-          await reg.periodicSync.register('update-game-data', { minInterval: 86400000 });
-        }
-      }
-    } catch (err) {
-      console.error('[PWA] Registration failed', err);
-    }
-  });
-}
