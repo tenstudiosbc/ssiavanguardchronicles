@@ -87,6 +87,23 @@ nav {
   color: var(--accent);
   text-decoration: none;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.nav-logo-image {
+  height: 40px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(0, 245, 212, 0.2));
+  transition: all 0.3s ease;
+}
+
+.nav-logo:hover .nav-logo-image {
+  filter: drop-shadow(0 0 20px rgba(0, 245, 212, 0.5));
+  transform: scale(1.05);
 }
 
 .nav-logo span {
@@ -146,6 +163,21 @@ nav {
   background: linear-gradient(180deg, rgba(0, 60, 80, 0.2) 0%, transparent 100%);
 }
 
+.hero-header-image {
+  max-width: 90%;
+  height: auto;
+  max-height: 400px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+  filter: drop-shadow(0 0 30px rgba(0, 245, 212, 0.3));
+  transition: filter 0.4s ease;
+}
+
+.hero-header-image:hover {
+  filter: drop-shadow(0 0 50px rgba(0, 245, 212, 0.6));
+}
+
 .hero-eyebrow {
   font-family: var(--f-mono);
   font-size: 0.6rem;
@@ -154,7 +186,7 @@ nav {
   text-transform: uppercase;
   margin-bottom: 1.8rem;
   opacity: 0;
-  animation: fadeUp 0.8s 0.3s forwards;
+  animation: fadeUp 0.8s 0.35s forwards;
 }
 
 .hero-title {
