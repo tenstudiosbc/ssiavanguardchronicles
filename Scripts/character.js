@@ -1,4 +1,7 @@
-const characters = [
+/* ─── CHARACTER DATA AND RENDERING ─── */
+
+// Character data with actual game characters
+const charactersData = [
   {
     name: "Jones Harrison",
     rarity: 5,
@@ -52,7 +55,7 @@ const characters = [
     portrait: "https://i.supaimg.com/87b28d12-4010-4b07-b0c5-0a18b5cbe72a.png",
     tags: ["DPS"],
     bio: "Kirisame Ayaka is a Youthful Adult Woman, around 30 years old, a model type body, She's a SIRA (Shinkyou Imperial Reconnaissance Agency), she's in a position of Special Agent In Charge, Always Determined but Softer towards anyone on SIRA, but her fighting Skills with a Katana is another level of Mastery"
-  }, 
+  },
   {
     name: "Princess Elaria Solenyra",
     rarity: 5,
@@ -60,7 +63,7 @@ const characters = [
     weapon: "Sword",
     portrait: "https://i.supaimg.com/5abe95cb-9ce1-4cbd-afd4-f38cd6d0496d.png",
     tags: ["DPS"],
-    bio: "Legends say she is the “Eternal Bloom of Sa’Lume”, blessed by mystical waters hidden deep in the desert. Some worship her as a princess of Greenwhale, while others dismiss her as a clever trickster who discovered the fountain of youth. In truth, she’s just human—but her discipline, wit, and mastery of illusions give her the presence of someone immortal."
+    bio: "Legends say she is the \"Eternal Bloom of Sa'Lume\", blessed by mystical waters hidden deep in the desert. Some worship her as a princess of Greenwhale, while others dismiss her as a clever trickster who discovered the fountain of youth. In truth, she's just human—but her discipline, wit, and mastery of illusions give her the presence of someone immortal."
   },
   {
     name: "Hannabi Ingrid Stephanie",
@@ -69,7 +72,7 @@ const characters = [
     weapon: "Sword",
     portrait: "https://i.supaimg.com/52407d38-a3f4-4e1f-81ff-732bc2128645.png",
     tags: ["Support", "High DEF"],
-    bio: "Timid, Reserved and a Kitten, Shes a Probie Special Agent in the team"
+    bio: "Timid, Reserved and a Kitten, She's a Probie Special Agent in the team"
   },
   {
     name: "Margaret Stephanie",
@@ -78,33 +81,35 @@ const characters = [
     weapon: "Polearm",
     portrait: "https://i.supaimg.com/141eaae9-011c-46c9-bc02-a3efbc9425e4.png",
     tags: ["Support"],
-    bio: "A loveling Mother, School Counsulor"
-  },  
+    bio: "A loveling Mother, School Counselor"
+  }
 ];
 
-// Utility to create star rarity
+/* ─── UTILITY FUNCTIONS ─── */
+
 function createStars(rarity) {
   return "⭐".repeat(rarity);
 }
 
-// Save counter to localStorage
 function saveCounter(charName, type, count) {
   const key = `${charName}_${type}`;
   localStorage.setItem(key, count);
 }
 
-// Load counter from localStorage
 function loadCounter(charName, type) {
   const key = `${charName}_${type}`;
   return parseInt(localStorage.getItem(key) || "0", 10);
 }
 
-// Inject characters into HTML
-document.addEventListener("DOMContentLoaded", () => {
+/* ─── CHARACTER RENDERING ─── */
+
+function renderCharacters() {
   const container = document.getElementById("characters-container");
   if (!container) return;
 
-  characters.forEach(char => {
+  container.innerHTML = "";
+
+  charactersData.forEach((char) => {
     const card = document.createElement("div");
     card.className = "character-card";
 
@@ -114,20 +119,21 @@ document.addEventListener("DOMContentLoaded", () => {
     let ownCount = loadCounter(char.name, "own");
 
     card.innerHTML = `
+      <div class="rarity-bar"></div>
       <div class="portrait">
-        <img src="${char.portrait}" alt="${char.name}" />
+        <img src="${char.portrait}" alt="${char.name}" loading="lazy">
       </div>
       <div class="info">
         <h2>${char.name}</h2>
-        <p><strong>Rarity:</strong> ${createStars(char.rarity)}</p>
-        <p><strong>Element:</strong> ${char.element}</p>
-        <p><strong>Weapon:</strong> ${char.weapon}</p>
-        <p><strong>Tags:</strong> ${char.tags.join(", ")}</p>
-        <p>${char.bio}</p>
-        <div class="actions">
-          <button class="btn-action fav">❤️ Favorite (<span class="fav-count">${favCount}</span>)</button>
-          <button class="btn-action like">👍 Like (<span class="like-count">${likeCount}</span>)</button>
-          <button class="btn-action own">✅ Owned (<span class="own-count">${ownCount}</span>)</button>
+        <p class="char-rarity"><strong>Rarity:</strong> ${createStars(char.rarity)}</p>
+        <p class="char-element"><strong>Element:</strong> ${char.element}</p>
+        <p class="char-weapon"><strong>Weapon:</strong> ${char.weapon}</p>
+        <p class="char-tags"><strong>Tags:</strong> ${char.tags.join(", ")}</p>
+        <p class="char-bio">${char.bio}</p>
+        <div class="char-actions">
+          <button class="btn-char-action fav">❤️ Fav (<span class="fav-count">${favCount}</span>)</button>
+          <button class="btn-char-action like">👍 Like (<span class="like-count">${likeCount}</span>)</button>
+          <button class="btn-char-action own">✅ Own (<span class="own-count">${ownCount}</span>)</button>
         </div>
       </div>
     `;
@@ -141,26 +147,60 @@ document.addEventListener("DOMContentLoaded", () => {
       favCount++;
       favBtn.querySelector(".fav-count").textContent = favCount;
       saveCounter(char.name, "fav", favCount);
-      document.dispatchEvent(new CustomEvent("toast", { detail: `${char.name} added to Favorites!` }));
+      document.dispatchEvent(
+        new CustomEvent("toast", {
+          detail: `${char.name} added to Favorites!`
+        })
+      );
     });
 
     likeBtn.addEventListener("click", () => {
       likeCount++;
       likeBtn.querySelector(".like-count").textContent = likeCount;
       saveCounter(char.name, "like", likeCount);
-      document.dispatchEvent(new CustomEvent("toast", { detail: `You liked ${char.name}!` }));
+      document.dispatchEvent(
+        new CustomEvent("toast", {
+          detail: `You liked ${char.name}!`
+        })
+      );
     });
 
     ownBtn.addEventListener("click", () => {
       ownCount++;
       ownBtn.querySelector(".own-count").textContent = ownCount;
       saveCounter(char.name, "own", ownCount);
-      document.dispatchEvent(new CustomEvent("toast", { detail: `You own ${char.name}!` }));
+      document.dispatchEvent(
+        new CustomEvent("toast", {
+          detail: `You own ${char.name}!`
+        })
+      );
     });
 
     container.appendChild(card);
 
-    // Dispatch custom event so index.html can show toast
-    document.dispatchEvent(new CustomEvent("charactersLoaded", { detail: { name: char.name } }));
+    // Dispatch custom event
+    document.dispatchEvent(
+      new CustomEvent("charactersLoaded", {
+        detail: { name: char.name }
+      })
+    );
   });
-});
+}
+
+/* ─── SEARCH FUNCTIONALITY ─── */
+
+function filterCharacters() {
+  const filter = document.getElementById("character-search").value.toUpperCase();
+  document.querySelectorAll(".character-card").forEach((card) => {
+    const name = card.querySelector("h2")?.textContent || "";
+    card.style.display = name.toUpperCase().includes(filter) ? "" : "none";
+  });
+}
+
+/* ─── INITIALIZE ON DOM READY ─── */
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", renderCharacters);
+} else {
+  renderCharacters();
+}
