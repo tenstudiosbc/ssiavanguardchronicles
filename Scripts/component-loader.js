@@ -1,6 +1,20 @@
 /* ─── COMPONENT LOADER ─── */
 
 /**
+ * Get the base path for components based on current location
+ * @returns {string} Base path to Components folder
+ */
+function getBasePath() {
+  const currentPath = window.location.pathname;
+  // If we're in Pages folder, go up one level
+  if (currentPath.includes('/Pages/')) {
+    return '../Components/';
+  }
+  // Otherwise, we're in root
+  return './Components/';
+}
+
+/**
  * Load and inject HTML components into the page
  * @param {string} componentPath - Path to the component file
  * @param {string} targetSelector - CSS selector for target element
@@ -44,11 +58,16 @@ async function loadComponents(components) {
 // Load components when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    loadComponents([{ path: 'Components/navbar.html', target: '#navbar-container' }, { path: 'Components/footer.html', target: '#footer-container' }]);
+    const basePath = getBasePath();
+    loadComponents([
+      { path: basePath + 'navbar.html', target: '#navbar-container' },
+      { path: basePath + 'footer.html', target: '#footer-container' }
+    ]);
   });
 } else {
+  const basePath = getBasePath();
   loadComponents([
-    { path: 'Components/navbar.html', target: '#navbar-container' },
-    { path: 'Components/footer.html', target: '#footer-container' }
+    { path: basePath + 'navbar.html', target: '#navbar-container' },
+    { path: basePath + 'footer.html', target: '#footer-container' }
   ]);
 }
