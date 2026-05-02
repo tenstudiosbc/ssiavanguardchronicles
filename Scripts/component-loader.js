@@ -15,6 +15,42 @@ function getBasePath() {
 }
 
 /**
+ * Get the path prefix to reach the root directory from current location
+ * @returns {string} Path prefix
+ */
+function getRootPathPrefix() {
+  const currentPath = window.location.pathname;
+  if (currentPath.includes('/Pages/')) {
+    return '../'; // If inside /Pages/, need to go up a folder
+  }
+  return './'; // If at root, stay at root
+}
+
+/**
+ * Dynamically updates links inside injected components so they work from any folder depth
+ * @param {HTMLElement} container
+ */
+function fixComponentLinks(container) {
+  const rootPrefix = getRootPathPrefix();
+  const links = container.querySelectorAll('a');
+
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+
+    // Skip external links, pure anchors, and absolute paths
+    if (!href || href.startsWith('http') || href.startsWith('//') || href.startsWith('#')) {
+      return;
+    }
+
+    // Clean any existing relative dots (like ../ or ./) from the HTML so we have a clean root-based path
+    const cleanPath = href.replace(/^(\.\.\/)+/, '').replace(/^(\.\/)+/, '');
+
+    // Apply the correct prefix for the current page depth
+    link.setAttribute('href', rootPrefix + cleanPath);
+  });
+}
+
+/**
  * Load and inject HTML components into the page
  * @param {string} componentPath - Path to the component file
  * @param {string} targetSelector - CSS selector for target element
@@ -35,6 +71,10 @@ async function loadComponent(componentPath, targetSelector) {
     }
 
     targetElement.innerHTML = html;
+    
+    // Fix relative links dynamically based on current page location
+    fixComponentLinks(targetElement);
+
     console.log(`[Component Loader] ${componentPath} loaded successfully`);
   } catch (error) {
     console.error(`[Component Loader] Error loading ${componentPath}:`, error);
@@ -55,19 +95,18 @@ async function loadComponents(components) {
   }
 }
 
-// Load components when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    const basePath = getBasePath();
-    loadComponents([
-      { path: basePath + 'navbar.html', target: '#navbar-container' },
-      { path: basePath + 'footer.html', target: '#footer-container' }
-    ]);
-  });
-} else {
+// Initialization function
+function init() {
   const basePath = getBasePath();
   loadComponents([
     { path: basePath + 'navbar.html', target: '#navbar-container' },
     { path: basePath + 'footer.html', target: '#footer-container' }
   ]);
+}
+
+// Load components when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
 }
