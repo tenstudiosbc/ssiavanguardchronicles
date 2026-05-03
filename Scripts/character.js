@@ -132,6 +132,37 @@ const charactersData = [
     tags: ["DEF Ally Buffer"],
     bio: "Nexon Dyke Martinez, known simply as Nexon, is an energetic and spirited Special Agent within the SSIA. Born in Little Hansa, a small but vibrant town in the Federal Republic of Mittlemagizste, Nexon grew up surrounded by the bustling activity of a close-knit community. He is known for his comedic personality, humor, and seemingly carefree attitude."
   },
+
+  {
+    id: "silverstein-cronin",
+    name: "Silverstein Cronin",
+    rarity: 5,
+    role: "DPS",
+    faction: "MIA",
+    element: "Cryo",
+    weapon: "Broadblade",
+    portrait: "Place URL Here",
+    splash: "Place URL Here",
+    tags: ["Cryo Damager"],
+    bio: `Silverstein Cronin is an Special Agents from Mittlemazigste Investigation Agency`
+  },
+
+  {
+    id: "princess-elaria-solenyra",
+    name: "Princess Elaria Solenyra",
+    rarity: 5,
+    role: "DPS",
+    faction: "Greenwhale",
+    element: "Spectro",
+    weapon: "Rapier",
+    portrait: "Place URL here",
+    splash: "Place URL Here",
+    tags: ["DPS", "Spectro Buffer", "Spectro DMG Multiplier"],
+    bio: `An Immortal Youthful Woman from Sa’Lume, she's one of lineage that has live over thousands years old, she's a Tsundere princess`
+  },
+
+
+  
 ];
 
 /* ────────────────────────────────────────────────────────── */
