@@ -61,6 +61,7 @@ const charactersData = [
     tags: ["DPS"],
     bio: "Authoritative yet compassionate leader, skilled in investigations, tactics, and split-second decisions."
   },
+  
   {
     id: "kenziet",
     name: "Kenziet Felicia-Harrison",
@@ -74,6 +75,7 @@ const charactersData = [
     tags: ["DPS"],
     bio: "Confident and fiercely protective. Master of behavioral analysis and resilience."
   },
+  
   {
     id: "fritz",
     name: "Fritz Von Viermitz",
@@ -87,6 +89,7 @@ const charactersData = [
     tags: ["Support", "DPS"],
     bio: "Calm, strategic, and brilliant in behavioral profiling."
   },
+  
   {
     id: "hannabi",
     name: "Hannabi Ingrid Stephanie",
@@ -99,7 +102,22 @@ const charactersData = [
     splash: "https://i.supaimg.com/b3da42ad-02aa-4f1a-b499-acc775586122/768ec0e5-e03b-41d4-9da1-91b25a972647.png",
     tags: ["Support", "Hydro"],
     bio: "A timid probie with a heart of gold."
-  }
+  },
+  
+  {
+    id: "kirisame-ayaka",
+    name: "Kirisame Ayaka",
+    rarity: 5,
+    role: "DPS",
+    faction: "SSIA",
+    element: "Electro",
+    weapon: "Katana",
+    portrait: "https://i.supaimg.com/b3da42ad-02aa-4f1a-b499-acc775586122/44f41b50-6839-48a7-b9e7-efc0d75590cd.png",
+    splash: "https://i.supaimg.com/b3da42ad-02aa-4f1a-b499-acc775586122/44f41b50-6839-48a7-b9e7-efc0d75590cd.png",
+    tags: ["DPS"],
+    bio: "Kirisame Ayaka is a Youthful Adult Woman, around 30 years old, a model type body, She's a SIRA (Shinkyou Imperial Reconnaissance Agency), she's in a position of Special Agent In Charge,  Always Determined but Softer towards anyone on SIRA, but her fighting Skills with a Katana is another level of Mastery"
+  },
+  
 ];
 
 /* ────────────────────────────────────────────────────────── */
