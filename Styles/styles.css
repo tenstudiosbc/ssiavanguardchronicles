@@ -842,7 +842,47 @@ footer {
   z-index: 2;
   border-top: 1px solid var(--border);
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
+  background: linear-gradient(0deg, rgba(0, 245, 212, 0.02) 0%, transparent 100%);
+}
+
+.footer-nav {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  color: var(--text-dim);
+  transition: all 0.3s ease;
+  padding: 4px 8px;
+}
+
+.footer-nav a:hover {
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--glow-a);
+}
+
+.footer-nav .separator {
+  color: var(--border-bright);
+  opacity: 0.5;
+  user-select: none;
+}
+
+footer hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  max-width: 600px;
+  margin: 0 auto 2rem;
 }
 
 .footer-logo {
@@ -866,6 +906,11 @@ footer p {
   letter-spacing: 0.2em;
   color: var(--text-muted);
   margin-top: 0.3rem;
+}
+
+footer p strong {
+  color: var(--accent);
+  letter-spacing: 0.3em;
 }
 
 /* ─── TOASTER ─── */
