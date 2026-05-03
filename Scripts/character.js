@@ -1,266 +1,377 @@
-/* ─────────────────────────────────────────────────────────────────────────
-   CHARACTER DATA TEMPLATE
-   Copy this block and paste it inside the charactersData array below.
-   
-   {
-     id: "unique_id_here",
-     name: "Character Name",
-     rarity: 5,
-     element: "🔥 Pyro",
-     weapon: "Pistols",
-     portrait: "https://your-image-url.com/img.png",
-     tags: ["DPS", "Support"],
-     bio: "Enter character backstory here..."
-   },
-   ───────────────────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════ */
+/* SSIA VANGUARD CHRONICLES - CHARACTER SYSTEM V2            */
+/* Dynamic Modal + Responsive + Better Performance           */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────────────────── */
+/* CHARACTER DATA                                            */
+/* ────────────────────────────────────────────────────────── */
 
 const charactersData = [
   {
-    id: "jones",
+    id: "jones-harrison",
     name: "Jones Harrison",
     rarity: 5,
+    role: "Main DPS",
+    faction: "SSIA",
     element: "🔥 Pyro",
     weapon: "Pistols",
     portrait: "https://i.supaimg.com/579ea0e6-e34f-4d67-b86a-810acfc4b25c.png",
+    splash: "https://i.supaimg.com/579ea0e6-e34f-4d67-b86a-810acfc4b25c.png",
     tags: ["DPS"],
     bio: "Authoritative yet compassionate leader, skilled in investigations, tactics, and split-second decisions."
   },
+
   {
     id: "kenziet",
     name: "Kenziet Felicia-Harrison",
     rarity: 5,
+    role: "Main DPS",
+    faction: "SSIA",
     element: "⚡ Electro",
     weapon: "Katana",
     portrait: "https://i.supaimg.com/c2468193-f5cc-4f2e-a07c-1cb6b69efa52.png",
+    splash: "https://i.supaimg.com/c2468193-f5cc-4f2e-a07c-1cb6b69efa52.png",
     tags: ["DPS"],
-    bio: "Confident and fiercely protective. Master of behavioral analysis and resilience, Sexy and Seductive."
+    bio: "Confident and fiercely protective. Master of behavioral analysis and resilience."
   },
+
   {
     id: "fritz",
     name: "Fritz Von Viermitz",
     rarity: 5,
+    role: "Support DPS",
+    faction: "SSIA",
     element: "❄️ Cryo",
     weapon: "SMGs",
     portrait: "https://i.supaimg.com/19def742-4339-449e-b35f-fdcfd23f8e28.png",
+    splash: "https://i.supaimg.com/19def742-4339-449e-b35f-fdcfd23f8e28.png",
     tags: ["Support", "DPS"],
     bio: "Calm, strategic, and brilliant in behavioral profiling."
-  },
-  {
-    id: "nexon",
-    name: "Nexon Dyke Martinez",
-    rarity: 4,
-    element: "🪨 Geo",
-    weapon: "Gauntlets",
-    portrait: "https://i.supaimg.com/ca4b490e-680c-49e5-9973-b4126dac49cf.png",
-    tags: ["Tanker"],
-    bio: "Charismatic and agile with strong combat and intel skills."
-  },
-  {
-    id: "lucia",
-    name: "Lucia Hoenigsman",
-    rarity: 4,
-    element: "💨 Aero",
-    weapon: "Polearm / SMGs",
-    portrait: "https://i.supaimg.com/23ff2094-4eb8-478d-9418-ea51c0a5625b.png",
-    tags: ["Support"],
-    bio: "Charming, hot, and determined. Leads the Mittlemazigste SSIA Field Office."
-  },
-  {
-    id: "ayaka",
-    name: "Kirisame Ayaka",
-    rarity: 5,
-    element: "⚡️ Electro",
-    weapon: "Katana",
-    portrait: "https://i.supaimg.com/87b28d12-4010-4b07-b0c5-0a18b5cbe72a.png",
-    tags: ["DPS"],
-    bio: "Special Agent In Charge at SIRA. Determined but softer towards her team, though her blade skills are mastery level."
-  },
-  {
-    id: "elaria",
-    name: "Princess Elaria Solenyra",
-    rarity: 5,
-    element: "✨️ Spectro",
-    weapon: "Sword",
-    portrait: "https://i.supaimg.com/5abe95cb-9ce1-4cbd-afd4-f38cd6d0496d.png",
-    tags: ["DPS"],
-    bio: "Blessed by mystical waters, her discipline and mastery of illusions give her the presence of an immortal."
-  },
-  {
-    id: "hannabi",
-    name: "Hannabi Ingrid Stephanie",
-    rarity: 5,
-    element: "💧 Hydro",
-    weapon: "Sword",
-    portrait: "https://i.supaimg.com/52407d38-a3f4-4e1f-81ff-732bc2128645.png",
-    tags: ["Support"],
-    bio: "Timid and reserved, she is a Probie Special Agent in the team."
-  },
-  {
-    id: "margaret",
-    name: "Margaret Stephanie",
-    rarity: 4,
-    element: "❄️ Cryo",
-    weapon: "Polearm",
-    portrait: "https://i.supaimg.com/141eaae9-011c-46c9-bc02-a3efbc9425e4.png",
-    tags: ["Support"],
-    bio: "A loving mother and school counselor."
   }
-  // <--- PASTE NEW CHARACTERS FROM TEMPLATE HERE
 ];
 
-/* ─── UTILITIES & STORAGE ─── */
+/* ────────────────────────────────────────────────────────── */
+/* UTILITIES                                                  */
+/* ────────────────────────────────────────────────────────── */
 
-const createStars = (rarity) => "⭐".repeat(rarity);
-const saveStat = (id, type, count) => localStorage.setItem(`${id}_${type}`, count);
-const loadStat = (id, type) => parseInt(localStorage.getItem(`${id}_${type}`) || "0", 10);
+const characterContainer = document.getElementById("characters-container");
 
-/* ─── TOAST NOTIFICATION ─── */
-
-function showToast(message) {
-  let toastRoot = document.getElementById("toast-root");
-  if (!toastRoot) {
-    toastRoot = document.createElement("div");
-    toastRoot.id = "toast-root";
-    // Inline styles if not present in CSS
-    Object.assign(toastRoot.style, {
-      position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: '9999'
-    });
-    document.body.appendChild(toastRoot);
-  }
-
-  const toast = document.createElement("div");
-  toast.className = "toast-message";
-  toast.textContent = message;
-  // Apply quick styles
-  Object.assign(toast.style, {
-    background: '#6366f1', color: 'white', padding: '12px 24px', borderRadius: '50px',
-    marginBottom: '10px', boxShadow: '0 4px 15px rgba(0,0,0,0.3)', animation: 'fadeUp 0.3s ease-out'
-  });
-
-  toastRoot.appendChild(toast);
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    setTimeout(() => toast.remove(), 500);
-  }, 2500);
+function createStars(rarity) {
+  return "⭐".repeat(rarity);
 }
 
-/* ─── MODAL CONTROLS ─── */
+function storageKey(charId, type) {
+  return `svc_${charId}_${type}`;
+}
 
-function openCharacterModal(id) {
-  const char = charactersData.find(c => c.id === id);
-  if (!char) return;
+function saveCounter(charId, type, count) {
+  localStorage.setItem(storageKey(charId, type), count);
+}
 
-  const modalOverlay = document.getElementById("character-modal");
-  const modalBody = document.getElementById("modal-body");
-  if (!modalOverlay || !modalBody) return;
+function loadCounter(charId, type) {
+  return parseInt(localStorage.getItem(storageKey(charId, type)) || "0", 10);
+}
 
-  const fav = loadStat(char.id, "fav");
-  const like = loadStat(char.id, "like");
-  const own = loadStat(char.id, "own");
+function emitToast(message) {
+  document.dispatchEvent(
+    new CustomEvent("toast", {
+      detail: message
+    })
+  );
+}
 
-  modalBody.innerHTML = `
-    <div class="modal-flex-container">
-      <div class="modal-portrait">
-        <img src="${char.portrait}" alt="${char.name}">
-      </div>
-      <div class="modal-details">
-        <div class="modal-header">
-          <h2>${char.name}</h2>
-          <div class="stars">${createStars(char.rarity)}</div>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-item"><strong>Element:</strong> ${char.element}</div>
-          <div class="stat-item"><strong>Weapon:</strong> ${char.weapon}</div>
-          <div class="stat-item"><strong>Tags:</strong> ${char.tags.join(", ")}</div>
-        </div>
-        <p class="modal-bio">${char.bio}</p>
-        <div class="modal-actions">
-          <button onclick="handleStatClick('${char.id}', 'fav')">❤️ Fav (<span id="m-fav-${char.id}">${fav}</span>)</button>
-          <button onclick="handleStatClick('${char.id}', 'like')">👍 Like (<span id="m-like-${char.id}">${like}</span>)</button>
-          <button onclick="handleStatClick('${char.id}', 'own')">✅ Own (<span id="m-own-${char.id}">${own}</span>)</button>
-        </div>
+/* ────────────────────────────────────────────────────────── */
+/* MODAL SYSTEM                                               */
+/* ────────────────────────────────────────────────────────── */
+
+function createCharacterModal() {
+  if (document.getElementById("character-modal")) return;
+
+  const modal = document.createElement("div");
+
+  modal.id = "character-modal";
+
+  modal.innerHTML = `
+    <div class="modal-overlay"></div>
+
+    <div class="character-modal-content">
+      <button class="modal-close-btn">✕</button>
+
+      <div class="modal-body">
+        <!-- DYNAMICALLY LOADED -->
       </div>
     </div>
   `;
 
-  modalOverlay.classList.add("active");
+  document.body.appendChild(modal);
+
+  const overlay = modal.querySelector(".modal-overlay");
+  const closeBtn = modal.querySelector(".modal-close-btn");
+
+  overlay.addEventListener("click", closeCharacterModal);
+  closeBtn.addEventListener("click", closeCharacterModal);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeCharacterModal();
+    }
+  });
+}
+
+function openCharacterModal(character) {
+  const modal = document.getElementById("character-modal");
+  const modalBody = modal.querySelector(".modal-body");
+
+  modalBody.innerHTML = `
+    <div class="modal-banner">
+      <img src="${character.splash}" alt="${character.name}">
+    </div>
+
+    <div class="modal-info">
+      <div class="modal-top">
+        <div>
+          <h2>${character.name}</h2>
+          <p class="modal-rarity">${createStars(character.rarity)}</p>
+        </div>
+
+        <span class="modal-role">${character.role}</span>
+      </div>
+
+      <div class="modal-meta-grid">
+
+        <div class="meta-box">
+          <span>Element</span>
+          <strong>${character.element}</strong>
+        </div>
+
+        <div class="meta-box">
+          <span>Weapon</span>
+          <strong>${character.weapon}</strong>
+        </div>
+
+        <div class="meta-box">
+          <span>Faction</span>
+          <strong>${character.faction}</strong>
+        </div>
+
+        <div class="meta-box">
+          <span>Tags</span>
+          <strong>${character.tags.join(", ")}</strong>
+        </div>
+
+      </div>
+
+      <div class="modal-bio">
+        <h3>Biography</h3>
+        <p>${character.bio}</p>
+      </div>
+
+    </div>
+  `;
+
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden";
 }
 
 function closeCharacterModal() {
-  const modalOverlay = document.getElementById("character-modal");
-  if (modalOverlay) modalOverlay.classList.remove("active");
+  const modal = document.getElementById("character-modal");
+
+  modal.classList.remove("active");
+
+  document.body.style.overflow = "";
 }
 
-function handleStatClick(id, type) {
-  let count = loadStat(id, type) + 1;
-  saveStat(id, type, count);
+/* ────────────────────────────────────────────────────────── */
+/* CARD CREATION                                               */
+/* ────────────────────────────────────────────────────────── */
 
-  // Update Modal Numbers
-  const modalCount = document.getElementById(`m-${type}-${id}`);
-  if (modalCount) modalCount.textContent = count;
+function createCharacterCard(character) {
+  const card = document.createElement("article");
 
-  // Update Card Numbers
-  const cardCount = document.getElementById(`c-${type}-${id}`);
-  if (cardCount) cardCount.textContent = count;
+  card.className = "character-card reveal";
 
-  showToast(`Updated ${type} for character!`);
-}
+  const favCount = loadCounter(character.id, "fav");
+  const likeCount = loadCounter(character.id, "like");
+  const ownCount = loadCounter(character.id, "own");
 
-/* ─── RENDERING ─── */
+  card.innerHTML = `
+    <div class="rarity-bar rarity-${character.rarity}"></div>
 
-function renderCharacters() {
-  const container = document.getElementById("characters-container");
-  if (!container) return;
+    <div class="card-clickable">
 
-  container.innerHTML = "";
+      <div class="portrait">
+        <img src="${character.portrait}" alt="${character.name}" loading="lazy">
 
-  charactersData.forEach((char) => {
-    const card = document.createElement("div");
-    card.className = "character-card";
-    card.onclick = () => openCharacterModal(char.id);
-
-    const fav = loadStat(char.id, "fav");
-
-    card.innerHTML = `
-      <div class="card-portrait">
-        <img src="${char.portrait}" alt="${char.name}" loading="lazy">
-        <div class="card-overlay-info">
-           <span class="card-fav-count">❤️ <span id="c-fav-${char.id}">${fav}</span></span>
+        <div class="character-overlay">
+          <span>VIEW PROFILE</span>
         </div>
       </div>
-      <div class="card-content">
-        <h3>${char.name}</h3>
-        <div class="card-rarity">${createStars(char.rarity)}</div>
-        <div class="card-element-tag">${char.element}</div>
-      </div>
-    `;
 
-    container.appendChild(card);
+      <div class="info">
+
+        <div class="character-header">
+          <h2>${character.name}</h2>
+          <span class="rarity">${createStars(character.rarity)}</span>
+        </div>
+
+        <div class="character-meta">
+          <span>${character.element}</span>
+          <span>${character.weapon}</span>
+        </div>
+
+        <div class="tag-group">
+          ${character.tags
+            .map((tag) => `<span class="tag">${tag}</span>`)
+            .join("")}
+        </div>
+
+        <p class="char-bio">
+          ${character.bio}
+        </p>
+
+      </div>
+    </div>
+
+    <div class="char-actions">
+
+      <button class="btn-char-action fav-btn">
+        ❤️ <span>${favCount}</span>
+      </button>
+
+      <button class="btn-char-action like-btn">
+        👍 <span>${likeCount}</span>
+      </button>
+
+      <button class="btn-char-action own-btn">
+        ✅ <span>${ownCount}</span>
+      </button>
+
+    </div>
+  `;
+
+  /* OPEN MODAL */
+
+  card.querySelector(".card-clickable").addEventListener("click", () => {
+    openCharacterModal(character);
   });
+
+  /* ACTION BUTTONS */
+
+  const actionTypes = [
+    {
+      selector: ".fav-btn",
+      type: "fav",
+      message: `${character.name} added to Favorites!`
+    },
+
+    {
+      selector: ".like-btn",
+      type: "like",
+      message: `You liked ${character.name}!`
+    },
+
+    {
+      selector: ".own-btn",
+      type: "own",
+      message: `You own ${character.name}!`
+    }
+  ];
+
+  actionTypes.forEach((action) => {
+    const button = card.querySelector(action.selector);
+
+    button.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      let current = loadCounter(character.id, action.type);
+
+      current++;
+
+      button.querySelector("span").textContent = current;
+
+      saveCounter(character.id, action.type, current);
+
+      emitToast(action.message);
+    });
+  });
+
+  return card;
 }
 
-/* ─── SEARCH ─── */
+/* ────────────────────────────────────────────────────────── */
+/* RENDER CHARACTERS                                           */
+/* ────────────────────────────────────────────────────────── */
+
+function renderCharacters() {
+  if (!characterContainer) return;
+
+  characterContainer.innerHTML = "";
+
+  const fragment = document.createDocumentFragment();
+
+  charactersData.forEach((character) => {
+    fragment.appendChild(createCharacterCard(character));
+  });
+
+  characterContainer.appendChild(fragment);
+
+  createCharacterModal();
+
+  revealCards();
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* SEARCH                                                      */
+/* ────────────────────────────────────────────────────────── */
 
 function filterCharacters() {
-  const query = document.getElementById("character-search")?.value.toLowerCase() || "";
+  const input = document
+    .getElementById("character-search")
+    .value.toLowerCase();
+
   const cards = document.querySelectorAll(".character-card");
 
   cards.forEach((card) => {
-    const name = card.querySelector("h3")?.textContent.toLowerCase() || "";
-    card.style.display = name.includes(query) ? "" : "none";
+    const name = card.querySelector("h2").textContent.toLowerCase();
+
+    card.style.display = name.includes(input) ? "" : "none";
   });
 }
 
-/* ─── INITIALIZATION ─── */
+/* ────────────────────────────────────────────────────────── */
+/* REVEAL ANIMATION                                             */
+/* ────────────────────────────────────────────────────────── */
+
+function revealCards() {
+  const cards = document.querySelectorAll(".reveal");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    },
+    {
+      threshold: 0.1
+    }
+  );
+
+  cards.forEach((card) => observer.observe(card));
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* INITIALIZE                                                   */
+/* ────────────────────────────────────────────────────────── */
 
 document.addEventListener("DOMContentLoaded", () => {
   renderCharacters();
-  
-  // Close modal when clicking outside content
-  const modalOverlay = document.getElementById("character-modal");
-  if (modalOverlay) {
-    modalOverlay.addEventListener("click", (e) => {
-      if (e.target === modalOverlay) closeCharacterModal();
-    });
+
+  const search = document.getElementById("character-search");
+
+  if (search) {
+    search.addEventListener("input", filterCharacters);
   }
 });
