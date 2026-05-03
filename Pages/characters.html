@@ -1,53 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="description" content="SSIA Vanguard Chronicles - Character Roster">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SSIA: Vanguard Chronicles - Characters</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Chakra+Petch:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Exo+2:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-
-  <!-- FIX: Changed '../Styles/' to './Styles/' -->
-  <!-- If this file is in the root directory, '../' tries to go outside the repository, causing a 404. -->
-  <link rel="stylesheet" href="../Styles/styles.css">
-  <link rel="stylesheet" href="../Styles/characters.css">
+<meta charset="UTF-8">
+<meta name="description" content="SSIA Vanguard Chronicles - Character Roster">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSIA: Vanguard Chronicles - Characters</title>
+​<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Chakra+Petch:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Exo+2:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+​<!-- PATH FIX: Consistent relative paths -->
+<link rel="stylesheet" href="./Styles/styles.css">
+<link rel="stylesheet" href="./Styles/characters.css">
 </head>
 <body>
-
-  <canvas id="bg-canvas"></canvas>
-
-  <!-- NAV COMPONENT CONTAINER -->
-  <div id="navbar-container"></div>
-
-  <!-- CHARACTERS PAGE HEADER -->
-  <div class="characters-header">
-    <div class="header-content">
-      <h1 class="header-title">Active Agents Roster</h1>
-      <p class="header-subtitle">Meet the elite operatives of SSIA Vanguard Chronicles</p>
-    </div>
-  </div>
-
-  <!-- CHARACTERS SECTION -->
-  <div class="section-wrapper">
-    <section>
-      <div class="search-wrap reveal">
-        <span class="search-icon">⌕</span>
-        <input type="text" id="character-search" placeholder="SEARCH_AGENT_DATABASE..." onkeyup="filterCharacters()">
-      </div>
-      <div class="characters-grid" id="characters-container"></div>
-    </section>
-  </div>
-
-  <!-- FOOTER COMPONENT CONTAINER -->
-  <div id="footer-container"></div>
-
-  <div id="toaster"></div>
-
-  <!-- FIX: Changed '../Scripts/' to './Scripts/' -->
-  <script src="../Scripts/component-loader.js" onload="console.log('✓ component-loader.js loaded')" onerror="console.error('✗ component-loader.js failed to load')"></script>
-  <script src="../Scripts/scripts.js" onload="console.log('✓ scripts.js loaded')" onerror="console.error('✗ scripts.js failed to load')"></script>
-  <script src="../Scripts/character.js" onload="console.log('✓ character.js loaded')" onerror="console.error('✗ character.js failed to load')"></script>
+​<canvas id="bg-canvas"></canvas>
+​<!-- NAV COMPONENT CONTAINER -->
+<div id="navbar-container"></div>
+​<!-- CHARACTERS PAGE HEADER -->
+<header class="characters-header">
+<div class="header-content">
+<h1 class="header-title">Active Agents Roster</h1>
+<p class="header-subtitle">Vanguard Chronicles Operative Database</p>
+</div>
+</header>
+​<!-- CHARACTERS SECTION -->
+<div class="section-wrapper">
+<section>
+<!-- REFINED SEARCH UI -->
+<div class="search-wrap reveal">
+<span class="search-icon">⌕</span>
+<input type="text" id="character-search" placeholder="SEARCH_AGENT_DATABASE..." onkeyup="filterCharacters()">
+</div>
+​<!-- THE GRID -->
+<div class="characters-grid" id="characters-container">
+<!-- JS will inject cards here. Example structure for your JS to generate:
+<div class="character-card reveal">
+<div class="portrait">
+<img src="agent.jpg" alt="Agent">
+<div class="char-name-plate">
+<h2>Agent Name</h2>
+</div>
+</div>
+<div class="info">
+<div class="char-detail"><strong>Role</strong> <span>Infiltrator</span></div>
+<p class="char-bio">Bio text here...</p>
+<div class="char-actions">
+<button class="btn-action">Profile</button>
+<button class="btn-action fav-btn">Fav</button>
+<button class="btn-action like-btn">Like</button>
+</div>
+</div>
+</div>
+-->
+</div>
+</section>
+</div>
+​<!-- FOOTER COMPONENT CONTAINER -->
+<div id="footer-container"></div>
+​<div id="toaster"></div>
+​<!-- PATH FIX: Consistent relative paths -->
+<script src="./Scripts/component-loader.js"></script>
+<script src="./Scripts/scripts.js"></script>
+<script src="./Scripts/character.js"></script>
 </body>
 </html>
