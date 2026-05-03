@@ -22,7 +22,6 @@ function getElementIcon(element) {
     "Dendro": "🌿",
     "Physical": "⚔️"
   };
-  // Returns formatted string if found, otherwise just the element name
   return icons[element] ? `${icons[element]} ${element}` : element;
 }
 
@@ -131,9 +130,21 @@ const charactersData = [
     tags: ["DEF Ally Buffer"],
     bio: "Nexon Dyke Martinez, known simply as Nexon, is an energetic and spirited Special Agent within the SSIA. Born in Little Hansa, a small but vibrant town in the Federal Republic of Mittlemagizste, Nexon grew up surrounded by the bustling activity of a close-knit community. He is known for his comedic personality, humor, and seemingly carefree attitude."
   },
-
-  
 ];
+
+/* ────────────────────────────────────────────────────────── */
+/* FILTER STATE                                               */
+/* ────────────────────────────────────────────────────────── */
+
+/**
+ * Tracks which filters are currently active.
+ * null means "show all" for that category.
+ */
+const activeFilters = {
+  faction: null,   // e.g. "SSIA" | "SIRA" | null
+  element: null,   // e.g. "Pyro" | "Electro" | null
+  rarity: null     // e.g. 4 | 5 | null
+};
 
 /* ────────────────────────────────────────────────────────── */
 /* UTILITIES                                                  */
@@ -163,6 +174,161 @@ function emitToast(message) {
       detail: message
     })
   );
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* FILTER STYLES (injected into <head> at runtime)           */
+/* ────────────────────────────────────────────────────────── */
+
+function injectFilterStyles() {
+  if (document.getElementById("filter-bar-styles")) return; // already injected
+
+  const style = document.createElement("style");
+  style.id = "filter-bar-styles";
+  style.textContent = `
+    #filter-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 12px 0 20px;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted, #888);
+      min-width: 64px;
+    }
+
+    .filter-btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-btn {
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border, #444);
+      background: transparent;
+      color: var(--color-text, #ddd);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--color-accent, #c89b3c);
+      color: var(--color-accent, #c89b3c);
+    }
+
+    .filter-btn.active {
+      background: var(--color-accent, #c89b3c);
+      border-color: var(--color-accent, #c89b3c);
+      color: #fff;
+      font-weight: 600;
+    }
+  `;
+
+  document.head.appendChild(style);
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* FILTER BAR                                                 */
+/* ────────────────────────────────────────────────────────── */
+
+/**
+ * Derives unique sorted values from charactersData for a given key.
+ * Used to auto-build filter buttons whenever new characters are added.
+ */
+function getUniqueValues(key) {
+  const values = charactersData.map((c) => c[key]);
+  return [...new Set(values)].sort((a, b) =>
+    typeof a === "number" ? a - b : String(a).localeCompare(String(b))
+  );
+}
+
+/**
+ * Creates the full filter bar HTML and injects it right after the search bar.
+ * Re-renders itself on every filter change to keep button active states in sync.
+ */
+function renderFilterBar() {
+  // Remove existing bar so we can redraw it cleanly
+  const existing = document.getElementById("filter-bar");
+  if (existing) existing.remove();
+
+  const factions  = getUniqueValues("faction");
+  const elements  = getUniqueValues("element");
+  const rarities  = getUniqueValues("rarity");
+
+  const bar = document.createElement("div");
+  bar.id = "filter-bar";
+
+  // ── helper: build one filter row ──────────────────────────────────────────
+  function buildRow(label, values, filterKey, labelFn) {
+    const row = document.createElement("div");
+    row.className = "filter-row";
+
+    const title = document.createElement("span");
+    title.className = "filter-label";
+    title.textContent = label;
+    row.appendChild(title);
+
+    const btnWrap = document.createElement("div");
+    btnWrap.className = "filter-btn-group";
+
+    // "All" reset pill
+    const allBtn = document.createElement("button");
+    allBtn.className = "filter-btn" + (activeFilters[filterKey] === null ? " active" : "");
+    allBtn.textContent = "All";
+    allBtn.addEventListener("click", () => {
+      activeFilters[filterKey] = null;
+      renderFilterBar();
+      applyFilters();
+    });
+    btnWrap.appendChild(allBtn);
+
+    values.forEach((val) => {
+      const btn = document.createElement("button");
+      btn.className = "filter-btn" + (activeFilters[filterKey] === val ? " active" : "");
+      btn.textContent = labelFn ? labelFn(val) : val;
+      btn.addEventListener("click", () => {
+        // Clicking the already-active filter deselects it (toggles off)
+        activeFilters[filterKey] = activeFilters[filterKey] === val ? null : val;
+        renderFilterBar();
+        applyFilters();
+      });
+      btnWrap.appendChild(btn);
+    });
+
+    row.appendChild(btnWrap);
+    return row;
+  }
+
+  bar.appendChild(buildRow("Faction",  factions, "faction", null));
+  bar.appendChild(buildRow("Element",  elements, "element", (el) => getElementIcon(el)));
+  bar.appendChild(buildRow("Rarity",   rarities, "rarity",  (r) => `${"⭐".repeat(r)} (${r}★)`));
+
+  // Inject bar after the search bar wrapper
+  const searchBar = document.getElementById("character-search");
+  if (searchBar) {
+    // Walk up to the nearest containing wrapper; fall back to inserting after the input itself
+    const parent = searchBar.closest(".search-wrapper") || searchBar.parentElement;
+    parent.insertAdjacentElement("afterend", bar);
+  } else {
+    // No search bar found — just prepend to the character container's parent
+    characterContainer?.parentElement?.insertBefore(bar, characterContainer);
+  }
 }
 
 /* ────────────────────────────────────────────────────────── */
@@ -259,9 +425,16 @@ function createCharacterCard(character) {
   const card = document.createElement("article");
   card.className = "character-card reveal";
 
-  const favCount = loadCounter(character.id, "fav");
+  // Store filter values as data attributes so applyFilters() can read them
+  // without re-querying the DOM
+  card.dataset.faction = character.faction;
+  card.dataset.element = character.element;
+  card.dataset.rarity  = character.rarity;
+  card.dataset.name    = character.name.toLowerCase();
+
+  const favCount  = loadCounter(character.id, "fav");
   const likeCount = loadCounter(character.id, "like");
-  const ownCount = loadCounter(character.id, "own");
+  const ownCount  = loadCounter(character.id, "own");
 
   card.innerHTML = `
     <div class="rarity-bar rarity-${character.rarity}"></div>
@@ -310,9 +483,9 @@ function createCharacterCard(character) {
   });
 
   const actionTypes = [
-    { selector: ".fav-btn", type: "fav", message: `${character.name} added to Favorites!` },
+    { selector: ".fav-btn",  type: "fav",  message: `${character.name} added to Favorites!` },
     { selector: ".like-btn", type: "like", message: `You liked ${character.name}!` },
-    { selector: ".own-btn", type: "own", message: `You own ${character.name}!` }
+    { selector: ".own-btn",  type: "own",  message: `You own ${character.name}!` }
   ];
 
   actionTypes.forEach((action) => {
@@ -331,7 +504,7 @@ function createCharacterCard(character) {
 }
 
 /* ────────────────────────────────────────────────────────── */
-/* RENDERING & SEARCH                                          */
+/* RENDERING, SEARCH & FILTERING                              */
 /* ────────────────────────────────────────────────────────── */
 
 function renderCharacters() {
@@ -346,13 +519,27 @@ function renderCharacters() {
   revealCards();
 }
 
-function filterCharacters() {
-  const input = document.getElementById("character-search").value.toLowerCase();
+/**
+ * Single source of truth for card visibility.
+ * Combines the search input with all three active filters.
+ */
+function applyFilters() {
+  const searchInput = (document.getElementById("character-search")?.value || "").toLowerCase();
   const cards = document.querySelectorAll(".character-card");
+
   cards.forEach((card) => {
-    const name = card.querySelector("h2").textContent.toLowerCase();
-    card.style.display = name.includes(input) ? "" : "none";
+    const nameMatch    = card.dataset.name.includes(searchInput);
+    const factionMatch = activeFilters.faction === null || card.dataset.faction === activeFilters.faction;
+    const elementMatch = activeFilters.element === null || card.dataset.element === activeFilters.element;
+    const rarityMatch  = activeFilters.rarity  === null || Number(card.dataset.rarity) === activeFilters.rarity;
+
+    card.style.display = (nameMatch && factionMatch && elementMatch && rarityMatch) ? "" : "none";
   });
+}
+
+// Keep the old name working so any external callers aren't broken
+function filterCharacters() {
+  applyFilters();
 }
 
 function revealCards() {
@@ -368,8 +555,15 @@ function revealCards() {
   cards.forEach((card) => observer.observe(card));
 }
 
+/* ────────────────────────────────────────────────────────── */
+/* INIT                                                        */
+/* ────────────────────────────────────────────────────────── */
+
 document.addEventListener("DOMContentLoaded", () => {
+  injectFilterStyles();
   renderCharacters();
+  renderFilterBar();
+
   const search = document.getElementById("character-search");
-  if (search) search.addEventListener("input", filterCharacters);
+  if (search) search.addEventListener("input", applyFilters);
 });
