@@ -48,7 +48,23 @@ const charactersData = [
     splash: "https://i.supaimg.com/19def742-4339-449e-b35f-fdcfd23f8e28.png",
     tags: ["Support", "DPS"],
     bio: "Calm, strategic, and brilliant in behavioral profiling."
-  }
+  },
+
+  {
+    id: "hannabi",
+    name: "Hannabi Ingrid Stephanie",
+    rarity: 5,
+    role: "Healer",
+    faction: "SSIA",
+    element: "💧 Hydro",
+    weapon: "Sword",
+    portrait: "https://i.supaimg.com/b3da42ad-02aa-4f1a-b499-acc775586122/768ec0e5-e03b-41d4-9da1-91b25a972647.png",
+    splash: "https://i.supaimg.com/b3da42ad-02aa-4f1a-b499-acc775586122/768ec0e5-e03b-41d4-9da1-91b25a972647.png",
+    tags: ["Support", "Hydro"],
+    bio: "a Timid Probie."
+  },
+
+   
 ];
 
 /* ────────────────────────────────────────────────────────── */
