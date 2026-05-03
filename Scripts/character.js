@@ -20,7 +20,9 @@ function getElementIcon(element) {
     "Aero": "🍃",
     "Geo": "🪨",
     "Dendro": "🌿",
-    "Physical": "⚔️"
+    "Physical": "⚔️",
+    "Void": "🌌",
+    "Spectro": "🔆"
   };
   return icons[element] ? `${icons[element]} ${element}` : element;
 }
