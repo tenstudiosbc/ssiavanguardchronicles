@@ -129,7 +129,7 @@ const charactersData = [
     portrait: "https://i.supaimg.com/b3da42ad-02aa-4f1a-b499-acc775586122/c95589f6-13a8-481d-9336-504ff271c9c9.png",
     splash: "https://i.supaimg.com/b3da42ad-02aa-4f1a-b499-acc775586122/c95589f6-13a8-481d-9336-504ff271c9c9.png",
     tags: ["DEF Ally Buffer"],
-    bio: "Nexon Dyke Martinez, known simply as Nexon, is an energetic and spirited Special Agent within the SSIA. Born in Little Hansa, a small but vibrant town in the Federal Republic of Mittlemagizste, Nexon grew up surrounded by the bustling activity of a close-knit community. He is known for his comedic personality, humor, and seemingly carefree attitude. Despite his playful demeanor, Nexon is highly skilled in the field and often proves himself to be an asset when the team faces difficult situations. His introverted nature is balanced by his occasional bouts of insecurity and the drive to prove himself, making him a more layered character than he first appears."
+    bio: "Nexon Dyke Martinez, known simply as Nexon, is an energetic and spirited Special Agent within the SSIA. Born in Little Hansa, a small but vibrant town in the Federal Republic of Mittlemagizste, Nexon grew up surrounded by the bustling activity of a close-knit community. He is known for his comedic personality, humor, and seemingly carefree attitude."
   },
 
   
