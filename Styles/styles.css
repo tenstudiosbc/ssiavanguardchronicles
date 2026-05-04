@@ -146,6 +146,18 @@ nav {
   text-shadow: 0 0 8px rgba(0, 245, 212, 0.5);
 }
 
+.nav-links a.external-link .arrow {
+  display: inline-block;
+  margin-left: 4px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.7;
+}
+
+.nav-links a.external-link:hover .arrow {
+  transform: translateX(2px) translateY(-2px);
+  opacity: 1;
+}
+
 .nav-links a.discord {
   color: #818cf8;
   border: 1px solid rgba(88, 101, 242, 0.3);
@@ -1025,5 +1037,10 @@ footer p strong {
   .nav-links a {
     font-size: 0.55rem;
     padding: 6px 8px;
+  }
+
+  .nav-links a.external-link .arrow {
+    margin-left: 2px;
+    font-size: 0.9em;
   }
 }
