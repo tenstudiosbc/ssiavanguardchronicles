@@ -179,6 +179,11 @@ const activeFilters = {
   rarity: null     // e.g. 4 | 5 | null
 };
 
+/**
+ * Tracks current sort setting.
+ */
+let currentSort = "name-asc";
+
 /* ────────────────────────────────────────────────────────── */
 /* UTILITIES                                                  */
 /* ────────────────────────────────────────────────────────── */
@@ -271,6 +276,44 @@ function injectFilterStyles() {
       color: #fff;
       font-weight: 600;
     }
+
+    .sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted, #888);
+      white-space: nowrap;
+    }
+
+    .sort-select {
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--color-border, #444);
+      background: transparent;
+      color: var(--color-text, #ddd);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      font-family: inherit;
+    }
+
+    .sort-select:hover {
+      border-color: var(--color-accent, #c89b3c);
+      color: var(--color-accent, #c89b3c);
+    }
+
+    .sort-select:focus {
+      outline: none;
+      border-color: var(--color-accent, #c89b3c);
+      box-shadow: 0 0 0 2px rgba(200, 155, 60, 0.2);
+    }
   `;
 
   document.head.appendChild(style);
@@ -289,6 +332,74 @@ function getUniqueValues(key) {
   return [...new Set(values)].sort((a, b) =>
     typeof a === "number" ? a - b : String(a).localeCompare(String(b))
   );
+}
+
+/**
+ * Creates the sort dropdown and injects it into the topbar.
+ */
+function renderSortBar() {
+  let sortWrap = document.getElementById("sort-wrap");
+  if (!sortWrap) {
+    sortWrap = document.createElement("div");
+    sortWrap.id = "sort-wrap";
+    sortWrap.className = "sort-wrap";
+    sortWrap.innerHTML = `
+      <span class="sort-label">Sort</span>
+      <select class="sort-select" id="sort-select">
+        <option value="name-asc">Name (A-Z)</option>
+        <option value="name-desc">Name (Z-A)</option>
+        <option value="rarity-high">Rarity (High to Low)</option>
+        <option value="rarity-low">Rarity (Low to High)</option>
+      </select>
+    `;
+
+    const topbar = document.querySelector(".characters-topbar");
+    if (topbar) {
+      topbar.appendChild(sortWrap);
+    }
+  }
+
+  const sortSelect = document.getElementById("sort-select");
+  if (sortSelect) {
+    sortSelect.value = currentSort;
+    sortSelect.addEventListener("change", (e) => {
+      currentSort = e.target.value;
+      applySorting();
+    });
+  }
+}
+
+/**
+ * Applies current sort to visible cards.
+ */
+function applySorting() {
+  const cards = Array.from(document.querySelectorAll(".character-card"));
+  const visibleCards = cards.filter(card => card.style.display !== "none");
+
+  visibleCards.sort((a, b) => {
+    const nameA = a.dataset.name || "";
+    const nameB = b.dataset.name || "";
+    const rarityA = parseInt(a.dataset.rarity) || 0;
+    const rarityB = parseInt(b.dataset.rarity) || 0;
+
+    switch (currentSort) {
+      case "name-asc":
+        return nameA.localeCompare(nameB);
+      case "name-desc":
+        return nameB.localeCompare(nameA);
+      case "rarity-high":
+        return rarityB - rarityA;
+      case "rarity-low":
+        return rarityA - rarityB;
+      default:
+        return 0;
+    }
+  });
+
+  const container = document.getElementById("characters-container");
+  if (container) {
+    visibleCards.forEach(card => container.appendChild(card));
+  }
 }
 
 /**
@@ -568,6 +679,8 @@ function applyFilters() {
 
     card.style.display = (nameMatch && factionMatch && elementMatch && rarityMatch) ? "" : "none";
   });
+
+  applySorting();
 }
 
 // Keep the old name working so any external callers aren't broken
@@ -596,6 +709,7 @@ document.addEventListener("DOMContentLoaded", () => {
   injectFilterStyles();
   renderCharacters();
   renderFilterBar();
+  renderSortBar();
 
   const search = document.getElementById("character-search");
   if (search) search.addEventListener("input", applyFilters);
