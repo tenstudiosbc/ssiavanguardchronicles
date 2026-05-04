@@ -1007,10 +1007,33 @@ body {
 }
 
 /* ────────────────────────────────────────────────────────── */
-/* MOBILE                                                      */
+/* MOBILE LANDSCAPE & TABLETS                                  */
 /* ────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
+
+  .characters-header {
+    padding: 6rem 1rem 2.5rem;
+  }
+
+  .header-badge {
+    font-size: 0.65rem;
+    padding: 0.5rem 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .header-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .header-subtitle {
+    font-size: 0.9rem;
+    margin-top: 0.8rem;
+  }
+
+  .characters-section {
+    padding: 2rem 1rem 3rem;
+  }
 
   .characters-topbar {
     flex-direction: column;
@@ -1021,6 +1044,19 @@ body {
   .sort-wrap {
     order: -1;
     width: 100%;
+    flex-direction: column;
+  }
+
+  .sort-select {
+    width: 100%;
+  }
+
+  .search-wrap {
+    width: 100%;
+  }
+
+  #character-search {
+    width: 100%;
   }
 
   .character-counter {
@@ -1029,28 +1065,46 @@ body {
   }
 
   .characters-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
   }
 
   .portrait {
     height: 280px;
   }
 
+  .character-card {
+    min-height: auto;
+  }
+
   .char-actions {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .btn-char-action {
+    font-size: 0.75rem;
+    padding: 0.6rem 0.8rem;
   }
 
   .modal-top {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1rem;
   }
 
   .modal-top h2 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
 
   .modal-meta-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .modal-meta-item {
+    grid-column: span 1;
   }
 
   .modal-banner {
@@ -1061,47 +1115,184 @@ body {
     padding: 1.4rem;
   }
 
+  .character-modal-content {
+    width: 90vw;
+    max-width: 600px;
+  }
+
 }
 
 /* ────────────────────────────────────────────────────────── */
 /* SMALL MOBILE                                                */
 /* ────────────────────────────────────────────────────────── */
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
 
   .characters-header {
-    padding:
-      6.5rem
-      1rem
-      3rem;
+    padding: 5rem 0.75rem 2rem;
+  }
+
+  .header-badge {
+    font-size: 0.6rem;
+    padding: 0.45rem 0.8rem;
+    margin-bottom: 0.8rem;
   }
 
   .header-title {
-    font-size: 2.3rem;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    line-height: 1.1;
   }
 
   .header-subtitle {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
+    margin-top: 0.6rem;
   }
 
   .characters-section {
-    padding:
-      1.5rem
-      1rem
-      4rem;
+    padding: 1.5rem 0.75rem 2.5rem;
+  }
+
+  .characters-topbar {
+    gap: 0.8rem;
+  }
+
+  .search-wrap {
+    order: -1;
+  }
+
+  #character-search {
+    font-size: 0.8rem;
+    padding: 0.85rem 1rem 0.85rem 2.8rem;
+  }
+
+  .search-icon {
+    font-size: 0.9rem;
+    left: 0.9rem;
+  }
+
+  .character-counter {
+    font-size: 0.75rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .characters-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .portrait {
-    height: 240px;
+    height: 260px;
+  }
+
+  .character-card {
+    border-radius: 16px;
   }
 
   .character-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .character-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .rarity {
+    font-size: 0.85rem;
+  }
+
+  .character-meta {
+    font-size: 0.8rem;
+    gap: 0.4rem;
+  }
+
+  .tag-group {
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .char-bio {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .char-actions {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
   }
 
   .btn-char-action {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .btn-char-action span {
+    display: none;
+  }
+
+  .info {
+    padding: 1rem;
+    gap: 0.7rem;
+  }
+
+  .modal-banner {
+    height: 220px;
+  }
+
+  .modal-top h2 {
+    font-size: 1.5rem;
+  }
+
+  .modal-meta-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .modal-info {
+    padding: 1.2rem;
+  }
+
+  .character-modal-content {
+    width: 95vw;
+    max-width: 95vw;
+    max-height: 85vh;
+  }
+
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* EXTRA SMALL DEVICES                                          */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+
+  .characters-header {
+    padding: 4.5rem 0.5rem 1.5rem;
+  }
+
+  .header-badge {
+    font-size: 0.55rem;
+    padding: 0.4rem 0.7rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .header-title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    line-height: 1;
+  }
+
+  .header-subtitle {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+
+  .characters-section {
+    padding: 1rem 0.5rem 2rem;
   }
 
   .sort-wrap {
@@ -1111,6 +1302,77 @@ body {
 
   .sort-select {
     width: 100%;
+    font-size: 0.8rem;
+  }
+
+  #character-search {
+    font-size: 0.75rem;
+    padding: 0.75rem 0.9rem 0.75rem 2.4rem;
+  }
+
+  .search-icon {
+    font-size: 0.85rem;
+    left: 0.8rem;
+  }
+
+  .character-counter {
+    font-size: 0.7rem;
+    padding: 0.7rem 0.9rem;
+  }
+
+  .characters-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .portrait {
+    height: 240px;
+  }
+
+  .character-card {
+    border-radius: 12px;
+  }
+
+  .character-header {
+    gap: 0.3rem;
+  }
+
+  .character-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .rarity {
+    font-size: 0.75rem;
+  }
+
+  .character-meta {
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .char-bio {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .char-actions {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.3rem;
+  }
+
+  .btn-char-action {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .info {
+    padding: 0.9rem;
+    gap: 0.6rem;
   }
 
   .modal-banner {
@@ -1118,15 +1380,16 @@ body {
   }
 
   .modal-top h2 {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
 
   .modal-info {
-    padding: 1.2rem;
+    padding: 1rem;
   }
 
   .character-modal-content {
     width: 95vw;
+    max-height: 80vh;
   }
 
 }
