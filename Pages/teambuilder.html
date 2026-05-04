@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="description"
+    content="SSIA Vanguard Chronicles - Team Builder"
+  >
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>SSIA: Vanguard Chronicles - Team Builder</title>
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Chakra+Petch:wght@300;400;500;600;700&family=Exo+2:wght@100;300;400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- HTML2PDF LIBRARY -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <!-- MAIN CSS -->
+
+  <link rel="stylesheet" href="../Styles/styles.css">
+  <link rel="stylesheet" href="../Styles/characters.css">
+  <link rel="stylesheet" href="../Styles/teambuilder-styles.css">
+
+</head>
+
+<body>
+
+  <!-- BACKGROUND -->
+
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- NAVBAR -->
+
+  <div id="navbar-container"></div>
+
+  <!-- PAGE HERO -->
+
+  <header class="characters-header">
+
+    <div class="header-content">
+
+      <span class="header-badge">
+        TEAM COMMAND
+      </span>
+
+      <h1 class="header-title">
+        Team Builder
+      </h1>
+
+      <p class="header-subtitle">
+        Assemble your ultimate operative squad
+      </p>
+
+    </div>
+
+  </header>
+
+  <!-- MAIN CONTENT -->
+
+  <main class="section-wrapper">
+
+    <section class="teambuilder-section reveal">
+
+      <!-- CONTROLS BAR -->
+
+      <div class="tb-topbar">
+
+        <div class="tb-controls-left">
+
+          <button id="clear-team-btn" class="tb-btn btn-secondary">
+            🗑️ CLEAR TEAM
+          </button>
+
+          <button id="save-pdf-btn" class="tb-btn btn-primary">
+            💾 DOWNLOAD PDF
+          </button>
+
+        </div>
+
+        <div class="tb-team-counter">
+
+          <span id="team-count">
+            0 / 4 Members
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- MAIN LAYOUT -->
+
+      <div class="tb-main-grid">
+
+        <!-- LEFT: CHARACTER SELECTION -->
+
+        <section class="tb-left-panel">
+
+          <div class="tb-panel-header">
+
+            <h2 class="tb-panel-title">SELECT OPERATIVES</h2>
+
+            <div class="search-wrap tb-search">
+
+              <span class="search-icon">⌕</span>
+
+              <input
+                type="text"
+                id="team-character-search"
+                placeholder="SEARCH_AGENTS..."
+                autocomplete="off"
+              >
+
+            </div>
+
+          </div>
+
+          <div class="tb-character-list" id="character-list-container">
+
+            <!-- Characters will be injected here -->
+
+          </div>
+
+        </section>
+
+        <!-- RIGHT: TEAM DISPLAY & INFO -->
+
+        <section class="tb-right-panel">
+
+          <!-- TEAM MEMBERS -->
+
+          <div class="tb-team-display">
+
+            <h2 class="tb-panel-title">YOUR TEAM</h2>
+
+            <div class="tb-team-slots" id="team-slots-container">
+
+              <div class="tb-team-slot empty" data-slot="1">
+                <div class="slot-placeholder">
+                  <span class="slot-number">SLOT 1</span>
+                  <span class="slot-label">Drag or Click to Add</span>
+                </div>
+              </div>
+
+              <div class="tb-team-slot empty" data-slot="2">
+                <div class="slot-placeholder">
+                  <span class="slot-number">SLOT 2</span>
+                  <span class="slot-label">Drag or Click to Add</span>
+                </div>
+              </div>
+
+              <div class="tb-team-slot empty" data-slot="3">
+                <div class="slot-placeholder">
+                  <span class="slot-number">SLOT 3</span>
+                  <span class="slot-label">Drag or Click to Add</span>
+                </div>
+              </div>
+
+              <div class="tb-team-slot empty" data-slot="4">
+                <div class="slot-placeholder">
+                  <span class="slot-number">SLOT 4</span>
+                  <span class="slot-label">Drag or Click to Add</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ELEMENTAL COUNTER INFO -->
+
+          <div class="tb-counter-info">
+
+            <h3 class="tb-info-title">ELEMENTAL COUNTERS</h3>
+
+            <div class="tb-counter-table" id="counter-table">
+
+              <!-- Counter info will be injected here -->
+
+            </div>
+
+            <p class="tb-counter-hint">
+              💡 Tip: Use different elements to maximize team coverage
+            </p>
+
+          </div>
+
+          <!-- TEAM TIPS -->
+
+          <div class="tb-tips-section">
+
+            <h3 class="tb-info-title">TEAM BUILDING TIPS</h3>
+
+            <div class="tb-tips-list">
+
+              <div class="tb-tip">
+                <span class="tip-icon">⚔️</span>
+                <span class="tip-text">Balance DPS with Support roles</span>
+              </div>
+
+              <div class="tb-tip">
+                <span class="tip-icon">🔄</span>
+                <span class="tip-text">Mix elemental types for versatility</span>
+              </div>
+
+              <div class="tb-tip">
+                <span class="tip-icon">❤️</span>
+                <span class="tip-text">Include at least one healer</span>
+              </div>
+
+              <div class="tb-tip">
+                <span class="tip-icon">🎯</span>
+                <span class="tip-text">Consider weapon synergies</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+
+  <div id="footer-container"></div>
+
+  <!-- TOASTER -->
+
+  <div id="toaster"></div>
+
+  <!-- LOADING SCREEN -->
+
+  <div id="page-loader">
+
+    <div class="loader-content">
+
+      <div class="loader-spinner"></div>
+
+      <p>
+        INITIALIZING TEAM BUILDER...
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL FOR CHARACTER SELECTION (Mobile) -->
+
+  <div id="character-modal" class="tb-modal">
+
+    <div class="tb-modal-content">
+
+      <div class="tb-modal-header">
+
+        <h2>SELECT OPERATIVE</h2>
+
+        <button id="modal-close-btn" class="tb-modal-close">✕</button>
+
+      </div>
+
+      <div class="tb-modal-body" id="modal-character-list">
+
+        <!-- Characters will be injected for mobile selection -->
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SCRIPTS -->
+
+  <script src="../Scripts/component-loader.js"></script>
+
+  <script src="../Scripts/scripts.js"></script>
+
+  <script src="../Scripts/character.js"></script>
+
+  <script src="../Scripts/teambuilder.js"></script>
+
+</body>
+
+</html>
