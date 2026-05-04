@@ -101,6 +101,7 @@ function initializeTeamBuilder() {
   setupDragAndDrop();
   updateTeamCounter();
   updateCounterInfo();
+  updateTeamStrength();
 }
 
 /* ────────────────────────────────────────────────────────── */
@@ -187,6 +188,7 @@ function addCharacterToTeam(character) {
   updateTeamDisplay();
   updateTeamCounter();
   updateCounterInfo();
+  updateTeamStrength();
 
   // Close modal on mobile
   if (teamBuilderState.isMobile) {
@@ -203,6 +205,7 @@ function removeCharacterFromSlot(slotIndex) {
     updateTeamDisplay();
     updateTeamCounter();
     updateCounterInfo();
+    updateTeamStrength();
     showToast(`${character.name} removed from team`, "info");
   }
 }
@@ -214,6 +217,7 @@ function clearTeam() {
       updateTeamDisplay();
       updateTeamCounter();
       updateCounterInfo();
+      updateTeamStrength();
       showToast("Team cleared!", "info");
     }
   }
@@ -330,6 +334,96 @@ function updateCounterInfo() {
 }
 
 /* ────────────────────────────────────────────────────────– */
+/* TEAM STRENGTH SCORING                                      */
+/* ────────────────────────────────────────────────────────– */
+
+function calculateTeamStrength() {
+  const team = teamBuilderState.team;
+  const filledCount = team.filter(m => m !== null).length;
+
+  // Calculate Completeness (0-25 points)
+  const completenessScore = Math.round((filledCount / 4) * 25);
+
+  // Calculate Role Diversity (0-25 points)
+  const roles = team.filter(m => m !== null).map(m => m.role);
+  const uniqueRoles = new Set(roles);
+  const roleDiversityScore = Math.round((uniqueRoles.size / Math.min(4, uniqueRoles.size)) * 25);
+
+  // Calculate Element Coverage (0-25 points)
+  const elements = team.filter(m => m !== null).map(m => m.element);
+  const uniqueElements = new Set(elements);
+  const elementCoverageScore = Math.round((uniqueElements.size / Math.min(4, uniqueElements.size)) * 25);
+
+  // Calculate Team Balance (0-25 points)
+  let balanceScore = 0;
+  if (filledCount > 0) {
+    // Check for healer
+    const hasHealer = team.some(m => m && m.role.toLowerCase().includes("healer"));
+    if (hasHealer) balanceScore += 10;
+
+    // Check for support
+    const hasSupport = team.some(m => m && m.role.toLowerCase().includes("support"));
+    if (hasSupport) balanceScore += 5;
+
+    // Check for DPS variety
+    const dpsCount = team.filter(m => m && m.role.toLowerCase().includes("dps")).length;
+    if (dpsCount >= 2) balanceScore += 5;
+
+    // Check for tank
+    const hasTank = team.some(m => m && m.role.toLowerCase().includes("tank"));
+    if (hasTank) balanceScore += 5;
+
+    // Bonus for team completeness
+    if (filledCount === 4) balanceScore += Math.min(5, balanceScore);
+  }
+  balanceScore = Math.min(25, balanceScore);
+
+  // Calculate total score (0-100)
+  const totalScore = completenessScore + roleDiversityScore + elementCoverageScore + balanceScore;
+
+  return {
+    total: totalScore,
+    completeness: completenessScore,
+    roleDiversity: roleDiversityScore,
+    elementCoverage: elementCoverageScore,
+    balance: balanceScore
+  };
+}
+
+function updateTeamStrength() {
+  const score = calculateTeamStrength();
+
+  // Update percentage
+  const percentageEl = document.getElementById("team-strength-percentage");
+  if (percentageEl) {
+    percentageEl.textContent = `${score.total}%`;
+  }
+
+  // Update fill bar
+  const fillEl = document.getElementById("team-strength-fill");
+  if (fillEl) {
+    fillEl.style.width = `${score.total}%`;
+    
+    // Change color based on score
+    if (score.total < 25) {
+      fillEl.style.background = "linear-gradient(90deg, #ff4060, #ff6080)";
+    } else if (score.total < 50) {
+      fillEl.style.background = "linear-gradient(90deg, #f0c060, #ffd080)";
+    } else if (score.total < 75) {
+      fillEl.style.background = "linear-gradient(90deg, #00d4aa, #00f5d4)";
+    } else {
+      fillEl.style.background = "linear-gradient(90deg, #00ff88, #00f5d4)";
+    }
+  }
+
+  // Update stats
+  document.getElementById("stat-completeness").textContent = `${score.completeness}/25`;
+  document.getElementById("stat-diversity").textContent = `${score.roleDiversity}/25`;
+  document.getElementById("stat-elements").textContent = `${score.elementCoverage}/25`;
+  document.getElementById("stat-balance").textContent = `${score.balance}/25`;
+}
+
+/* ────────────────────────────────────────────────────────– */
 /* SEARCH FUNCTIONALITY                                        */
 /* ────────────────────────────────────────────────────────– */
 
@@ -400,6 +494,7 @@ function setupDragAndDrop() {
         updateTeamDisplay();
         updateTeamCounter();
         updateCounterInfo();
+        updateTeamStrength();
         showToast(`${character.name} added to Slot ${slotIndex + 1}!`, "success");
       }
     });
