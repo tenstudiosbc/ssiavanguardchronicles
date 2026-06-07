@@ -488,7 +488,8 @@ function createCharacterModal() {
     <div class="modal-overlay"></div>
     <div class="character-modal-content">
       <button class="modal-close-btn">✕</button>
-      <div class="modal-body"></div>
+      <div class="modal-banner"></div>
+      <div class="modal-info"></div>
     </div>
   `;
 
@@ -507,45 +508,42 @@ function createCharacterModal() {
 
 function openCharacterModal(character) {
   const modal = document.getElementById("character-modal");
-  const modalBody = modal.querySelector(".modal-body");
+  const modalBanner = modal.querySelector(".modal-banner");
+  const modalInfo = modal.querySelector(".modal-info");
 
-  modalBody.innerHTML = `
-    <div class="modal-banner">
-      <img src="${character.splash}" alt="${character.name}">
+  modalBanner.innerHTML = `<img src="${character.splash}" alt="${character.name}">`;
+
+  modalInfo.innerHTML = `
+    <div class="modal-top">
+      <div>
+        <h2>${character.name}</h2>
+        <p class="modal-rarity">${createStars(character.rarity)}</p>
+      </div>
+      <span class="modal-role">${character.role}</span>
     </div>
 
-    <div class="modal-info">
-      <div class="modal-top">
-        <div>
-          <h2>${character.name}</h2>
-          <p class="modal-rarity">${createStars(character.rarity)}</p>
-        </div>
-        <span class="modal-role">${character.role}</span>
+    <div class="modal-meta-grid">
+      <div class="meta-box">
+        <span>Element</span>
+        <strong>${getElementIcon(character.element)}</strong>
       </div>
+      <div class="meta-box">
+        <span>Weapon</span>
+        <strong>${character.weapon}</strong>
+      </div>
+      <div class="meta-box">
+        <span>Faction</span>
+        <strong>${character.faction}</strong>
+      </div>
+      <div class="meta-box">
+        <span>Tags</span>
+        <strong>${character.tags.join(", ")}</strong>
+      </div>
+    </div>
 
-      <div class="modal-meta-grid">
-        <div class="meta-box">
-          <span>Element</span>
-          <strong>${getElementIcon(character.element)}</strong>
-        </div>
-        <div class="meta-box">
-          <span>Weapon</span>
-          <strong>${character.weapon}</strong>
-        </div>
-        <div class="meta-box">
-          <span>Faction</span>
-          <strong>${character.faction}</strong>
-        </div>
-        <div class="meta-box">
-          <span>Tags</span>
-          <strong>${character.tags.join(", ")}</strong>
-        </div>
-      </div>
-
-      <div class="modal-bio">
-        <h3>Biography</h3>
-        <p>${character.bio}</p>
-      </div>
+    <div class="modal-bio">
+      <h3>Biography</h3>
+      <p>${character.bio}</p>
     </div>
   `;
 
