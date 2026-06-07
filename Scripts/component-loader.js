@@ -76,6 +76,12 @@ async function loadComponent(componentPath, targetSelector) {
     fixComponentLinks(targetElement);
 
     console.log(`[Component Loader] ${componentPath} loaded successfully`);
+
+    // Dispatch event for specific component loaded
+    const componentName = componentPath.split('/').pop().replace('.html', '');
+    document.dispatchEvent(new CustomEvent('componentLoaded', { 
+      detail: { component: componentName, path: componentPath, target: targetSelector }
+    }));
   } catch (error) {
     console.error(`[Component Loader] Error loading ${componentPath}:`, error);
   }
@@ -90,6 +96,8 @@ async function loadComponents(components) {
   try {
     await Promise.all(components.map((comp) => loadComponent(comp.path, comp.target)));
     console.log('[Component Loader] All components loaded');
+    // Dispatch event when all components are loaded
+    document.dispatchEvent(new CustomEvent('componentsLoaded'));
   } catch (error) {
     console.error('[Component Loader] Error loading components:', error);
   }

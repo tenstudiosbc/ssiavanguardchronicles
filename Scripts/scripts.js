@@ -160,21 +160,29 @@ function initHamburgerMenu() {
   const navLinks = document.getElementById('nav-links');
 
   if (!hamburgerMenu || !navLinks) {
-    console.warn('Hamburger menu or nav-links not found');
-    return;
+    console.warn('[Hamburger Menu] Elements not found');
+    return false;
   }
 
+  console.log('[Hamburger Menu] Initializing...');
+
+  // Remove any existing listeners by cloning and replacing (to avoid duplicates on dynamic loads)
+  const newHamburgerMenu = hamburgerMenu.cloneNode(true);
+  hamburgerMenu.parentNode.replaceChild(newHamburgerMenu, hamburgerMenu);
+  const hamburgerMenuElement = document.getElementById('hamburger-menu');
+
   // Toggle menu on hamburger button click
-  hamburgerMenu.addEventListener('click', (e) => {
+  hamburgerMenuElement.addEventListener('click', (e) => {
     e.stopPropagation();
-    hamburgerMenu.classList.toggle('active');
+    e.preventDefault();
+    hamburgerMenuElement.classList.toggle('active');
     navLinks.classList.toggle('active');
   });
 
   // Close menu when a link is clicked
   navLinks.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
-      hamburgerMenu.classList.remove('active');
+      hamburgerMenuElement.classList.remove('active');
       navLinks.classList.remove('active');
     });
   });
@@ -183,7 +191,7 @@ function initHamburgerMenu() {
   document.addEventListener('click', (e) => {
     const isClickInsideNav = e.target.closest('nav');
     if (!isClickInsideNav && navLinks.classList.contains('active')) {
-      hamburgerMenu.classList.remove('active');
+      hamburgerMenuElement.classList.remove('active');
       navLinks.classList.remove('active');
     }
   });
@@ -191,15 +199,25 @@ function initHamburgerMenu() {
   // Close menu on window resize (if resizing back to desktop view)
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
-      hamburgerMenu.classList.remove('active');
+      hamburgerMenuElement.classList.remove('active');
       navLinks.classList.remove('active');
     }
   });
+
+  console.log('[Hamburger Menu] Initialized successfully');
+  return true;
 }
 
-// Initialize immediately if DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initHamburgerMenu);
-} else {
-  initHamburgerMenu();
+// Listen for navbar component being loaded (works for initial load and dynamic reloads)
+document.addEventListener('componentLoaded', (e) => {
+  if (e.detail.component === 'navbar') {
+    console.log('[Hamburger Menu] Navbar loaded, initializing hamburger menu...');
+    // Use setTimeout to ensure DOM is updated
+    setTimeout(initHamburgerMenu, 100);
+  }
+});
+
+// Fallback: Also try to initialize immediately if navbar already exists
+if (document.getElementById('hamburger-menu')) {
+  setTimeout(initHamburgerMenu, 100);
 }
