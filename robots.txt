@@ -12,4 +12,4 @@ Disallow: /private/
 Crawl-delay: 1
 
 # Specify sitemap location
-Sitemap: https://tenstudiosbc.github.io/ssiavanguardchronicles/sitemap.xml
+Sitemap: https://ssiavc.tenstudiosbc.my.id/sitemap.xml

@@ -4,7 +4,7 @@
   
   <!-- Home Page -->
   <url>
-    <loc>https://tenstudiosbc.github.io/ssiavanguardchronicles/</loc>
+    <loc>https://ssiavc.tenstudiosbc.my.id/</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -16,7 +16,7 @@
 
   <!-- Characters/Agents Page -->
   <url>
-    <loc>https://tenstudiosbc.github.io/ssiavanguardchronicles/Pages/characters.html</loc>
+    <loc>https://ssiavc.tenstudiosbc.my.id/Pages/characters.html</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -28,7 +28,7 @@
 
   <!-- Team Builder Page -->
   <url>
-    <loc>https://tenstudiosbc.github.io/ssiavanguardchronicles/Pages/teambuilder.html</loc>
+    <loc>https://ssiavc.tenstudiosbc.my.id/Pages/teambuilder.html</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -40,7 +40,7 @@
 
   <!-- Help Center Page -->
   <url>
-    <loc>https://tenstudiosbc.github.io/ssiavanguardchronicles/Pages/helpcenter.html</loc>
+    <loc>https://ssiavc.tenstudiosbc.my.id/Pages/helpcenter.html</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
