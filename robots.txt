@@ -1,0 +1,15 @@
+# SSIA Vanguard Chronicles - robots.txt
+# Allow search engines to index all pages
+
+User-agent: *
+Allow: /
+
+# Disallow private/admin areas (if any exist in future)
+Disallow: /admin/
+Disallow: /private/
+
+# Crawl delay to prevent server overload
+Crawl-delay: 1
+
+# Specify sitemap location
+Sitemap: https://tenstudiosbc.github.io/ssiavanguardchronicles/sitemap.xml
