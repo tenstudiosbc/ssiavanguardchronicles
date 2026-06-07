@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="description"
+    content="SSIA Vanguard Chronicles - Help Center"
+  >
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>SSIA: Vanguard Chronicles - Help Center</title>
+
+  <!-- GOOGLE FONTS -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Chakra+Petch:wght@300;400;500;600;700&family=Exo+2:wght@100;300;400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- MAIN CSS -->
+
+  <link rel="stylesheet" href="../Styles/styles.css">
+
+  <style>
+
+    /* HELP CENTER PAGE */
+
+    .helpcenter-header {
+      min-height: 42vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 70px;
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .helpcenter-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(0, 190, 255, 0.22), transparent 36%),
+        linear-gradient(180deg, rgba(3, 8, 18, 0.2), rgba(3, 8, 18, 0.96));
+      pointer-events: none;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 8px 18px;
+      border: 1px solid rgba(90, 220, 255, 0.42);
+      border-radius: 999px;
+      background: rgba(4, 22, 42, 0.72);
+      color: #79e6ff;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      box-shadow: 0 0 24px rgba(0, 195, 255, 0.16);
+    }
+
+    .header-title {
+      margin: 0;
+      font-family: "Exo 2", sans-serif;
+      font-size: clamp(2.6rem, 7vw, 5.7rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f4fbff;
+      text-shadow: 0 0 28px rgba(0, 200, 255, 0.28);
+    }
+
+    .header-subtitle {
+      margin: 18px auto 0;
+      max-width: 720px;
+      color: rgba(230, 248, 255, 0.82);
+      font-family: "Rajdhani", sans-serif;
+      font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    .helpcenter-section {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto 90px;
+    }
+
+    .helpcenter-topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 28px;
+      padding: 18px;
+      border: 1px solid rgba(112, 224, 255, 0.22);
+      border-radius: 18px;
+      background: rgba(5, 16, 32, 0.72);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+    }
+
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+      padding: 0 16px;
+      border: 1px solid rgba(112, 224, 255, 0.26);
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .search-icon {
+      margin-right: 12px;
+      color: #79e6ff;
+      font-size: 1.35rem;
+    }
+
+    #help-search {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #f4fbff;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+    }
+
+    #help-search::placeholder {
+      color: rgba(230, 248, 255, 0.42);
+    }
+
+    .help-counter {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(112, 224, 255, 0.24);
+      color: rgba(230, 248, 255, 0.86);
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+      background: rgba(0, 195, 255, 0.08);
+    }
+
+    .help-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .help-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 100%;
+      border: 1px solid rgba(112, 224, 255, 0.2);
+      border-radius: 22px;
+      background:
+        linear-gradient(145deg, rgba(5, 18, 36, 0.9), rgba(4, 10, 24, 0.92)),
+        radial-gradient(circle at top right, rgba(0, 196, 255, 0.18), transparent 36%);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.28);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .help-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(112, 224, 255, 0.42);
+      box-shadow: 0 26px 70px rgba(0, 180, 255, 0.12);
+    }
+
+    .help-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #79e6ff, rgba(255, 255, 255, 0.18));
+    }
+
+    .help-card-inner {
+      padding: 26px;
+    }
+
+    .help-card-kicker {
+      display: inline-flex;
+      margin-bottom: 12px;
+      color: #79e6ff;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .help-card h2 {
+      margin: 0 0 12px;
+      color: #ffffff;
+      font-family: "Exo 2", sans-serif;
+      font-size: clamp(1.45rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .help-card p {
+      margin: 0 0 18px;
+      color: rgba(230, 248, 255, 0.78);
+      font-family: "Rajdhani", sans-serif;
+      font-size: 1.06rem;
+      line-height: 1.65;
+    }
+
+    .help-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .help-list li {
+      position: relative;
+      padding: 11px 12px 11px 34px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.045);
+      color: rgba(244, 251, 255, 0.88);
+      font-family: "Rajdhani", sans-serif;
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .help-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 14px;
+      top: 10px;
+      color: #79e6ff;
+    }
+
+    .notice-panel {
+      margin-top: 28px;
+      padding: 22px;
+      border: 1px solid rgba(255, 209, 102, 0.3);
+      border-radius: 18px;
+      background: rgba(255, 196, 58, 0.08);
+      color: rgba(255, 244, 216, 0.9);
+      font-family: "Rajdhani", sans-serif;
+      font-size: 1.06rem;
+      line-height: 1.6;
+    }
+
+    .notice-panel strong {
+      color: #ffe29a;
+      font-family: "Chakra Petch", sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .quick-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid rgba(112, 224, 255, 0.24);
+      border-radius: 999px;
+      color: rgba(230, 248, 255, 0.86);
+      text-decoration: none;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      background: rgba(0, 195, 255, 0.06);
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .quick-links a:hover {
+      color: #ffffff;
+      border-color: rgba(112, 224, 255, 0.5);
+      background: rgba(0, 195, 255, 0.14);
+    }
+
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(2, 8, 18, 0.96);
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    #page-loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      display: grid;
+      place-items: center;
+      gap: 18px;
+      color: rgba(230, 248, 255, 0.86);
+      font-family: "Chakra Petch", sans-serif;
+      letter-spacing: 0.12em;
+      text-align: center;
+    }
+
+    .loader-spinner {
+      width: 58px;
+      height: 58px;
+      border: 3px solid rgba(112, 224, 255, 0.16);
+      border-top-color: #79e6ff;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 850px) {
+      .helpcenter-topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .help-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .help-counter {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .helpcenter-header {
+        padding: 105px 16px 56px;
+      }
+
+      .helpcenter-section {
+        width: min(100% - 22px, 1180px);
+        margin-bottom: 70px;
+      }
+
+      .help-card-inner {
+        padding: 22px;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- BACKGROUND -->
+
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- NAVBAR -->
+
+  <div id="navbar-container"></div>
+
+  <!-- PAGE HERO -->
+
+  <header class="helpcenter-header">
+
+    <div class="header-content">
+
+      <span class="header-badge">
+        SSIA SUPPORT DATABASE
+      </span>
+
+      <h1 class="header-title">
+        Help Center
+      </h1>
+
+      <p class="header-subtitle">
+        Technical support, save data guidance, low specification PC notes, and bug report instructions for SSIA: Vanguard Chronicles.
+      </p>
+
+      <div class="quick-links" aria-label="Help Center Quick Links">
+        <a href="#rpg-maker-vx-ace">VX ACE</a>
+        <a href="#rpg-maker-mv">RPG MAKER MV</a>
+        <a href="#save-recovery">SAVE RECOVERY</a>
+        <a href="#copy-save-data">COPY SAVE DATA</a>
+        <a href="#low-spec-pc">LOW SPEC PC</a>
+        <a href="#bug-reports">BUG REPORTS</a>
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- MAIN CONTENT -->
+
+  <main class="section-wrapper">
+
+    <section class="helpcenter-section">
+
+      <!-- TOP CONTROLS -->
+
+      <div class="helpcenter-topbar reveal">
+
+        <!-- SEARCH -->
+
+        <div class="search-wrap">
+
+          <span class="search-icon">
+            ⌕
+          </span>
+
+          <input
+            type="text"
+            id="help-search"
+            placeholder="SEARCH_SUPPORT_DATABASE..."
+            autocomplete="off"
+          >
+
+        </div>
+
+        <!-- HELP COUNT -->
+
+        <div class="help-counter">
+
+          <span id="help-count">
+            Loading Articles...
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- HELP GRID -->
+
+      <div class="help-grid" id="help-container">
+
+        <!-- ABOUT RPG MAKER VX ACE -->
+
+        <article
+          class="help-card reveal"
+          id="rpg-maker-vx-ace"
+          data-keywords="rpg maker vx ace rgss3 windows engine ssia vanguard chronicles performance save folder"
+        >
+
+          <div class="help-card-inner">
+
+            <span class="help-card-kicker">
+              ENGINE DATABASE / 001
+            </span>
+
+            <h2>
+              About RPG Maker VX Ace
+            </h2>
+
+            <p>
+              SSIA: Vanguard Chronicles is built with RPG Maker VX Ace. This engine is lightweight, Windows-focused, and suitable for 2D story-driven RPG experiences with tactical systems, dialogue scenes, maps, events, and custom scripts.
+            </p>
+
+            <ul class="help-list">
+              <li>Best played on Windows using the official game folder provided by TSBC Games Division.</li>
+              <li>Do not delete core files such as Game.exe, Game.ini, Audio, Graphics, Data, or System folders.</li>
+              <li>Keep the game inside a normal folder path, not inside restricted system folders.</li>
+              <li>If the game cannot open, try extracting the game again and running it from the extracted folder.</li>
+            </ul>
+
+          </div>
+
+        </article>
+
+        <!-- ABOUT RPG MAKER MV -->
+
+        <article
+          class="help-card reveal"
+          id="rpg-maker-mv"
+          data-keywords="rpg maker mv javascript html5 future engine android mobile version web version"
+        >
+
+          <div class="help-card-inner">
+
+            <span class="help-card-kicker">
+              ENGINE DATABASE / 002
+            </span>
+
+            <h2>
+              About RPG Maker MV
+            </h2>
+
+            <p>
+              RPG Maker MV is a newer RPG Maker engine that uses JavaScript and supports broader deployment targets. If SSIA: Vanguard Chronicles ever uses MV-related builds or experiments, it may behave differently from the VX Ace version.
+            </p>
+
+            <ul class="help-list">
+              <li>MV projects usually use different save systems compared to VX Ace.</li>
+              <li>VX Ace save files should not be assumed compatible with MV unless TSBC officially confirms it.</li>
+              <li>MV may support more modern deployment options, but performance depends on device, browser/runtime, and plugins.</li>
+              <li>Always follow the version notes included in the official TSBC release post.</li>
+            </ul>
+
+          </div>
+
+        </article>
+
+        <!-- SAVE DATA RECOVERY AND BACKUP -->
+
+        <article
+          class="help-card reveal"
+          id="save-recovery"
+          data-keywords="save data recovery backup save01 rvdata2 lost progress restore corrupted file"
+        >
+
+          <div class="help-card-inner">
+
+            <span class="help-card-kicker">
+              SAVE SUPPORT / 003
+            </span>
+
+            <h2>
+              Save Data Recovery and Backup
+            </h2>
+
+            <p>
+              Save data is important for continuing your Vanguard Chronicles progress. Before updating, moving, deleting, or reinstalling the game, make a backup of your save files first.
+            </p>
+
+            <ul class="help-list">
+              <li>Open your current SSIA: Vanguard Chronicles game folder.</li>
+              <li>Look for save files such as Save01.rvdata2, Save02.rvdata2, or similar VX Ace save files.</li>
+              <li>Copy the save files into a backup folder, external drive, cloud folder, or another safe location.</li>
+              <li>If a save becomes corrupted, replace it with your latest working backup.</li>
+              <li>Do not rename save files unless you understand the save slot order.</li>
+            </ul>
+
+          </div>
+
+        </article>
+
+        <!-- HOW TO COPY PASTE SAVE DATA -->
+
+        <article
+          class="help-card reveal"
+          id="copy-save-data"
+          data-keywords="copy paste save data newer version update transfer save01 rvdata2 old version new version"
+        >
+
+          <div class="help-card-inner">
+
+            <span class="help-card-kicker">
+              UPDATE SUPPORT / 004
+            </span>
+
+            <h2>
+              How To Copy Paste Save Data into Newer Version of the Game
+            </h2>
+
+            <p>
+              When TSBC releases a newer version, you can usually continue your progress by copying your save files from the old game folder into the new game folder, as long as the update remains compatible with previous saves.
+            </p>
+
+            <ul class="help-list">
+              <li>Download and extract the newest SSIA: Vanguard Chronicles version.</li>
+              <li>Open the old game folder and find your SaveXX.rvdata2 files.</li>
+              <li>Copy the save files from the old game folder.</li>
+              <li>Paste them into the new game folder, near Game.exe, unless the release notes say otherwise.</li>
+              <li>Launch the new version and check whether your save slot appears correctly.</li>
+              <li>Keep the old game folder until you confirm the new version works properly.</li>
+            </ul>
+
+          </div>
+
+        </article>
+
+        <!-- MY PC IS LOW SPECIFICATION -->
+
+        <article
+          class="help-card reveal"
+          id="low-spec-pc"
+          data-keywords="low specification pc laptop potato lag performance fps stutter old hardware windows"
+        >
+
+          <div class="help-card-inner">
+
+            <span class="help-card-kicker">
+              PERFORMANCE SUPPORT / 005
+            </span>
+
+            <h2>
+              My PC is at Low Specification
+            </h2>
+
+            <p>
+              SSIA: Vanguard Chronicles is designed to be playable on modest Windows hardware, but low specification PCs may still experience slow loading, stutter, or audio delay depending on storage speed, background apps, and system health.
+            </p>
+
+            <ul class="help-list">
+              <li>Close heavy apps such as browsers, launchers, screen recorders, and editing software before playing.</li>
+              <li>Play while your laptop is plugged in if your device lowers performance on battery mode.</li>
+              <li>Extract the game fully before running it; do not play directly from a compressed archive.</li>
+              <li>Move the game to internal storage or SSD if loading feels slow.</li>
+              <li>Restart your PC if the game becomes unusually slow after long usage.</li>
+              <li>Keep enough free storage so Windows can run smoothly.</li>
+            </ul>
+
+          </div>
+
+        </article>
+
+        <!-- BUG REPORTS -->
+
+        <article
+          class="help-card reveal"
+          id="bug-reports"
+          data-keywords="bug reports report issue glitch error crash softlock screenshot version tsbc support"
+        >
+
+          <div class="help-card-inner">
+
+            <span class="help-card-kicker">
+              FIELD REPORT / 006
+            </span>
+
+            <h2>
+              Bug Reports
+            </h2>
+
+            <p>
+              If you find a bug, glitch, crash, typo, map issue, softlock, missing dialogue, or broken event, send a clear report so TSBC can investigate it faster.
+            </p>
+
+            <ul class="help-list">
+              <li>Include your game version, for example: Version_DD_MM_YY.</li>
+              <li>Explain where the bug happened: map name, scene, chapter, or quest step.</li>
+              <li>Describe what you were doing before the bug appeared.</li>
+              <li>Attach screenshots or video if possible.</li>
+              <li>Mention whether the bug happens once or can be repeated.</li>
+              <li>Do not delete your save backup until the issue is solved.</li>
+            </ul>
+
+          </div>
+
+        </article>
+
+      </div>
+
+      <!-- NOTICE -->
+
+      <div class="notice-panel reveal">
+
+        <strong>Important Notice:</strong>
+        Always read the official release notes before updating SSIA: Vanguard Chronicles. Some updates may include new content, balance changes, event changes, file structure changes, or save compatibility notes.
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+
+  <div id="footer-container"></div>
+
+  <!-- TOASTER -->
+
+  <div id="toaster"></div>
+
+  <!-- LOADING SCREEN -->
+
+  <div id="page-loader">
+
+    <div class="loader-content">
+
+      <div class="loader-spinner"></div>
+
+      <p>
+        CONNECTING TO SSIA SUPPORT DATABASE...
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- SCRIPTS -->
+
+  <script src="../Scripts/component-loader.js"></script>
+
+  <script src="../Scripts/scripts.js"></script>
+
+  <!-- PAGE ENHANCEMENTS -->
+
+  <script>
+
+    /* HELP CENTER SEARCH */
+
+    function filterHelpArticles() {
+
+      const searchInput = document.getElementById("help-search");
+      const cards = document.querySelectorAll(".help-card");
+
+      if (!searchInput) return;
+
+      const query = searchInput.value.trim().toLowerCase();
+
+      cards.forEach(card => {
+
+        const title = card.querySelector("h2")?.textContent.toLowerCase() || "";
+        const text = card.textContent.toLowerCase();
+        const keywords = card.dataset.keywords?.toLowerCase() || "";
+
+        const match =
+          title.includes(query) ||
+          text.includes(query) ||
+          keywords.includes(query);
+
+        card.style.display = match ? "block" : "none";
+
+      });
+
+      updateHelpCount();
+
+    }
+
+    /* HELP CENTER COUNTER */
+
+    function updateHelpCount() {
+
+      const cards = document.querySelectorAll(".help-card");
+
+      const visibleCards = [...cards].filter(
+        card => card.style.display !== "none"
+      );
+
+      const counter = document.getElementById("help-count");
+
+      if (!counter) return;
+
+      counter.textContent =
+        `${visibleCards.length} SUPPORT ARTICLES`;
+
+    }
+
+    /* INIT PAGE */
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const search = document.getElementById("help-search");
+
+      if (search) {
+        search.addEventListener("input", filterHelpArticles);
+      }
+
+      setTimeout(() => {
+
+        updateHelpCount();
+
+        /* REMOVE LOADER */
+
+        const loader = document.getElementById("page-loader");
+
+        if (loader) {
+
+          loader.classList.add("hide");
+
+          setTimeout(() => {
+            loader.remove();
+          }, 500);
+
+        }
+
+      }, 400);
+
+    });
+
+  </script>
+
+</body>
+
+</html>
