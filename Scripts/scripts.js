@@ -153,3 +153,39 @@ const observer = new IntersectionObserver(
 );
 
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+/* ─── HAMBURGER MENU ─── */
+const hamburgerMenu = document.getElementById('hamburger-menu');
+const navLinks = document.getElementById('nav-links');
+
+if (hamburgerMenu && navLinks) {
+  // Toggle menu on hamburger button click
+  hamburgerMenu.addEventListener('click', () => {
+    hamburgerMenu.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  });
+
+  // Close menu when a link is clicked
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      hamburgerMenu.classList.remove('active');
+      navLinks.classList.remove('active');
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('nav')) {
+      hamburgerMenu.classList.remove('active');
+      navLinks.classList.remove('active');
+    }
+  });
+
+  // Close menu on window resize (if resizing back to desktop view)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      hamburgerMenu.classList.remove('active');
+      navLinks.classList.remove('active');
+    }
+  });
+}
