@@ -694,7 +694,8 @@ body {
 
   width: min(1000px, 92vw);
 
-  max-height: 90vh;
+  max-height: 85vh;
+  height: auto;
 
   border-radius: 28px;
 
@@ -715,6 +716,9 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(0, 255, 153, 0.15);
 }
 
 #character-modal.active .character-modal-content {
@@ -779,9 +783,32 @@ body {
 .modal-info {
   padding: 2rem;
   overflow-y: auto;
+  overflow-x: hidden;
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar styling */
+.modal-info::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-info::-webkit-scrollbar-track {
+  background: rgba(0, 255, 153, 0.05);
+  border-radius: 10px;
+}
+
+.modal-info::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 153, 0.3);
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.modal-info::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 153, 0.5);
 }
 
 .modal-top {
@@ -814,6 +841,9 @@ body {
     1rem;
 
   border-radius: 999px;
+
+  margin-bottom: 1rem;
+  flex-shrink: 0;
 
   background:
     rgba(0,255,153,0.08);
@@ -888,6 +918,82 @@ body {
   margin: 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+/* RESPONSIVE MODAL */
+
+@media (max-width: 768px) {
+  .character-modal-content {
+    max-height: 90vh;
+    width: min(100vw, 96vw);
+    border-radius: 20px;
+  }
+
+  .modal-banner {
+    height: 200px;
+  }
+
+  .modal-info {
+    padding: 1.5rem;
+  }
+
+  .modal-top {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-role {
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal-meta-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .modal-bio {
+    margin-top: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .character-modal-content {
+    max-height: 95vh;
+    width: 100vw;
+    border-radius: 16px;
+  }
+
+  .modal-close-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
+  .modal-banner {
+    height: 150px;
+  }
+
+  .modal-info {
+    padding: 1.2rem;
+  }
+
+  .modal-top h2 {
+    font-size: 1.5rem;
+  }
+
+  .meta-box {
+    padding: 0.8rem;
+  }
+
+  .meta-box span {
+    font-size: 0.7rem;
+  }
+
+  .meta-box strong {
+    font-size: 0.9rem;
+  }
 }
 
 /* ────────────────────────────────────────────────────────── */
