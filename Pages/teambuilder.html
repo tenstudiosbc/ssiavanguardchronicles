@@ -126,6 +126,10 @@
             💾 DOWNLOAD PDF
           </button>
 
+          <button id="settings-btn" class="tb-btn btn-settings">
+            ⚙️ SETTINGS
+          </button>
+
         </div>
 
         <div class="tb-team-counter">
@@ -376,6 +380,237 @@
       <div class="tb-modal-body" id="modal-character-list">
 
         <!-- Characters will be injected for mobile selection -->
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SETTINGS MODAL -->
+
+  <div id="settings-modal" class="tb-modal settings-modal">
+
+    <div class="tb-modal-content settings-modal-content">
+
+      <div class="tb-modal-header">
+
+        <h2>⚙️ TEAM SETTINGS</h2>
+
+        <button id="settings-close-btn" class="tb-modal-close">✕</button>
+
+      </div>
+
+      <div class="tb-modal-body settings-modal-body">
+
+        <!-- GENERAL SETTINGS -->
+
+        <div class="settings-section">
+
+          <h3 class="settings-section-title">⚙️ GENERAL</h3>
+
+          <div class="settings-group">
+
+            <label class="settings-label">
+              <input type="checkbox" id="setting-sound" class="settings-checkbox" checked>
+              <span>🔊 Sound Effects</span>
+            </label>
+
+            <label class="settings-label">
+              <input type="checkbox" id="setting-autosave" class="settings-checkbox" checked>
+              <span>💾 Auto-Save Team</span>
+            </label>
+
+            <label class="settings-label">
+              <input type="checkbox" id="setting-animations" class="settings-checkbox" checked>
+              <span>✨ Animations</span>
+            </label>
+
+          </div>
+
+        </div>
+
+        <!-- DISPLAY SETTINGS -->
+
+        <div class="settings-section">
+
+          <h3 class="settings-section-title">🎨 DISPLAY</h3>
+
+          <div class="settings-group">
+
+            <label class="settings-label">
+              <span>Layout Preference:</span>
+            </label>
+
+            <div class="settings-radio-group">
+
+              <label class="settings-radio">
+                <input type="radio" name="layout" value="compact" class="settings-radio-input">
+                <span>📦 Compact</span>
+              </label>
+
+              <label class="settings-radio">
+                <input type="radio" name="layout" value="standard" class="settings-radio-input" checked>
+                <span>⬜ Standard</span>
+              </label>
+
+              <label class="settings-radio">
+                <input type="radio" name="layout" value="expanded" class="settings-radio-input">
+                <span>📺 Expanded</span>
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- FILTER SETTINGS -->
+
+        <div class="settings-section">
+
+          <h3 class="settings-section-title">🔍 FILTERS & SEARCH</h3>
+
+          <div class="settings-group">
+
+            <label class="settings-label">
+              <input type="checkbox" id="setting-filter-elements" class="settings-checkbox">
+              <span>Filter by Elements</span>
+            </label>
+
+            <label class="settings-label">
+              <input type="checkbox" id="setting-filter-roles" class="settings-checkbox">
+              <span>Filter by Roles</span>
+            </label>
+
+            <label class="settings-label">
+              <span>Show Difficulty:</span>
+            </label>
+
+            <div class="settings-radio-group">
+
+              <label class="settings-radio">
+                <input type="radio" name="difficulty" value="all" class="settings-radio-input" checked>
+                <span>All</span>
+              </label>
+
+              <label class="settings-radio">
+                <input type="radio" name="difficulty" value="easy" class="settings-radio-input">
+                <span>Easy</span>
+              </label>
+
+              <label class="settings-radio">
+                <input type="radio" name="difficulty" value="hard" class="settings-radio-input">
+                <span>Hard</span>
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- EXPORT SETTINGS -->
+
+        <div class="settings-section">
+
+          <h3 class="settings-section-title">📤 EXPORT OPTIONS</h3>
+
+          <div class="settings-group">
+
+            <label class="settings-label">
+              <span>Default Format:</span>
+            </label>
+
+            <div class="settings-radio-group">
+
+              <label class="settings-radio">
+                <input type="radio" name="export-format" value="pdf" class="settings-radio-input" checked>
+                <span>📄 PDF</span>
+              </label>
+
+              <label class="settings-radio">
+                <input type="radio" name="export-format" value="json" class="settings-radio-input">
+                <span>📋 JSON</span>
+              </label>
+
+              <label class="settings-radio">
+                <input type="radio" name="export-format" value="text" class="settings-radio-input">
+                <span>📝 Text</span>
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- TEAM NAME -->
+
+        <div class="settings-section">
+
+          <h3 class="settings-section-title">🏆 TEAM PROFILE</h3>
+
+          <div class="settings-group">
+
+            <label class="settings-label">
+              <span>Team Name:</span>
+            </label>
+
+            <input 
+              type="text" 
+              id="team-name-input" 
+              class="settings-text-input" 
+              placeholder="Enter your team name..."
+              maxlength="50"
+            >
+
+            <small class="settings-hint" id="name-char-count">0 / 50 characters</small>
+
+          </div>
+
+        </div>
+
+        <!-- SHORTCUTS -->
+
+        <div class="settings-section">
+
+          <h3 class="settings-section-title">⌨️ KEYBOARD SHORTCUTS</h3>
+
+          <div class="settings-shortcuts">
+
+            <div class="shortcut-item">
+              <span class="shortcut-key">Ctrl + S</span>
+              <span class="shortcut-desc">Quick Save Team</span>
+            </div>
+
+            <div class="shortcut-item">
+              <span class="shortcut-key">Ctrl + E</span>
+              <span class="shortcut-desc">Export Team</span>
+            </div>
+
+            <div class="shortcut-item">
+              <span class="shortcut-key">Ctrl + L</span>
+              <span class="shortcut-desc">Clear Team</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ACTION BUTTONS -->
+
+        <div class="settings-actions">
+
+          <button id="settings-reset-btn" class="settings-action-btn reset-btn">
+            🔄 RESET TO DEFAULT
+          </button>
+
+          <button id="settings-save-btn" class="settings-action-btn save-btn">
+            ✅ SAVE SETTINGS
+          </button>
+
+        </div>
 
       </div>
 

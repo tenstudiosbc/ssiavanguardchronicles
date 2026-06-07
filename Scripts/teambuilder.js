@@ -78,7 +78,18 @@ const teamBuilderState = {
   team: [null, null, null, null], // 4 party members
   selectedCharacterId: null,
   currentSearchQuery: "",
-  isMobile: window.innerWidth <= 768
+  isMobile: window.innerWidth <= 768,
+  settings: {
+    sound: true,
+    autosave: true,
+    animations: true,
+    layout: "standard",
+    filterElements: false,
+    filterRoles: false,
+    difficultyFilter: "all",
+    exportFormat: "pdf",
+    teamName: ""
+  }
 };
 
 /* ────────────────────────────────────────────────────────── */
@@ -97,11 +108,127 @@ function initializeTeamBuilder() {
     return;
   }
 
+  loadSettingsFromStorage();
   renderCharacterList(charactersData);
   setupDragAndDrop();
   updateTeamCounter();
   updateCounterInfo();
   updateTeamStrength();
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* SETTINGS MANAGEMENT                                         */
+/* ────────────────────────────────────────────────────────– */
+
+function loadSettingsFromStorage() {
+  const stored = localStorage.getItem("teamBuilderSettings");
+  if (stored) {
+    teamBuilderState.settings = { ...teamBuilderState.settings, ...JSON.parse(stored) };
+  }
+  applySettings();
+}
+
+function saveSettingsToStorage() {
+  localStorage.setItem("teamBuilderSettings", JSON.stringify(teamBuilderState.settings));
+}
+
+function applySettings() {
+  // Apply animations setting
+  const animationDisabled = !teamBuilderState.settings.animations;
+  if (animationDisabled) {
+    document.documentElement.style.setProperty("--animation-duration", "0s");
+  }
+
+  // Apply layout preference
+  applyLayoutPreference(teamBuilderState.settings.layout);
+
+  // Update modal UI with current settings
+  updateSettingsUI();
+}
+
+function applyLayoutPreference(layout) {
+  const mainGrid = document.querySelector(".tb-main-grid");
+  if (!mainGrid) return;
+
+  if (layout === "compact") {
+    mainGrid.style.gap = "1rem";
+    document.querySelectorAll(".tb-character-list").forEach(el => {
+      el.style.maxHeight = "400px";
+    });
+  } else if (layout === "expanded") {
+    mainGrid.style.gap = "3rem";
+    document.querySelectorAll(".tb-character-list").forEach(el => {
+      el.style.maxHeight = "800px";
+    });
+  } else {
+    mainGrid.style.gap = "2rem";
+    document.querySelectorAll(".tb-character-list").forEach(el => {
+      el.style.maxHeight = "600px";
+    });
+  }
+}
+
+function updateSettingsUI() {
+  // Update checkboxes
+  const soundCheck = document.getElementById("setting-sound");
+  const autosaveCheck = document.getElementById("setting-autosave");
+  const animationsCheck = document.getElementById("setting-animations");
+
+  if (soundCheck) soundCheck.checked = teamBuilderState.settings.sound;
+  if (autosaveCheck) autosaveCheck.checked = teamBuilderState.settings.autosave;
+  if (animationsCheck) animationsCheck.checked = teamBuilderState.settings.animations;
+
+  // Update layout radio
+  const layoutRadios = document.querySelectorAll('input[name="layout"]');
+  layoutRadios.forEach(radio => {
+    radio.checked = radio.value === teamBuilderState.settings.layout;
+  });
+
+  // Update difficulty filter radio
+  const diffRadios = document.querySelectorAll('input[name="difficulty"]');
+  diffRadios.forEach(radio => {
+    radio.checked = radio.value === teamBuilderState.settings.difficultyFilter;
+  });
+
+  // Update export format radio
+  const exportRadios = document.querySelectorAll('input[name="export-format"]');
+  exportRadios.forEach(radio => {
+    radio.checked = radio.value === teamBuilderState.settings.exportFormat;
+  });
+
+  // Update team name input
+  const teamNameInput = document.getElementById("team-name-input");
+  if (teamNameInput) {
+    teamNameInput.value = teamBuilderState.settings.teamName;
+    updateCharCount();
+  }
+}
+
+function resetSettingsToDefault() {
+  if (confirm("Are you sure? This will reset all settings to default.")) {
+    teamBuilderState.settings = {
+      sound: true,
+      autosave: true,
+      animations: true,
+      layout: "standard",
+      filterElements: false,
+      filterRoles: false,
+      difficultyFilter: "all",
+      exportFormat: "pdf",
+      teamName: ""
+    };
+    saveSettingsToStorage();
+    applySettings();
+    showToast("Settings reset to default!", "info");
+  }
+}
+
+function updateCharCount() {
+  const input = document.getElementById("team-name-input");
+  const counter = document.getElementById("name-char-count");
+  if (input && counter) {
+    counter.textContent = `${input.value.length} / 50 characters`;
+  }
 }
 
 /* ────────────────────────────────────────────────────────── */
@@ -640,6 +767,68 @@ function closeCharacterModal() {
   }
 }
 
+/* ────────────────────────────────────────────────────────── */
+/* SETTINGS MODAL MANAGEMENT                                   */
+/* ────────────────────────────────────────────────────────– */
+
+function openSettingsModal() {
+  const modal = document.getElementById("settings-modal");
+  if (modal) {
+    updateSettingsUI();
+    modal.classList.add("active");
+  }
+}
+
+function closeSettingsModal() {
+  const modal = document.getElementById("settings-modal");
+  if (modal) {
+    modal.classList.remove("active");
+  }
+}
+
+function saveSettings() {
+  saveSettingsToStorage();
+  applySettings();
+  showToast("✅ Settings saved successfully!", "success");
+  closeSettingsModal();
+}
+
+function handleKeyboardShortcuts(e) {
+  // Ctrl + S - Quick Save
+  if (e.ctrlKey && e.key === 's') {
+    e.preventDefault();
+    if (teamBuilderState.team.some(m => m !== null)) {
+      if (teamBuilderState.settings.autosave) {
+        showToast("Team auto-saved to browser!", "success");
+      }
+      saveTeamToStorage();
+    }
+  }
+
+  // Ctrl + E - Export
+  if (e.ctrlKey && e.key === 'e') {
+    e.preventDefault();
+    exportTeamAsPDF();
+  }
+
+  // Ctrl + L - Clear Team
+  if (e.ctrlKey && e.key === 'l') {
+    e.preventDefault();
+    if (confirm("Clear your team?")) {
+      clearTeam();
+    }
+  }
+}
+
+function saveTeamToStorage() {
+  const teamData = {
+    team: teamBuilderState.team,
+    teamName: teamBuilderState.settings.teamName,
+    timestamp: new Date().toISOString()
+  };
+  localStorage.setItem("teamBuilderTeam", JSON.stringify(teamData));
+}
+
 /* ────────────────────────────────────────────────────────– */
 /* EVENT LISTENERS SETUP                                      */
 /* ────────────────────────────────────────────────────────– */
@@ -655,6 +844,76 @@ function setupEventListeners() {
   const clearBtn = document.getElementById("clear-team-btn");
   if (clearBtn) {
     clearBtn.addEventListener("click", clearTeam);
+  }
+
+  // Settings
+  const settingsBtn = document.getElementById("settings-btn");
+  if (settingsBtn) {
+    settingsBtn.addEventListener("click", openSettingsModal);
+  }
+
+  // Settings Modal Controls
+  const settingsCloseBtn = document.getElementById("settings-close-btn");
+  if (settingsCloseBtn) {
+    settingsCloseBtn.addEventListener("click", closeSettingsModal);
+  }
+
+  const settingsSaveBtn = document.getElementById("settings-save-btn");
+  if (settingsSaveBtn) {
+    settingsSaveBtn.addEventListener("click", saveSettings);
+  }
+
+  const settingsResetBtn = document.getElementById("settings-reset-btn");
+  if (settingsResetBtn) {
+    settingsResetBtn.addEventListener("click", resetSettingsToDefault);
+  }
+
+  // Settings Input Listeners
+  const soundCheck = document.getElementById("setting-sound");
+  const autosaveCheck = document.getElementById("setting-autosave");
+  const animationsCheck = document.getElementById("setting-animations");
+
+  if (soundCheck) soundCheck.addEventListener("change", (e) => {
+    teamBuilderState.settings.sound = e.target.checked;
+  });
+
+  if (autosaveCheck) autosaveCheck.addEventListener("change", (e) => {
+    teamBuilderState.settings.autosave = e.target.checked;
+  });
+
+  if (animationsCheck) animationsCheck.addEventListener("change", (e) => {
+    teamBuilderState.settings.animations = e.target.checked;
+  });
+
+  // Layout radios
+  document.querySelectorAll('input[name="layout"]').forEach(radio => {
+    radio.addEventListener("change", (e) => {
+      teamBuilderState.settings.layout = e.target.value;
+      applyLayoutPreference(e.target.value);
+    });
+  });
+
+  // Difficulty filter radios
+  document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
+    radio.addEventListener("change", (e) => {
+      teamBuilderState.settings.difficultyFilter = e.target.value;
+    });
+  });
+
+  // Export format radios
+  document.querySelectorAll('input[name="export-format"]').forEach(radio => {
+    radio.addEventListener("change", (e) => {
+      teamBuilderState.settings.exportFormat = e.target.value;
+    });
+  });
+
+  // Team name input
+  const teamNameInput = document.getElementById("team-name-input");
+  if (teamNameInput) {
+    teamNameInput.addEventListener("input", (e) => {
+      teamBuilderState.settings.teamName = e.target.value;
+      updateCharCount();
+    });
   }
 
   // Search
@@ -676,10 +935,23 @@ function setupEventListeners() {
     });
   }
 
+  // Close settings modal when clicking outside
+  const settingsModal = document.getElementById("settings-modal");
+  if (settingsModal) {
+    settingsModal.addEventListener("click", (e) => {
+      if (e.target === settingsModal) {
+        closeSettingsModal();
+      }
+    });
+  }
+
   // Handle window resize for mobile detection
   window.addEventListener("resize", () => {
     teamBuilderState.isMobile = window.innerWidth <= 768;
   });
+
+  // Keyboard shortcuts
+  document.addEventListener("keydown", handleKeyboardShortcuts);
 }
 
 /* ────────────────────────────────────────────────────────– */
