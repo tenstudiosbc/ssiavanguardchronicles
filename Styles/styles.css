@@ -1,22 +1,22 @@
 :root {
-  --bg: #05070d;
-  --bg2: #080c14;
-  --surface: rgba(8, 14, 24, 0.88);
-  --surface2: rgba(12, 20, 36, 0.7);
-  --accent: #00f5d4;
-  --accent2: #0094ff;
-  --gold: #f0c060;
-  --danger: #ff4060;
-  --glow-a: rgba(0, 245, 212, 0.18);
-  --glow-b: rgba(0, 148, 255, 0.12);
+  --bg: #0a0f05;
+  --bg2: #0d1608;
+  --surface: rgba(12, 18, 8, 0.88);
+  --surface2: rgba(15, 22, 10, 0.7);
+  --accent: #00ff99;
+  --accent2: #ffdd00;
+  --gold: #ffdd00;
+  --danger: #ff6644;
+  --glow-a: rgba(0, 255, 153, 0.18);
+  --glow-b: rgba(255, 221, 0, 0.12);
 
   /* READABILITY TWEAK: Lightened text colors for better contrast */
   --text: #ffffff;
-  --text-dim: #8da9c4;
-  --text-muted: #5a7b9c;
+  --text-dim: #b8d9a8;
+  --text-muted: #8ab882;
 
-  --border: rgba(0, 245, 212, 0.12);
-  --border-bright: rgba(0, 245, 212, 0.35);
+  --border: rgba(0, 255, 153, 0.12);
+  --border-bright: rgba(0, 255, 153, 0.35);
   --youtube: #ff0033;
   --discord: #5865f2;
   --bluesky: #1185fe;
