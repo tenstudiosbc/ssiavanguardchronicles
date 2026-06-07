@@ -155,12 +155,18 @@ const observer = new IntersectionObserver(
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
 /* ─── HAMBURGER MENU ─── */
-const hamburgerMenu = document.getElementById('hamburger-menu');
-const navLinks = document.getElementById('nav-links');
+function initHamburgerMenu() {
+  const hamburgerMenu = document.getElementById('hamburger-menu');
+  const navLinks = document.getElementById('nav-links');
 
-if (hamburgerMenu && navLinks) {
+  if (!hamburgerMenu || !navLinks) {
+    console.warn('Hamburger menu or nav-links not found');
+    return;
+  }
+
   // Toggle menu on hamburger button click
-  hamburgerMenu.addEventListener('click', () => {
+  hamburgerMenu.addEventListener('click', (e) => {
+    e.stopPropagation();
     hamburgerMenu.classList.toggle('active');
     navLinks.classList.toggle('active');
   });
@@ -175,7 +181,8 @@ if (hamburgerMenu && navLinks) {
 
   // Close menu when clicking outside
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('nav')) {
+    const isClickInsideNav = e.target.closest('nav');
+    if (!isClickInsideNav && navLinks.classList.contains('active')) {
       hamburgerMenu.classList.remove('active');
       navLinks.classList.remove('active');
     }
@@ -188,4 +195,11 @@ if (hamburgerMenu && navLinks) {
       navLinks.classList.remove('active');
     }
   });
+}
+
+// Initialize immediately if DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHamburgerMenu);
+} else {
+  initHamburgerMenu();
 }
