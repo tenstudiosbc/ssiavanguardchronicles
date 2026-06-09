@@ -1,4 +1,4 @@
-<!--Navbar.html version : 1.1.0-->
+<!--Navbar.html version : 1.1.2-->
 <nav class="site-navbar" aria-label="Main navigation">
   <!--
     Paths are written relative to the site root.
@@ -13,6 +13,59 @@
       loading="eager"
     >
   </a>
+
+  <!-- Play Button CSS: scoped only to the Play button. Navbar, links, logo, and hamburger still use style.css. -->
+  <style>
+    .ssiavc-play-button {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      padding: 9px 18px;
+      margin-left: auto;
+      margin-right: 10px;
+      background: linear-gradient(135deg, #e3242b 0%, #ff7a18 100%);
+      color: #ffffff;
+      font: inherit;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(227, 36, 43, 0.28);
+      white-space: nowrap;
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    }
+
+    .ssiavc-play-button:hover,
+    .ssiavc-play-button:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(227, 36, 43, 0.38);
+      filter: brightness(1.06);
+      outline: none;
+    }
+
+    .ssiavc-play-button:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 16px rgba(227, 36, 43, 0.24);
+    }
+
+    @media (max-width: 480px) {
+      .ssiavc-play-button {
+        padding: 8px 13px;
+        margin-right: 8px;
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+
+  <!-- Play Button -->
+  <button
+    class="ssiavc-play-button"
+    id="ssiavc-play-button"
+    type="button"
+    title="Play SSIA Vanguard Chronicles"
+    aria-label="Play SSIA Vanguard Chronicles"
+  >Play</button>
 
   <!-- Hamburger Menu Button -->
   <button
@@ -53,4 +106,71 @@
       >Discord <span class="arrow" aria-hidden="true">↗</span></a>
     </li>
   </ul>
+
+  <!-- Play Button JS: scoped only to the Play button. Hamburger/menu behavior still comes from your existing JS/style.css setup. -->
+  <script>
+    (function () {
+      var playButton = document.getElementById('ssiavc-play-button');
+      if (!playButton) return;
+
+      var ITCH_DOWNLOAD_URL = 'https://tenstudiosbc.itch.io/ssia-vanguard-chronicles';
+      var ANDROID_PACKAGE = 'com.tsbcgames.ssiavc';
+      var PC_PROTOCOL_URL = 'ssiavc://play';
+
+      function openDownloadFallback() {
+        window.location.href = ITCH_DOWNLOAD_URL;
+      }
+
+      function attemptOpenWithFallback(openUrl, fallbackDelay) {
+        var didLeavePage = false;
+        var fallbackTimer;
+
+        function markLeftPage() {
+          didLeavePage = true;
+          window.clearTimeout(fallbackTimer);
+        }
+
+        window.addEventListener('blur', markLeftPage, { once: true });
+
+        document.addEventListener('visibilitychange', function onVisibilityChange() {
+          if (document.hidden) {
+            markLeftPage();
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+          }
+        });
+
+        fallbackTimer = window.setTimeout(function () {
+          if (!didLeavePage) openDownloadFallback();
+        }, fallbackDelay || 1800);
+
+        window.location.href = openUrl;
+      }
+
+      function isAndroid() {
+        return /Android/i.test(navigator.userAgent || '');
+      }
+
+      function isWindowsDesktop() {
+        return /Windows NT/i.test(navigator.userAgent || '');
+      }
+
+      function handlePlayButtonClick() {
+        if (isAndroid()) {
+          var encodedFallback = encodeURIComponent(ITCH_DOWNLOAD_URL);
+          var androidIntentUrl = 'intent://play#Intent;scheme=ssiavc;package=' + ANDROID_PACKAGE + ';S.browser_fallback_url=' + encodedFallback + ';end';
+          attemptOpenWithFallback(androidIntentUrl, 1700);
+          return;
+        }
+
+        if (isWindowsDesktop()) {
+          attemptOpenWithFallback(PC_PROTOCOL_URL, 2000);
+          return;
+        }
+
+        openDownloadFallback();
+      }
+
+      playButton.addEventListener('click', handlePlayButtonClick);
+    })();
+  </script>
 </nav>
