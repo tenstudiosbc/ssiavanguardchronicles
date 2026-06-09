@@ -186,7 +186,7 @@ const FACTIONS = [
     name: "Solaris Military Command Network",
     shortName: "Solaris Command",
     type: "Military / Antagonistic Command Structure",
-    headquartered: "Solaris Imperial / Novoslavia-linked command sectors",
+    headquartered: "VOLVASTOK CITY, EMPIRE OF SOLARIS",
     jurisdictions: "Solaris military zones and covert influence areas",
     leaderTitle: "Commander",
     currentLeader: "Commander Vladimir Konstantin Voromir",
