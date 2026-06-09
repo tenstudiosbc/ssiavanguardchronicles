@@ -1,120 +1,256 @@
-/* ─── COMPONENT LOADER ─── */
+/* ─── DYNAMIC COMPONENT LOADER ───
+   Works with GitHub Pages project sites, custom domains, root pages, /Pages/ pages,
+   and future components without editing this file.
 
-/**
- * Get the base path for components based on current location
- * @returns {string} Base path to Components folder
- */
-function getBasePath() {
-  const currentPath = window.location.pathname;
-  // If we're in Pages folder, go up one level
-  if (currentPath.includes('/Pages/')) {
-    return '../Components/';
+   Correct structure for your repo:
+   /
+   ├─ Components/
+   ├─ Pages/
+   ├─ Scripts/
+   │  └─ components-loader.js
+   └─ index.html
+*/
+
+(() => {
+  'use strict';
+
+  const CONFIG = {
+    componentsFolder: 'Components',
+    scriptsFolder: 'Scripts',
+    containerSuffix: '-container',
+    componentExtension: '.html',
+    autoLoadSelector: '[data-component], [id$="-container"]',
+    skipAutoAttribute: 'data-component-auto'
+  };
+
+  /**
+   * Finds the website root from the script URL.
+   *
+   * GitHub Pages project site:
+   * https://tenstudiosbc.github.io/ssiavanguardchronicles/Scripts/components-loader.js
+   * root = https://tenstudiosbc.github.io/ssiavanguardchronicles/
+   *
+   * Custom domain:
+   * https://ssiavc.tenstudiosbc.my.id/Scripts/components-loader.js
+   * root = https://ssiavc.tenstudiosbc.my.id/
+   */
+  function getSiteRootURL() {
+    const script =
+      document.currentScript ||
+      document.querySelector('script[src*="components-loader"]');
+
+    if (script && script.src) {
+      const scriptURL = new URL(script.src, window.location.href);
+      const marker = `/${CONFIG.scriptsFolder}/`;
+
+      if (scriptURL.pathname.includes(marker)) {
+        const rootPath = scriptURL.pathname.split(marker)[0] + '/';
+        return new URL(rootPath, scriptURL.origin);
+      }
+
+      return new URL('./', scriptURL);
+    }
+
+    const path = window.location.pathname;
+
+    if (path.includes('/Pages/')) {
+      return new URL('../', window.location.href);
+    }
+
+    return new URL('./', window.location.href);
   }
-  // Otherwise, we're in root
-  return './Components/';
-}
 
-/**
- * Get the path prefix to reach the root directory from current location
- * @returns {string} Path prefix
- */
-function getRootPathPrefix() {
-  const currentPath = window.location.pathname;
-  if (currentPath.includes('/Pages/')) {
-    return '../'; // If inside /Pages/, need to go up a folder
+  function getComponentsBaseURL() {
+    return new URL(`${CONFIG.componentsFolder}/`, getSiteRootURL());
   }
-  return './'; // If at root, stay at root
-}
 
-/**
- * Dynamically updates links inside injected components so they work from any folder depth
- * @param {HTMLElement} container
- */
-function fixComponentLinks(container) {
-  const rootPrefix = getRootPathPrefix();
-  const links = container.querySelectorAll('a');
+  function normalizeComponentName(name) {
+    return String(name || '')
+      .trim()
+      .replace(/^\/+/, '')
+      .replace(/^(\.\.\/)+/, '')
+      .replace(/^(\.\/)+/, '')
+      .replace(/\.html$/i, '');
+  }
 
-  links.forEach(link => {
-    const href = link.getAttribute('href');
+  function getComponentNameFromElement(element) {
+    const fromData = element.getAttribute('data-component');
+    if (fromData) return normalizeComponentName(fromData);
 
-    // Skip external links, pure anchors, and absolute paths
-    if (!href || href.startsWith('http') || href.startsWith('//') || href.startsWith('#')) {
+    const id = element.id || '';
+    if (id.endsWith(CONFIG.containerSuffix)) {
+      return normalizeComponentName(id.slice(0, -CONFIG.containerSuffix.length));
+    }
+
+    return '';
+  }
+
+  function getComponentURL(componentName) {
+    const cleanName = normalizeComponentName(componentName);
+    return new URL(`${cleanName}${CONFIG.componentExtension}`, getComponentsBaseURL());
+  }
+
+  function shouldSkipURL(value) {
+    if (!value) return true;
+
+    const trimmed = value.trim();
+
+    return (
+      trimmed === '' ||
+      trimmed.startsWith('#') ||
+      trimmed.startsWith('http://') ||
+      trimmed.startsWith('https://') ||
+      trimmed.startsWith('//') ||
+      trimmed.startsWith('mailto:') ||
+      trimmed.startsWith('tel:') ||
+      trimmed.startsWith('javascript:') ||
+      trimmed.startsWith('data:') ||
+      trimmed.startsWith('blob:')
+    );
+  }
+
+  /**
+   * Fix links/assets inside components.
+   *
+   * Example inside Components/navbar.html:
+   * href="Pages/characters.html"
+   *
+   * On GitHub Pages project site becomes:
+   * /ssiavanguardchronicles/Pages/characters.html
+   *
+   * On custom domain becomes:
+   * /Pages/characters.html
+   */
+  function fixComponentURLs(container) {
+    const siteRoot = getSiteRootURL();
+
+    const attributes = [
+      ['a', 'href'],
+      ['img', 'src'],
+      ['script', 'src'],
+      ['link', 'href'],
+      ['source', 'src'],
+      ['video', 'src'],
+      ['video', 'poster'],
+      ['audio', 'src']
+    ];
+
+    attributes.forEach(([selector, attribute]) => {
+      container.querySelectorAll(`${selector}[${attribute}]`).forEach((element) => {
+        const rawValue = element.getAttribute(attribute);
+        if (shouldSkipURL(rawValue)) return;
+
+        const cleanValue = rawValue
+          .replace(/^(\.\.\/)+/, '')
+          .replace(/^(\.\/)+/, '');
+
+        const fixedURL = new URL(cleanValue, siteRoot);
+
+        // Keep links as path-relative to the current domain/repo.
+        element.setAttribute(attribute, fixedURL.pathname + fixedURL.search + fixedURL.hash);
+      });
+    });
+  }
+
+  /**
+   * Scripts inserted through innerHTML do not run automatically,
+   * so this re-inserts them safely.
+   */
+  function runInjectedScripts(container) {
+    container.querySelectorAll('script').forEach((oldScript) => {
+      const newScript = document.createElement('script');
+
+      [...oldScript.attributes].forEach((attr) => {
+        newScript.setAttribute(attr.name, attr.value);
+      });
+
+      newScript.textContent = oldScript.textContent;
+      oldScript.replaceWith(newScript);
+    });
+  }
+
+  async function loadComponent(componentName, targetElement) {
+    const cleanName = normalizeComponentName(componentName);
+
+    if (!cleanName || !targetElement) {
+      console.warn('[Component Loader] Missing component name or target element.');
       return;
     }
 
-    // Clean any existing relative dots (like ../ or ./) from the HTML so we have a clean root-based path
-    const cleanPath = href.replace(/^(\.\.\/)+/, '').replace(/^(\.\/)+/, '');
+    const componentURL = getComponentURL(cleanName);
 
-    // Apply the correct prefix for the current page depth
-    link.setAttribute('href', rootPrefix + cleanPath);
-  });
-}
+    try {
+      targetElement.setAttribute('data-component-loading', cleanName);
 
-/**
- * Load and inject HTML components into the page
- * @param {string} componentPath - Path to the component file
- * @param {string} targetSelector - CSS selector for target element
- * @returns {Promise<void>}
- */
-async function loadComponent(componentPath, targetSelector) {
-  try {
-    const response = await fetch(componentPath);
-    if (!response.ok) {
-      throw new Error(`Failed to load component: ${response.statusText}`);
+      const response = await fetch(componentURL, { cache: 'no-cache' });
+
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+
+      const html = await response.text();
+
+      targetElement.innerHTML = html;
+      fixComponentURLs(targetElement);
+      runInjectedScripts(targetElement);
+
+      targetElement.removeAttribute('data-component-loading');
+      targetElement.removeAttribute('data-component-error');
+      targetElement.setAttribute('data-component-loaded', cleanName);
+
+      document.dispatchEvent(new CustomEvent('componentLoaded', {
+        detail: {
+          component: cleanName,
+          url: componentURL.href,
+          target: targetElement
+        }
+      }));
+
+      console.log(`[Component Loader] Loaded: ${cleanName}`);
+    } catch (error) {
+      targetElement.removeAttribute('data-component-loading');
+      targetElement.setAttribute('data-component-error', cleanName);
+
+      console.error(`[Component Loader] Failed to load ${cleanName} from ${componentURL.href}:`, error);
     }
-    const html = await response.text();
-    const targetElement = document.querySelector(targetSelector);
+  }
 
-    if (!targetElement) {
-      console.error(`Target element not found: ${targetSelector}`);
-      return;
-    }
+  async function loadAllComponents(root = document) {
+    const elements = [...root.querySelectorAll(CONFIG.autoLoadSelector)]
+      .filter((element) => element.getAttribute(CONFIG.skipAutoAttribute) !== 'false')
+      .filter((element) => !element.hasAttribute('data-component-loaded'))
+      .filter((element) => !element.hasAttribute('data-component-loading'));
 
-    targetElement.innerHTML = html;
-    
-    // Fix relative links dynamically based on current page location
-    fixComponentLinks(targetElement);
+    const jobs = elements.map((element) => {
+      const componentName = getComponentNameFromElement(element);
+      return componentName ? loadComponent(componentName, element) : Promise.resolve();
+    });
 
-    console.log(`[Component Loader] ${componentPath} loaded successfully`);
+    await Promise.all(jobs);
 
-    // Dispatch event for specific component loaded
-    const componentName = componentPath.split('/').pop().replace('.html', '');
-    document.dispatchEvent(new CustomEvent('componentLoaded', { 
-      detail: { component: componentName, path: componentPath, target: targetSelector }
+    document.dispatchEvent(new CustomEvent('componentsLoaded', {
+      detail: {
+        total: jobs.length
+      }
     }));
-  } catch (error) {
-    console.error(`[Component Loader] Error loading ${componentPath}:`, error);
+
+    console.log(`[Component Loader] Components processed: ${jobs.length}`);
   }
-}
 
-/**
- * Load multiple components and wait for all to complete
- * @param {Array<{path: string, target: string}>} components - Array of component configs
- * @returns {Promise<void>}
- */
-async function loadComponents(components) {
-  try {
-    await Promise.all(components.map((comp) => loadComponent(comp.path, comp.target)));
-    console.log('[Component Loader] All components loaded');
-    // Dispatch event when all components are loaded
-    document.dispatchEvent(new CustomEvent('componentsLoaded'));
-  } catch (error) {
-    console.error('[Component Loader] Error loading components:', error);
+  function init() {
+    loadAllComponents();
   }
-}
 
-// Initialization function
-function init() {
-  const basePath = getBasePath();
-  loadComponents([
-    { path: basePath + 'navbar.html', target: '#navbar-container' },
-    { path: basePath + 'footer.html', target: '#footer-container' }
-  ]);
-}
+  window.ComponentsLoader = {
+    load: loadComponent,
+    loadAll: loadAllComponents,
+    getSiteRootURL,
+    getComponentsBaseURL
+  };
 
-// Load components when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
