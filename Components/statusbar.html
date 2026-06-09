@@ -1,0 +1,182 @@
+<!-- ─── TSBC STATUS BAR COMPONENT ───
+  File: statusbar.html
+  Place this file inside: /Components/statusbar.html
+
+  HOW TO EDIT:
+  1. Change the message below:
+     data-message=" "
+
+  2. Show or hide the status bar:
+     data-shown-message="false"
+     data-shown-message="true"
+
+  Example:
+  <section id="tsbc-statusbar" data-shown-message="true" data-message="Version 1.1.1_20_06_26 coming soon">
+-->
+
+<section
+  id="tsbc-statusbar"
+  class="tsbc-statusbar"
+  data-shown-message="false"
+  data-message=" "
+  role="status"
+  aria-live="polite"
+>
+  <style>
+    /* ─── STATUS BAR STYLE ─── */
+    #tsbc-statusbar {
+      --statusbar-bg: rgba(8, 12, 24, 0.94);
+      --statusbar-border: rgba(120, 180, 255, 0.35);
+      --statusbar-text: #f3f7ff;
+      --statusbar-accent: #63a8ff;
+      --statusbar-shadow: rgba(0, 0, 0, 0.28);
+
+      width: min(1180px, calc(100% - 32px));
+      margin: 14px auto;
+      padding: 10px 16px;
+      border: 1px solid var(--statusbar-border);
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(99, 168, 255, 0.16), transparent 42%),
+        var(--statusbar-bg);
+      color: var(--statusbar-text);
+      box-shadow: 0 10px 28px var(--statusbar-shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      box-sizing: border-box;
+    }
+
+    #tsbc-statusbar[data-shown-message="false"] {
+      display: none;
+    }
+
+    #tsbc-statusbar[data-shown-message="true"] {
+      display: block;
+    }
+
+    #tsbc-statusbar .statusbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 24px;
+    }
+
+    #tsbc-statusbar .statusbar-indicator {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--statusbar-accent);
+      box-shadow: 0 0 14px var(--statusbar-accent);
+    }
+
+    #tsbc-statusbar .statusbar-label {
+      flex: 0 0 auto;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--statusbar-accent);
+      white-space: nowrap;
+    }
+
+    #tsbc-statusbar .statusbar-divider {
+      width: 1px;
+      align-self: stretch;
+      min-height: 20px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    #tsbc-statusbar .statusbar-message {
+      flex: 1 1 auto;
+      margin: 0;
+      font-size: 0.94rem;
+      font-weight: 500;
+      line-height: 1.45;
+      color: var(--statusbar-text);
+      word-break: break-word;
+    }
+
+    @media (max-width: 640px) {
+      #tsbc-statusbar {
+        width: calc(100% - 20px);
+        margin: 10px auto;
+        padding: 10px 12px;
+        border-radius: 12px;
+      }
+
+      #tsbc-statusbar .statusbar-inner {
+        align-items: flex-start;
+      }
+
+      #tsbc-statusbar .statusbar-label,
+      #tsbc-statusbar .statusbar-divider {
+        display: none;
+      }
+
+      #tsbc-statusbar .statusbar-message {
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+
+  <div class="statusbar-inner">
+    <span class="statusbar-indicator" aria-hidden="true"></span>
+    <span class="statusbar-label">Status</span>
+    <span class="statusbar-divider" aria-hidden="true"></span>
+    <p class="statusbar-message"> </p>
+  </div>
+
+  <script>
+    /* ─── STATUS BAR CONFIG ───
+      You can also edit these values directly.
+
+      message: The text shown inside the status bar.
+      shown-message:
+        true  = show status bar
+        false = hide status bar
+    */
+    (function () {
+      const config = {
+        message: " ",
+        "shown-message": false
+      };
+
+      const statusbar = document.getElementById("tsbc-statusbar");
+      if (!statusbar) return;
+
+      const messageElement = statusbar.querySelector(".statusbar-message");
+
+      const htmlMessage = statusbar.getAttribute("data-message");
+      const htmlShownMessage = statusbar.getAttribute("data-shown-message");
+
+      const finalMessage =
+        htmlMessage !== null && htmlMessage !== undefined
+          ? htmlMessage
+          : config.message;
+
+      const finalShownMessage =
+        htmlShownMessage !== null
+          ? htmlShownMessage === "true"
+          : Boolean(config["shown-message"]);
+
+      statusbar.setAttribute("data-shown-message", String(finalShownMessage));
+
+      if (messageElement) {
+        messageElement.textContent = finalMessage || " ";
+      }
+
+      statusbar.setAttribute(
+        "aria-hidden",
+        finalShownMessage ? "false" : "true"
+      );
+    })();
+  </script>
+</section>
