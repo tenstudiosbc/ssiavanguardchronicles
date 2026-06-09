@@ -22,7 +22,7 @@ const FACTIONS = [
     parentInstitution: "Confederacy Department of Justice",
     alignment: "Confederacy / Lawful",
     status: "Active",
-    logo: "",
+    logo: "https://i.ibb.co.com/VcrLmBQ0/1756008856976.png",
     tags: ["Major Cases", "Counter-Intelligence", "Forensics", "Federal Operations"],
     summary: "The SSIA is a Confederacy-level investigative agency responsible for major crimes, counter-intelligence threats, corruption, murders, serial killers, espionage, and cross-border security operations across Sierra Liudoxoya.",
     divisions: [
