@@ -127,7 +127,7 @@ const FACTIONS = [
   },
   {
     id: "csl",
-    name: "Confederacy of Sierra Liudoxoya",
+    name: "Confederacy of Sierra Liudoxoya Government",
     shortName: "CSL",
     type: "Supranational / Intergovernmental Institution",
     headquartered: "Sierra Liudoxoya Confederacy Seat",
@@ -200,7 +200,8 @@ const FACTIONS = [
       "Command Staff",
       "Covert Military Cells",
       "Special Weapons Detail",
-      "Field Suppression Units"
+      "Field Suppression Units", 
+      "Solaris National Council Research"
     ],
     duties: [
       "Execute Solaris military objectives.",
