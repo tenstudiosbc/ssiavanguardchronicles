@@ -2,8 +2,12 @@
   File: statusbar.html
   Place this file inside: /Components/statusbar.html
 
+  Recommended page placement:
+  <div id="navbar-container"></div>
+  <div id="statusbar-container"></div>
+
   HOW TO EDIT:
-  1. Change the message below:
+  1. Change the message:
      data-message=" "
 
   2. Show or hide the status bar:
@@ -11,14 +15,15 @@
      data-shown-message="true"
 
   Example:
-  <section id="tsbc-statusbar" data-shown-message="true" data-message="Version 1.1.1_20_06_26 coming soon">
+  data-shown-message="true"
+  data-message="Version 1.1.1_20_06_26 coming soon"
 -->
 
 <section
   id="tsbc-statusbar"
   class="tsbc-statusbar"
-  data-shown-message="true"
-  data-message="Site Is Operational, While we update the site"
+  data-shown-message="false"
+  data-message="The site is Operational, while we adding good stuff in it"
   role="status"
   aria-live="polite"
 >
@@ -31,8 +36,10 @@
       --statusbar-accent: #63a8ff;
       --statusbar-shadow: rgba(0, 0, 0, 0.28);
 
+      position: relative;
+      z-index: 50;
       width: min(1180px, calc(100% - 32px));
-      margin: 14px auto;
+      margin: 12px auto 18px auto;
       padding: 10px 16px;
       border: 1px solid var(--statusbar-border);
       border-radius: 14px;
@@ -51,6 +58,7 @@
         "Segoe UI",
         sans-serif;
       box-sizing: border-box;
+      clear: both;
     }
 
     #tsbc-statusbar[data-shown-message="false"] {
@@ -107,7 +115,7 @@
     @media (max-width: 640px) {
       #tsbc-statusbar {
         width: calc(100% - 20px);
-        margin: 10px auto;
+        margin: 10px auto 14px auto;
         padding: 10px 12px;
         border-radius: 12px;
       }
@@ -136,8 +144,6 @@
 
   <script>
     /* ─── STATUS BAR CONFIG ───
-      You can also edit these values directly.
-
       message: The text shown inside the status bar.
       shown-message:
         true  = show status bar
@@ -177,6 +183,21 @@
         "aria-hidden",
         finalShownMessage ? "false" : "true"
       );
+
+      /*
+        Safety placement:
+        If the status bar accidentally appears inside the navbar container,
+        this moves it directly after the navbar container.
+      */
+      const navbarContainer =
+        document.getElementById("navbar-container") ||
+        document.querySelector("[data-component='navbar']") ||
+        document.querySelector("header") ||
+        document.querySelector("nav");
+
+      if (navbarContainer && navbarContainer.contains(statusbar)) {
+        navbarContainer.insertAdjacentElement("afterend", statusbar);
+      }
     })();
   </script>
 </section>
