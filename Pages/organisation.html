@@ -89,14 +89,35 @@
       pointer-events: none !important;
     }
 
-    #navbar-container,
+    /* Keep the loaded shared navbar clickable above this page's custom layers. */
+    #navbar-container {
+      position: relative !important;
+      z-index: 12000 !important;
+      pointer-events: auto !important;
+      isolation: isolate;
+    }
+
+    #navbar-container *,
+    #navbar-container button,
+    #navbar-container a {
+      pointer-events: auto !important;
+    }
+
     .organisation-header,
     .section-wrapper,
-    #footer-container,
-    #toaster,
-    .faction-modal-root {
+    #footer-container {
       position: relative !important;
-      z-index: 5 !important;
+      z-index: 2 !important;
+    }
+
+    #toaster {
+      position: relative !important;
+      z-index: 13000 !important;
+    }
+
+    .faction-modal-root {
+      position: fixed !important;
+      z-index: 14000 !important;
     }
 
     .organisation-page,
@@ -589,6 +610,28 @@
       padding-left: 1.2rem;
     }
 
+
+
+    /* Safety net for mobile nav menus from the shared navbar component. */
+    #navbar-container .active,
+    #navbar-container .open,
+    #navbar-container .show {
+      pointer-events: auto !important;
+    }
+
+    body.organisation-nav-open {
+      overflow: hidden;
+    }
+
+    body.organisation-nav-open #navbar-container .nav-links,
+    body.organisation-nav-open #navbar-container .navbar-links,
+    body.organisation-nav-open #navbar-container .nav-menu,
+    body.organisation-nav-open #navbar-container .mobile-menu,
+    body.organisation-nav-open #navbar-container .menu,
+    body.organisation-nav-open #navbar-container ul {
+      pointer-events: auto !important;
+    }
+
     @media (max-width: 720px) {
       .organisation-header {
         min-height: 230px;
@@ -704,8 +747,9 @@
     }
 
     function forceOrganisationPageVisible() {
-      document.body.classList.remove("loading", "is-loading", "menu-open");
+      document.body.classList.remove("loading", "is-loading");
       document.body.style.overflowX = "hidden";
+      setupNavbarFallback();
 
       const loader = document.getElementById("page-loader");
       if (loader) loader.remove();
@@ -744,6 +788,60 @@
       }
 
       updateFactionCount();
+    }
+
+
+
+    function setupNavbarFallback() {
+      const navbar = document.getElementById("navbar-container");
+      if (!navbar || navbar.dataset.organisationNavFallback === "ready") return;
+
+      navbar.dataset.organisationNavFallback = "ready";
+
+      const menuSelector = ".nav-links, .navbar-links, .nav-menu, .mobile-menu, .menu, nav ul";
+      const toggleSelector = ".nav-toggle, .navbar-toggle, .menu-toggle, .mobile-menu-toggle, .mobile-menu-btn, .hamburger, .hamburger-menu, .menu-icon, #menu-toggle, [aria-label*='menu' i], [aria-label*='navigation' i]";
+
+      navbar.addEventListener("click", event => {
+        const toggle = event.target.closest(toggleSelector);
+        if (!toggle || !navbar.contains(toggle)) return;
+
+        const menu = navbar.querySelector(menuSelector);
+        const wasOpen =
+          toggle.classList.contains("active") ||
+          toggle.classList.contains("open") ||
+          (menu && (menu.classList.contains("active") || menu.classList.contains("open") || menu.classList.contains("show"))) ||
+          document.body.classList.contains("menu-open");
+
+        /* Let the original navbar script run first. If it does nothing, this fallback toggles it. */
+        setTimeout(() => {
+          const isOpenAfterOriginal =
+            toggle.classList.contains("active") ||
+            toggle.classList.contains("open") ||
+            (menu && (menu.classList.contains("active") || menu.classList.contains("open") || menu.classList.contains("show"))) ||
+            document.body.classList.contains("menu-open");
+
+          const shouldOpen = isOpenAfterOriginal === wasOpen ? !wasOpen : isOpenAfterOriginal;
+
+          toggle.classList.toggle("active", shouldOpen);
+          toggle.classList.toggle("open", shouldOpen);
+          toggle.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+
+          if (menu) {
+            menu.classList.toggle("active", shouldOpen);
+            menu.classList.toggle("open", shouldOpen);
+            menu.classList.toggle("show", shouldOpen);
+          }
+
+          document.body.classList.toggle("menu-open", shouldOpen);
+          document.body.classList.toggle("organisation-nav-open", shouldOpen);
+        }, 30);
+      });
+
+      navbar.addEventListener("click", event => {
+        const link = event.target.closest("a");
+        if (!link || !navbar.contains(link)) return;
+        document.body.classList.remove("organisation-nav-open");
+      });
     }
 
     document.addEventListener("DOMContentLoaded", () => {
