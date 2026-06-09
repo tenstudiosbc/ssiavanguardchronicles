@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="description" content="Explore the interactive Sierra Liudoxoya world map for SSIA Vanguard Chronicles. Zoom, drag, and inspect the fictional continent across nations, regions, and strategic locations.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="SSIA Vanguard Chronicles world map, Sierra Liudoxoya map, interactive map, fictional nations, SSIA game world">
+  <meta name="author" content="Ten Studios BC">
+  <meta name="robots" content="index, follow">
+
+  <title>World Map | SSIA: Vanguard Chronicles</title>
+
+  <meta property="og:title" content="SSIA Vanguard Chronicles - World Map">
+  <meta property="og:description" content="Explore the interactive Sierra Liudoxoya world map. Zoom, drag, and inspect the fictional continent across nations and regions.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ssiavc.tenstudiosbc.my.id/Pages/worldmap.html">
+  <meta property="og:image" content="https://i.ibb.co.com/xt3SZt20/Untitled2-20250918125156.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SSIA Vanguard Chronicles World Map">
+  <meta name="twitter:description" content="Explore Sierra Liudoxoya through an interactive zoomable and draggable world map.">
+
+  <link rel="canonical" href="https://ssiavc.tenstudiosbc.my.id/Pages/worldmap.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Chakra+Petch:wght@300;400;500;600;700&family=Exo+2:wght@100;300;400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../Styles/styles.css">
+  <link rel="stylesheet" href="../Styles/worldmap.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ssiavc.tenstudiosbc.my.id/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "World Map",
+        "item": "https://ssiavc.tenstudiosbc.my.id/Pages/worldmap.html"
+      }
+    ]
+  }
+  </script>
+
+</head>
+
+<body class="worldmap-page">
+
+  <canvas id="bg-canvas"></canvas>
+
+  <div id="navbar-container"></div>
+
+  <header class="worldmap-header">
+    <div class="header-content">
+      <span class="header-badge">CSL GEOSPATIAL ARCHIVE</span>
+      <h1 class="header-title">World Map</h1>
+      <p class="header-subtitle">Interactive Sierra Liudoxoya Continental Cartography</p>
+    </div>
+  </header>
+
+  <main class="section-wrapper">
+    <section class="worldmap-section">
+      <div class="worldmap-topbar reveal">
+        <div>
+          <span class="map-kicker">TACTICAL MAP INTERFACE</span>
+          <h2 class="map-title">Sierra Liudoxoya Overview</h2>
+          <p class="map-description">
+            Drag the map to inspect regions. Use the controls, mouse wheel, or pinch gestures to zoom in and out.
+          </p>
+        </div>
+
+        <div class="map-status" aria-live="polite">
+          <span id="map-zoom-label">ZOOM 125%</span>
+        </div>
+      </div>
+
+      <div class="worldmap-shell reveal" id="worldmap-shell">
+        <div class="map-toolbar" aria-label="World map controls">
+          <button type="button" class="map-control" id="map-zoom-in" aria-label="Zoom in">+</button>
+          <button type="button" class="map-control" id="map-zoom-out" aria-label="Zoom out">−</button>
+          <button type="button" class="map-control map-control-wide" id="map-reset" aria-label="Reset map view">RESET</button>
+        </div>
+
+        <div class="map-help-chip">
+          <span>DRAG</span>
+          <span>WHEEL / PINCH</span>
+          <span>DOUBLE TAP</span>
+        </div>
+
+        <div class="worldmap-viewport" id="worldmap-viewport" tabindex="0" role="application" aria-label="Interactive Sierra Liudoxoya world map">
+          <div class="worldmap-stage" id="worldmap-stage">
+            <img
+              id="worldmap-image"
+              class="worldmap-image"
+              src="https://i.ibb.co.com/xt3SZt20/Untitled2-20250918125156.png"
+              alt="Sierra Liudoxoya world map"
+              draggable="false"
+              decoding="async"
+            >
+          </div>
+        </div>
+
+        <div class="map-footer-panel">
+          <div>
+            <span class="panel-label">MAP SOURCE</span>
+            <span class="panel-value">Sierra Liudoxoya Cartographic Database</span>
+          </div>
+          <div>
+            <span class="panel-label">VIEW MODE</span>
+            <span class="panel-value">Zoomable / Draggable</span>
+          </div>
+          <div>
+            <span class="panel-label">ARCHIVE</span>
+            <span class="panel-value">SSIA Vanguard Chronicles</span>
+          </div>
+        </div>
+      </div>
+
+      <noscript>
+        <div class="worldmap-warning">
+          JavaScript is required for the draggable and zoomable world map interface.
+        </div>
+      </noscript>
+    </section>
+  </main>
+
+  <div id="footer-container"></div>
+  <div id="toaster"></div>
+
+  <div id="page-loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <p>CONNECTING TO CSL GEOSPATIAL ARCHIVE...</p>
+    </div>
+  </div>
+
+  <script src="../Scripts/component-loader.js" defer></script>
+  <script src="../Scripts/scripts.js" defer></script>
+  <script src="../Scripts/worldmap.js" defer></script>
+
+</body>
+
+</html>
