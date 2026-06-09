@@ -49,18 +49,33 @@
   <!-- Kept inside this file so you only need organisation.html + factions.js. -->
   <style>
 
+    /* PAGE SAFETY: keeps content above animated background/canvas on mobile browsers */
+    #bg-canvas {
+      pointer-events: none;
+    }
+
+    #navbar-container,
+    .organisation-header,
+    .section-wrapper,
+    #footer-container,
+    #toaster {
+      position: relative;
+      z-index: 2;
+    }
+
     .organisation-header {
-      min-height: 46vh;
+      min-height: 32vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 8rem 1.5rem 4rem;
+      padding: 7rem 1.5rem 3.2rem;
       position: relative;
       overflow: hidden;
       background:
-        radial-gradient(circle at center, rgba(0, 245, 212, 0.12), transparent 42%),
-        linear-gradient(180deg, rgba(5, 7, 13, 0.15), rgba(5, 7, 13, 0.9));
+        radial-gradient(circle at center, rgba(0, 245, 212, 0.13), transparent 42%),
+        linear-gradient(180deg, rgba(5, 7, 13, 0.15), rgba(5, 7, 13, 0.76));
+      border-bottom: 1px solid rgba(0, 245, 212, 0.12);
     }
 
     .organisation-header::before {
@@ -71,8 +86,56 @@
         linear-gradient(rgba(0, 245, 212, 0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 245, 212, 0.04) 1px, transparent 1px);
       background-size: 42px 42px;
-      mask-image: linear-gradient(to bottom, black, transparent 90%);
+      -webkit-mask-image: linear-gradient(to bottom, black, transparent 92%);
+      mask-image: linear-gradient(to bottom, black, transparent 92%);
       pointer-events: none;
+    }
+
+    .organisation-header .header-content {
+      position: relative;
+      z-index: 3;
+      width: min(980px, 100%);
+      margin: 0 auto;
+    }
+
+    .organisation-header .header-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid rgba(0, 245, 212, 0.25);
+      border-radius: 999px;
+      background: rgba(0, 245, 212, 0.08);
+      color: var(--accent, #00f5d4);
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .organisation-header .header-title {
+      color: var(--text, #ffffff);
+      font-family: "Exo 2", "Rajdhani", sans-serif;
+      font-size: clamp(2.15rem, 8vw, 4.6rem);
+      line-height: 0.95;
+      margin: 0;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-shadow: 0 0 30px rgba(0, 245, 212, 0.16);
+    }
+
+    .organisation-header .header-subtitle {
+      color: var(--text-dim, #8da9c4);
+      font-family: "Chakra Petch", sans-serif;
+      font-size: clamp(0.95rem, 3vw, 1.25rem);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin: 1rem auto 0;
+      max-width: 760px;
     }
 
     .organisation-section {
@@ -89,6 +152,39 @@
       flex-wrap: wrap;
     }
 
+    .search-wrap {
+      position: relative;
+      flex: 1 1 360px;
+      min-width: min(100%, 280px);
+    }
+
+    .search-wrap .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent, #00f5d4);
+      font-family: "Chakra Petch", sans-serif;
+      pointer-events: none;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      border: 1px solid var(--border, rgba(0, 245, 212, 0.12));
+      background: rgba(8, 14, 24, 0.78);
+      color: var(--text, #ffffff);
+      border-radius: 14px;
+      padding: 0.95rem 1rem 0.95rem 2.7rem;
+      font-family: "Chakra Petch", sans-serif;
+      letter-spacing: 0.06em;
+      outline: none;
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--border-bright, rgba(0, 245, 212, 0.35));
+      box-shadow: 0 0 28px rgba(0, 245, 212, 0.09);
+    }
+
     .organisation-counter {
       border: 1px solid var(--border-bright, rgba(0, 245, 212, 0.35));
       background: rgba(8, 14, 24, 0.72);
@@ -100,6 +196,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       box-shadow: 0 0 24px rgba(0, 245, 212, 0.08);
+      white-space: nowrap;
     }
 
     .organisations-grid {
@@ -206,6 +303,7 @@
       font-size: clamp(1.35rem, 3vw, 1.8rem);
       margin: 0.5rem 0 0.3rem;
       line-height: 1.1;
+      color: var(--text, #ffffff);
     }
 
     .faction-short-name {
@@ -374,6 +472,7 @@
       cursor: pointer;
       font-size: 1.2rem;
       transition: transform 0.2s ease, background 0.2s ease;
+      flex: 0 0 auto;
     }
 
     .faction-modal-close:hover {
@@ -440,6 +539,11 @@
     }
 
     @media (max-width: 760px) {
+      .organisation-header {
+        min-height: auto;
+        padding: 6.5rem 1rem 2.35rem;
+      }
+
       .organisations-topbar {
         align-items: stretch;
       }
@@ -447,14 +551,20 @@
       .search-wrap,
       .organisation-counter {
         width: 100%;
+        flex-basis: 100%;
+      }
+
+      .organisations-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .faction-logo-wrap,
+      .faction-modal-title-wrap {
+        align-items: flex-start;
       }
 
       .faction-modal-grid {
         grid-template-columns: 1fr;
-      }
-
-      .faction-modal-title-wrap {
-        align-items: flex-start;
       }
 
       .faction-modal-top,
@@ -630,25 +740,32 @@
         `${visibleCards.length} ORGANISATIONS LOGGED`;
     }
 
+    function hideOrganisationLoader() {
+
+      const loader = document.getElementById("page-loader");
+
+      if (loader) {
+
+        loader.classList.add("hide");
+
+        setTimeout(() => {
+          loader.remove();
+        }, 500);
+
+      }
+
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(() => {
-
         updateFactionCount();
+        hideOrganisationLoader();
+      }, 700);
 
-        const loader = document.getElementById("page-loader");
-
-        if (loader) {
-
-          loader.classList.add("hide");
-
-          setTimeout(() => {
-            loader.remove();
-          }, 500);
-
-        }
-
-      }, 400);
+      setTimeout(() => {
+        updateFactionCount();
+      }, 1200);
 
       const search = document.getElementById("faction-search");
 
