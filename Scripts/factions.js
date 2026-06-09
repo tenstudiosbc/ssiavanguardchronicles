@@ -186,7 +186,7 @@ const FACTIONS = [
     name: "Solaris Military Command Network",
     shortName: "Solaris Command",
     type: "Military / Antagonistic Command Structure",
-    headquartered: "VOLVASTOK CITY, EMPIRE OF SOLARIS",
+    headquartered: "Solaris Imperial / Novoslavia-linked command sectors",
     jurisdictions: "Solaris military zones and covert influence areas",
     leaderTitle: "Commander",
     currentLeader: "Commander Vladimir Konstantin Voromir",
@@ -197,11 +197,10 @@ const FACTIONS = [
     tags: ["Military", "Antagonist", "Solaris", "Command"],
     summary: "A hostile command structure connected to Solaris military power and covert operations. It can serve as an antagonistic faction during Leivonia and winterland-related arcs.",
     divisions: [
-      "Command Staff",
+      "Solaris National Council Research",
       "Covert Military Cells",
       "Special Weapons Detail",
-      "Field Suppression Units", 
-      "Solaris National Council Research"
+      "Field Suppression Units"
     ],
     duties: [
       "Execute Solaris military objectives.",
@@ -247,17 +246,26 @@ function getInitials(faction) {
 }
 
 function getLogoHTML(faction) {
+  const initials = escapeHTML(getInitials(faction));
+
   if (faction.logo) {
     return `
       <div class="faction-logo">
-        <img src="${escapeHTML(faction.logo)}" alt="${escapeHTML(faction.name)} logo">
+        <img
+          src="${escapeHTML(faction.logo)}"
+          alt="${escapeHTML(faction.name)} logo"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          onerror="this.parentElement.innerHTML='<span class=&quot;faction-logo-placeholder&quot;>${initials}</span>'"
+        >
       </div>
     `;
   }
 
   return `
     <div class="faction-logo">
-      <span class="faction-logo-placeholder">${escapeHTML(getInitials(faction))}</span>
+      <span class="faction-logo-placeholder">${initials}</span>
     </div>
   `;
 }
@@ -281,7 +289,7 @@ function createFactionCard(faction) {
   ].join(" ").toLowerCase();
 
   return `
-    <article class="faction-card reveal" data-faction-id="${escapeHTML(faction.id)}" data-search-text="${escapeHTML(searchText)}">
+    <article class="faction-card" data-faction-id="${escapeHTML(faction.id)}" data-search-text="${escapeHTML(searchText)}">
 
       <div class="faction-accent-bar"></div>
 
@@ -542,31 +550,19 @@ window.openFactionModal = openFactionModal;
 window.closeFactionModal = closeFactionModal;
 window.FACTIONS = FACTIONS;
 
-function initFactionsPage() {
+document.addEventListener("DOMContentLoaded", () => {
   renderFactions();
   filterFactions();
 
   const searchInput = document.getElementById("faction-search");
 
-  if (searchInput && !searchInput.dataset.factionsSearchReady) {
+  if (searchInput) {
     searchInput.addEventListener("input", filterFactions);
-    searchInput.dataset.factionsSearchReady = "true";
   }
 
-  if (!document.body.dataset.factionsEscReady) {
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") {
-        closeFactionModal();
-      }
-    });
-    document.body.dataset.factionsEscReady = "true";
-  }
-}
-
-window.initFactionsPage = initFactionsPage;
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initFactionsPage);
-} else {
-  initFactionsPage();
-}
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeFactionModal();
+    }
+  });
+});
