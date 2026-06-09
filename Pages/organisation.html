@@ -49,33 +49,18 @@
   <!-- Kept inside this file so you only need organisation.html + factions.js. -->
   <style>
 
-    /* PAGE SAFETY: keeps content above animated background/canvas on mobile browsers */
-    #bg-canvas {
-      pointer-events: none;
-    }
-
-    #navbar-container,
-    .organisation-header,
-    .section-wrapper,
-    #footer-container,
-    #toaster {
-      position: relative;
-      z-index: 2;
-    }
-
     .organisation-header {
-      min-height: 32vh;
+      min-height: 46vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 7rem 1.5rem 3.2rem;
+      padding: 8rem 1.5rem 4rem;
       position: relative;
       overflow: hidden;
       background:
-        radial-gradient(circle at center, rgba(0, 245, 212, 0.13), transparent 42%),
-        linear-gradient(180deg, rgba(5, 7, 13, 0.15), rgba(5, 7, 13, 0.76));
-      border-bottom: 1px solid rgba(0, 245, 212, 0.12);
+        radial-gradient(circle at center, rgba(0, 245, 212, 0.12), transparent 42%),
+        linear-gradient(180deg, rgba(5, 7, 13, 0.15), rgba(5, 7, 13, 0.9));
     }
 
     .organisation-header::before {
@@ -86,56 +71,8 @@
         linear-gradient(rgba(0, 245, 212, 0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 245, 212, 0.04) 1px, transparent 1px);
       background-size: 42px 42px;
-      -webkit-mask-image: linear-gradient(to bottom, black, transparent 92%);
-      mask-image: linear-gradient(to bottom, black, transparent 92%);
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
       pointer-events: none;
-    }
-
-    .organisation-header .header-content {
-      position: relative;
-      z-index: 3;
-      width: min(980px, 100%);
-      margin: 0 auto;
-    }
-
-    .organisation-header .header-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      max-width: 100%;
-      padding: 0.45rem 0.85rem;
-      border: 1px solid rgba(0, 245, 212, 0.25);
-      border-radius: 999px;
-      background: rgba(0, 245, 212, 0.08);
-      color: var(--accent, #00f5d4);
-      font-family: "Chakra Petch", sans-serif;
-      font-weight: 700;
-      font-size: 0.82rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .organisation-header .header-title {
-      color: var(--text, #ffffff);
-      font-family: "Exo 2", "Rajdhani", sans-serif;
-      font-size: clamp(2.15rem, 8vw, 4.6rem);
-      line-height: 0.95;
-      margin: 0;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      text-shadow: 0 0 30px rgba(0, 245, 212, 0.16);
-    }
-
-    .organisation-header .header-subtitle {
-      color: var(--text-dim, #8da9c4);
-      font-family: "Chakra Petch", sans-serif;
-      font-size: clamp(0.95rem, 3vw, 1.25rem);
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      margin: 1rem auto 0;
-      max-width: 760px;
     }
 
     .organisation-section {
@@ -152,39 +89,6 @@
       flex-wrap: wrap;
     }
 
-    .search-wrap {
-      position: relative;
-      flex: 1 1 360px;
-      min-width: min(100%, 280px);
-    }
-
-    .search-wrap .search-icon {
-      position: absolute;
-      left: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--accent, #00f5d4);
-      font-family: "Chakra Petch", sans-serif;
-      pointer-events: none;
-    }
-
-    .search-wrap input {
-      width: 100%;
-      border: 1px solid var(--border, rgba(0, 245, 212, 0.12));
-      background: rgba(8, 14, 24, 0.78);
-      color: var(--text, #ffffff);
-      border-radius: 14px;
-      padding: 0.95rem 1rem 0.95rem 2.7rem;
-      font-family: "Chakra Petch", sans-serif;
-      letter-spacing: 0.06em;
-      outline: none;
-    }
-
-    .search-wrap input:focus {
-      border-color: var(--border-bright, rgba(0, 245, 212, 0.35));
-      box-shadow: 0 0 28px rgba(0, 245, 212, 0.09);
-    }
-
     .organisation-counter {
       border: 1px solid var(--border-bright, rgba(0, 245, 212, 0.35));
       background: rgba(8, 14, 24, 0.72);
@@ -196,7 +100,6 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       box-shadow: 0 0 24px rgba(0, 245, 212, 0.08);
-      white-space: nowrap;
     }
 
     .organisations-grid {
@@ -303,7 +206,6 @@
       font-size: clamp(1.35rem, 3vw, 1.8rem);
       margin: 0.5rem 0 0.3rem;
       line-height: 1.1;
-      color: var(--text, #ffffff);
     }
 
     .faction-short-name {
@@ -447,50 +349,6 @@
       gap: 1rem;
     }
 
-
-    /* Modal logo safety: keeps very large organisation logos from overflowing the dossier header. */
-    .faction-modal-title-wrap > .faction-logo {
-      width: clamp(58px, 14vw, 92px);
-      height: clamp(58px, 14vw, 92px);
-      flex: 0 0 clamp(58px, 14vw, 92px);
-      max-width: 92px;
-      max-height: 92px;
-      border-radius: 22px;
-      border: 1px solid var(--org-border-bright);
-      background: rgba(0, 245, 212, 0.08);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      padding: 0.35rem;
-      color: var(--org-accent);
-      font-family: "Chakra Petch", sans-serif;
-      font-size: clamp(0.82rem, 2.4vw, 1rem);
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-align: center;
-      line-height: 1;
-    }
-
-    .faction-modal-title-wrap > .faction-logo img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-
-    .faction-modal-title-wrap > .faction-logo .faction-logo-placeholder {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
     .faction-modal-title {
       margin: 0;
       font-family: "Exo 2", sans-serif;
@@ -516,7 +374,6 @@
       cursor: pointer;
       font-size: 1.2rem;
       transition: transform 0.2s ease, background 0.2s ease;
-      flex: 0 0 auto;
     }
 
     .faction-modal-close:hover {
@@ -578,16 +435,30 @@
       padding-left: 1.1rem;
     }
 
+
+
+    /* Large uploaded logos stay visible and never overflow modal/card boxes. */
+    .faction-logo,
+    .faction-modal-title-wrap > .faction-logo {
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .faction-logo img,
+    .faction-modal-title-wrap > .faction-logo img {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      object-fit: contain !important;
+      object-position: center !important;
+      image-rendering: auto;
+    }
+
+
     body.faction-modal-open {
       overflow: hidden;
     }
 
     @media (max-width: 760px) {
-      .organisation-header {
-        min-height: auto;
-        padding: 6.5rem 1rem 2.35rem;
-      }
-
       .organisations-topbar {
         align-items: stretch;
       }
@@ -595,20 +466,14 @@
       .search-wrap,
       .organisation-counter {
         width: 100%;
-        flex-basis: 100%;
-      }
-
-      .organisations-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .faction-logo-wrap,
-      .faction-modal-title-wrap {
-        align-items: flex-start;
       }
 
       .faction-modal-grid {
         grid-template-columns: 1fr;
+      }
+
+      .faction-modal-title-wrap {
+        align-items: flex-start;
       }
 
       .faction-modal-top,
@@ -784,32 +649,25 @@
         `${visibleCards.length} ORGANISATIONS LOGGED`;
     }
 
-    function hideOrganisationLoader() {
-
-      const loader = document.getElementById("page-loader");
-
-      if (loader) {
-
-        loader.classList.add("hide");
-
-        setTimeout(() => {
-          loader.remove();
-        }, 500);
-
-      }
-
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(() => {
-        updateFactionCount();
-        hideOrganisationLoader();
-      }, 700);
 
-      setTimeout(() => {
         updateFactionCount();
-      }, 1200);
+
+        const loader = document.getElementById("page-loader");
+
+        if (loader) {
+
+          loader.classList.add("hide");
+
+          setTimeout(() => {
+            loader.remove();
+          }, 500);
+
+        }
+
+      }, 400);
 
       const search = document.getElementById("faction-search");
 
@@ -830,6 +688,74 @@
       updateFactionCount();
 
     };
+
+  </script>
+
+
+
+  <!-- NAVBAR MOBILE FALLBACK -->
+  <script>
+
+    /*
+      Some pages load the shared navbar asynchronously.
+      This fallback uses event delegation, so the hamburger remains clickable
+      even if the navbar HTML is injected after scripts.js has already loaded.
+    */
+    (function () {
+
+      function closestToggle(target) {
+        if (!target || !target.closest) return null;
+
+        return target.closest(
+          "#navbar-container .hamburger," +
+          "#navbar-container .menu-toggle," +
+          "#navbar-container .mobile-menu-toggle," +
+          "#navbar-container .nav-toggle," +
+          "#navbar-container .navbar-toggle," +
+          "#navbar-container [data-menu-toggle]," +
+          "#navbar-container [aria-label='Toggle menu']," +
+          "#navbar-container [aria-label='Open menu']," +
+          "#navbar-container button[aria-controls]"
+        );
+      }
+
+      function findMenu(navbar) {
+        if (!navbar) return null;
+
+        return navbar.querySelector(
+          ".mobile-menu, .mobile-nav, .nav-menu, .navbar-menu, .menu, [data-menu], [aria-expanded]"
+        );
+      }
+
+      document.addEventListener("click", function (event) {
+        const toggle = closestToggle(event.target);
+        if (!toggle) return;
+
+        const navbar = document.getElementById("navbar-container");
+        if (!navbar) return;
+
+        const menu = findMenu(navbar);
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        const nextState = !expanded;
+
+        toggle.classList.toggle("active", nextState);
+        toggle.classList.toggle("open", nextState);
+        toggle.setAttribute("aria-expanded", String(nextState));
+
+        navbar.classList.toggle("active", nextState);
+        navbar.classList.toggle("open", nextState);
+        document.body.classList.toggle("nav-open", nextState);
+        document.body.classList.toggle("menu-open", nextState);
+
+        if (menu && menu !== toggle) {
+          menu.classList.toggle("active", nextState);
+          menu.classList.toggle("open", nextState);
+          menu.classList.toggle("show", nextState);
+          menu.setAttribute("aria-hidden", String(!nextState));
+        }
+      }, true);
+
+    })();
 
   </script>
 
