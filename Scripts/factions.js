@@ -183,8 +183,8 @@ const FACTIONS = [
   },
   {
     id: "solaris-command",
-    name: "Solaris National Council Research",
-    shortName: "SNCR",
+    name: "Solaris Military Command Network",
+    shortName: "Solaris Command",
     type: "Military / Antagonistic Command Structure",
     headquartered: "Solaris Imperial / Novoslavia-linked command sectors",
     jurisdictions: "Solaris military zones and covert influence areas",
@@ -535,24 +535,37 @@ function filterFactions() {
   }
 }
 
+window.renderFactions = renderFactions;
 window.filterFactions = filterFactions;
 window.openFactionModal = openFactionModal;
 window.closeFactionModal = closeFactionModal;
 window.FACTIONS = FACTIONS;
 
-document.addEventListener("DOMContentLoaded", () => {
+function initFactionsPage() {
   renderFactions();
   filterFactions();
 
   const searchInput = document.getElementById("faction-search");
 
-  if (searchInput) {
+  if (searchInput && !searchInput.dataset.factionsSearchReady) {
     searchInput.addEventListener("input", filterFactions);
+    searchInput.dataset.factionsSearchReady = "true";
   }
 
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-      closeFactionModal();
-    }
-  });
-});
+  if (!document.body.dataset.factionsEscReady) {
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeFactionModal();
+      }
+    });
+    document.body.dataset.factionsEscReady = "true";
+  }
+}
+
+window.initFactionsPage = initFactionsPage;
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initFactionsPage);
+} else {
+  initFactionsPage();
+}
