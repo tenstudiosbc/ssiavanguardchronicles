@@ -1,4 +1,4 @@
-<!--Navbar.html version : 1.1.2-->
+<!--Navbar.html version : 1.1.3-->
 <nav class="site-navbar" aria-label="Main navigation">
   <!--
     Paths are written relative to the site root.
@@ -14,57 +14,80 @@
     >
   </a>
 
-  <!-- Play Button CSS: scoped only to the Play button. Navbar, links, logo, and hamburger still use style.css. -->
+  <!-- Download Game Button CSS: scoped only to this button. Navbar, links, logo, and hamburger still use style.css. -->
   <style>
-    .ssiavc-play-button {
+    .ssiavc-download-game-button {
       appearance: none;
       -webkit-appearance: none;
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      border-radius: 999px;
-      padding: 9px 18px;
+      position: relative;
+      isolation: isolate;
+      border: 1px solid rgba(180, 255, 205, 0.55);
+      border-radius: 10px;
+      padding: 10px 18px;
       margin-left: auto;
       margin-right: 10px;
-      background: linear-gradient(135deg, #e3242b 0%, #ff7a18 100%);
-      color: #ffffff;
+      background:
+        linear-gradient(135deg, #083d24 0%, #0b7a3f 42%, #20c263 100%);
+      color: #f4fff8;
       font: inherit;
       font-weight: 800;
       line-height: 1;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.045em;
+      text-transform: uppercase;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(227, 36, 43, 0.28);
+      box-shadow:
+        0 0 0 1px rgba(15, 255, 116, 0.16) inset,
+        0 9px 22px rgba(3, 98, 45, 0.36);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
       white-space: nowrap;
-      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease, border-color 180ms ease;
     }
 
-    .ssiavc-play-button:hover,
-    .ssiavc-play-button:focus-visible {
+    .ssiavc-download-game-button::before {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      z-index: -1;
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+
+    .ssiavc-download-game-button:hover,
+    .ssiavc-download-game-button:focus-visible {
       transform: translateY(-1px);
-      box-shadow: 0 12px 26px rgba(227, 36, 43, 0.38);
-      filter: brightness(1.06);
+      border-color: rgba(219, 255, 229, 0.9);
+      box-shadow:
+        0 0 0 1px rgba(171, 255, 198, 0.28) inset,
+        0 12px 28px rgba(3, 120, 54, 0.46);
+      filter: brightness(1.08) saturate(1.08);
       outline: none;
     }
 
-    .ssiavc-play-button:active {
+    .ssiavc-download-game-button:active {
       transform: translateY(0);
-      box-shadow: 0 6px 16px rgba(227, 36, 43, 0.24);
+      box-shadow:
+        0 0 0 1px rgba(15, 255, 116, 0.14) inset,
+        0 6px 16px rgba(3, 98, 45, 0.28);
     }
 
     @media (max-width: 480px) {
-      .ssiavc-play-button {
-        padding: 8px 13px;
+      .ssiavc-download-game-button {
+        padding: 9px 12px;
         margin-right: 8px;
-        font-size: 0.88rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.025em;
       }
     }
   </style>
 
-  <!-- Play Button -->
+  <!-- Download Game Button -->
   <button
-    class="ssiavc-play-button"
-    id="ssiavc-play-button"
+    class="ssiavc-download-game-button"
+    id="ssiavc-download-game-button"
     type="button"
-    title="Play SSIA Vanguard Chronicles"
-    aria-label="Play SSIA Vanguard Chronicles"
+    title="Download or launch SSIA Vanguard Chronicles"
+    aria-label="Download or launch SSIA Vanguard Chronicles"
   >Download Game</button>
 
   <!-- Hamburger Menu Button -->
@@ -98,43 +121,59 @@
     </li>
   </ul>
 
-  <!-- Play Button JS: scoped only to the Play button. Hamburger/menu behavior still comes from your existing JS/style.css setup. -->
+  <!-- Download Game Button JS: scoped only to this button. Hamburger/menu behavior still comes from your existing JS/style.css setup. -->
   <script>
     (function () {
-      var playButton = document.getElementById('ssiavc-play-button');
-      if (!playButton) return;
+      var downloadButton = document.getElementById('ssiavc-download-game-button');
+      if (!downloadButton) return;
 
       var ITCH_DOWNLOAD_URL = 'https://tenstudiosbc.itch.io/ssia-vanguard-chronicles';
       var ANDROID_PACKAGE = 'com.tsbcgames.ssiavc';
+      var ANDROID_SCHEME_URL = 'ssiavc://play';
       var PC_PROTOCOL_URL = 'ssiavc://play';
+      var FALLBACK_DELAY_ANDROID = 1500;
+      var FALLBACK_DELAY_PC = 2200;
 
       function openDownloadFallback() {
-        window.location.href = ITCH_DOWNLOAD_URL;
+        window.location.assign(ITCH_DOWNLOAD_URL);
       }
 
       function attemptOpenWithFallback(openUrl, fallbackDelay) {
-        var didLeavePage = false;
-        var fallbackTimer;
+        var pageWasHidden = false;
+        var fallbackTimer = null;
 
-        function markLeftPage() {
-          didLeavePage = true;
-          window.clearTimeout(fallbackTimer);
+        function cleanup() {
+          window.removeEventListener('pagehide', markOpened);
+          window.removeEventListener('blur', markOpened);
+          document.removeEventListener('visibilitychange', handleVisibilityChange);
         }
 
-        window.addEventListener('blur', markLeftPage, { once: true });
+        function markOpened() {
+          pageWasHidden = true;
+          if (fallbackTimer) window.clearTimeout(fallbackTimer);
+          cleanup();
+        }
 
-        document.addEventListener('visibilitychange', function onVisibilityChange() {
-          if (document.hidden) {
-            markLeftPage();
-            document.removeEventListener('visibilitychange', onVisibilityChange);
-          }
-        });
+        function handleVisibilityChange() {
+          if (document.hidden) markOpened();
+        }
+
+        window.addEventListener('pagehide', markOpened, { once: true });
+        window.addEventListener('blur', markOpened, { once: true });
+        document.addEventListener('visibilitychange', handleVisibilityChange);
 
         fallbackTimer = window.setTimeout(function () {
-          if (!didLeavePage) openDownloadFallback();
-        }, fallbackDelay || 1800);
+          cleanup();
+          if (!pageWasHidden) openDownloadFallback();
+        }, fallbackDelay);
 
-        window.location.href = openUrl;
+        try {
+          window.location.href = openUrl;
+        } catch (error) {
+          cleanup();
+          if (fallbackTimer) window.clearTimeout(fallbackTimer);
+          openDownloadFallback();
+        }
       }
 
       function isAndroid() {
@@ -145,23 +184,46 @@
         return /Windows NT/i.test(navigator.userAgent || '');
       }
 
-      function handlePlayButtonClick() {
+      function handleDownloadButtonClick() {
         if (isAndroid()) {
           var encodedFallback = encodeURIComponent(ITCH_DOWNLOAD_URL);
-          var androidIntentUrl = 'intent://play#Intent;scheme=ssiavc;package=' + ANDROID_PACKAGE + ';S.browser_fallback_url=' + encodedFallback + ';end';
-          attemptOpenWithFallback(androidIntentUrl, 1700);
+
+          /*
+            Chrome/Android intent format:
+            - If SSIA:VC Android app exists, it opens the app package.
+            - If not installed, browser_fallback_url sends the user to itch.io.
+          */
+          var androidIntentUrl =
+            'intent://play#Intent;' +
+            'scheme=ssiavc;' +
+            'package=' + ANDROID_PACKAGE + ';' +
+            'S.browser_fallback_url=' + encodedFallback + ';' +
+            'end';
+
+          attemptOpenWithFallback(androidIntentUrl, FALLBACK_DELAY_ANDROID);
           return;
         }
 
         if (isWindowsDesktop()) {
-          attemptOpenWithFallback(PC_PROTOCOL_URL, 2000);
+          /*
+            Browser pages cannot directly search for or open C:/Users/.../SSIAVC/Game.exe.
+            For full PC launching, the Windows launcher should register ssiavc://play.
+            If that protocol is not installed, this falls back to itch.io.
+          */
+          attemptOpenWithFallback(PC_PROTOCOL_URL, FALLBACK_DELAY_PC);
+          return;
+        }
+
+        /* Secondary attempt for mobile browsers that support custom schemes but not Android intents. */
+        if (/Mobile|Tablet|iPhone|iPad|iPod/i.test(navigator.userAgent || '')) {
+          attemptOpenWithFallback(ANDROID_SCHEME_URL, FALLBACK_DELAY_ANDROID);
           return;
         }
 
         openDownloadFallback();
       }
 
-      playButton.addEventListener('click', handlePlayButtonClick);
+      downloadButton.addEventListener('click', handleDownloadButtonClick);
     })();
   </script>
 </nav>
