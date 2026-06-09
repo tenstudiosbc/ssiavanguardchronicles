@@ -1,23 +1,56 @@
-<nav>
-  <!-- Write paths relative to the root directory. The JS will automatically add '../' or './' based on what page the user is viewing. -->
-  <a href="../index.html" class="nav-logo" title="SSIA Vanguard Chronicles - Home">
-    <img src="https://i.ibb.co.com/VYRrnKt1/20260417-104731.png" alt="SSIA Vanguard Chronicles Logo - Home" class="nav-logo-image">
+<!--Navbar.html version : 1.1.0-->
+<nav class="site-navbar" aria-label="Main navigation">
+  <!--
+    Paths are written relative to the site root.
+    The dynamic component loader can automatically convert them to ../ or ./ depending on the current page.
+  -->
+
+  <a href="index.html" class="nav-logo" title="SSIA Vanguard Chronicles - Home" aria-label="SSIA Vanguard Chronicles Home">
+    <img
+      src="https://i.ibb.co.com/VYRrnKt1/20260417-104731.png"
+      alt="SSIA Vanguard Chronicles Logo - Home"
+      class="nav-logo-image"
+      loading="eager"
+    >
   </a>
-  
+
   <!-- Hamburger Menu Button -->
-  <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle navigation menu">
+  <button
+    class="hamburger-menu"
+    id="hamburger-menu"
+    type="button"
+    aria-label="Toggle navigation menu"
+    aria-controls="nav-links"
+    aria-expanded="false"
+  >
     <span></span>
     <span></span>
     <span></span>
   </button>
-  
+
   <!-- Navigation Links -->
   <ul class="nav-links" id="nav-links">
-    <li><a href="../index.html#about">Mission</a></li>
-    <li><a href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles" class="external-link" title="Download SSIA Vanguard Chronicles from itch.io">Download <span class="arrow">↗</span></a></li>
-    <li><a href="../Pages/characters.html">Agents</a></li>
-    <li><a href="../index.html#banners">Events</a></li>
-    <li><a href="../Pages/teambuilder.html">Builder</a></li>
-    <li><a href="https://discord.gg/WVDQyFVNnX" target="_blank" class="discord external-link" title="Join SSIA Vanguard Chronicles Discord Community">Discord <span class="arrow">↗</span></a></li>
+    <li><a href="index.html#about">Mission</a></li>
+    <li>
+      <a
+        href="https://tenstudiosbc.itch.io/ssia-vanguard-chronicles"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="external-link"
+        title="Download SSIA Vanguard Chronicles from itch.io"
+      >Download <span class="arrow" aria-hidden="true">↗</span></a>
+    </li>
+    <li><a href="Pages/characters.html">Agents</a></li>
+    <li><a href="index.html#banners">Events</a></li>
+    <li><a href="Pages/teambuilder.html">Builder</a></li>
+    <li>
+      <a
+        href="https://discord.gg/WVDQyFVNnX"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="discord external-link"
+        title="Join SSIA Vanguard Chronicles Discord Community"
+      >Discord <span class="arrow" aria-hidden="true">↗</span></a>
+    </li>
   </ul>
 </nav>
