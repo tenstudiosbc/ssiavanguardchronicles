@@ -86,6 +86,38 @@ resizeCanvas();
 initParticles();
 animate();
 
+/* ─── AUTOPLAY THEME AUDIO ─── */
+const themeAudioUrl = 'https://cdn.tenstudiosbc.my.id/audio/VanguardChroniclesTheme.mp3';
+
+function initThemeAudio() {
+  try {
+    const audio = new Audio(themeAudioUrl);
+    audio.preload = 'auto';
+    audio.loop = true;
+    audio.volume = 0.35;
+
+    const startPlayback = () => {
+      audio.play().catch((error) => {
+        console.error('[Theme Audio] Autoplay failed or file is unavailable:', error);
+      });
+    };
+
+    audio.addEventListener('error', () => {
+      console.error('[Theme Audio] Failed to load audio from:', themeAudioUrl);
+    });
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      startPlayback();
+    } else {
+      window.addEventListener('load', startPlayback, { once: true });
+    }
+  } catch (error) {
+    console.error('[Theme Audio] Could not initialize audio player:', error);
+  }
+}
+
+initThemeAudio();
+
 /* ─── TOAST NOTIFICATIONS ─── */
 function showToast(message) {
   const toaster = document.getElementById('toaster');
