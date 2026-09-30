@@ -16,7 +16,7 @@ Example manifest:
 
 ```json
 [
-  "dispatch-001.html",
+  "platform-unification.html",
   "update-004.html"
 ]
 ```
