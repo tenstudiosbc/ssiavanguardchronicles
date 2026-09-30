@@ -1819,3 +1819,66 @@ footer, #footer-container { position: relative; z-index: 2; }
 .news-article-meta { margin-top:1.2rem; padding-top:.8rem; border-top:1px solid var(--border); color:var(--text-muted); font:.78rem var(--f-mono); }
 .news-article-meta span { padding:0 .4rem; color:var(--accent2); }
 .news-loading { color:var(--text-muted); }
+
+
+/* =========================================================
+   STABILITY PATCH — reduce visual jitter and layout shifts
+   ========================================================= */
+
+/* The hero artwork no longer bobs continuously; keep only its entrance. */
+.hero-header-image {
+  animation: fadeUp 0.8s 0.2s both;
+  will-change: auto;
+}
+
+/* Keep the scanline texture static instead of continuously moving. */
+body::after {
+  animation: none;
+}
+
+/* Reserve predictable media space so late image loads do not move cards. */
+.banner-card img,
+.news-article img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Avoid layout-affecting hover motion; retain color/shadow feedback. */
+.banner-card,
+.banner-card .banner-img {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+.banner-card:hover {
+  transform: none;
+}
+.banner-card:hover .banner-img {
+  transform: none;
+}
+
+/* Components are injected after the initial document parse; reserve nav space. */
+#navbar-container {
+  min-height: 72px;
+}
+@media (max-width: 760px) {
+  #navbar-container {
+    min-height: 64px;
+  }
+}
+
+/* Respect reduced-motion preferences across all site animations. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-header-image,
+  body::after {
+    animation: none !important;
+  }
+  .banner-card,
+  .banner-card .banner-img,
+  button,
+  .btn,
+  [role="button"] {
+    transition: none !important;
+  }
+}
