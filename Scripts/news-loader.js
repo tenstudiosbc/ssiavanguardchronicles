@@ -1,30 +1,66 @@
-/* Automatically discovers HTML files in News/ and renders them on index.html.
-   Requires HTTP(S): directory listing is not available on many static hosts, so
-   News/index.json is the portable manifest fallback. */
-(async () => {
+/* GitHub Pages News loader
+   Static hosting has no dependable directory listing: News/index.json is authoritative.
+   Paths are relative to the site root so this also works on project pages.
+*/
+(async function loadVanguardNews() {
+  "use strict";
   const container = document.getElementById("news-container");
   if (!container) return;
 
-  const safeName = (name) => typeof name === "string" &&
-    /^[a-zA-Z0-9_-]+\\.html$/.test(name) && name.toLowerCase() !== "index.html";
+  const manifestUrl = new URL("News/index.json", document.baseURI);
+  const isArticleFile = (name) =>
+    typeof name === "string" &&
+    /^[a-z0-9][a-z0-9_-]*\.html$/i.test(name) &&
+    name.toLowerCase() !== "index.html";
+
+  container.setAttribute("aria-busy", "true");
+  container.innerHTML = '<p class="news-loading">Retrieving latest dispatches...</p>';
 
   try {
-    // Prefer the auto-generated manifest. Keep it current when adding/removing articles.
-    const response = await fetch("News/index.json", { cache: "no-cache" });
-    if (!response.ok) throw new Error("News manifest unavailable");
-    const files = await response.json();
-    if (!Array.isArray(files)) throw new Error("News manifest must be an array");
+    const manifestResponse = await fetch(manifestUrl.href, { cache: "no-cache" });
+    if (!manifestResponse.ok) {
+      throw new Error(`Manifest request failed (${manifestResponse.status})`);
+    }
 
-    const articles = await Promise.all(files.filter(safeName).map(async (file) => {
-      const r = await fetch(`News/${encodeURIComponent(file)}`);
-      if (!r.ok) return "";
-      return await r.text();
+    const manifest = await manifestResponse.json();
+    if (!Array.isArray(manifest)) {
+      throw new Error("News/index.json must be a JSON array of HTML filenames.");
+    }
+
+    const files = [...new Set(manifest.filter(isArticleFile))];
+    if (files.length === 0) {
+      container.innerHTML = '<p class="news-loading">No news articles have been published yet.</p>';
+      return;
+    }
+
+    const results = await Promise.all(files.map(async (file) => {
+      const articleUrl = new URL(`News/${encodeURIComponent(file)}`, document.baseURI);
+      try {
+        const response = await fetch(articleUrl.href, { cache: "no-cache" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const source = await response.text();
+        const parsed = new DOMParser().parseFromString(source, "text/html");
+
+        // Accept a single fragment or multiple top-level article elements.
+        const nodes = [...parsed.body.children];
+        if (!nodes.length) return { file, html: "" };
+        return { file, html: nodes.map(node => node.outerHTML).join("\n") };
+      } catch (error) {
+        console.warn(`News article skipped: ${file}`, error);
+        return { file, html: "" };
+      }
     }));
-    const valid = articles.filter(Boolean);
-    container.innerHTML = valid.length ? valid.join("\\n") :
-      '<p class="news-loading">No news articles have been published yet.</p>';
+
+    const rendered = results.filter(item => item.html.trim()).map(item => item.html);
+    if (rendered.length) {
+      container.innerHTML = rendered.join("\n");
+    } else {
+      container.innerHTML = '<p class="news-loading">News is temporarily unavailable. Please check back soon.</p>';
+    }
   } catch (error) {
-    console.error("News loader:", error);
-    container.innerHTML = '<p class="news-loading">News could not be loaded. Check that News/index.json is available and the site is served over HTTP(S).</p>';
+    console.error("Vanguard News:", error);
+    container.innerHTML = '<p class="news-loading">News could not be loaded. Please try again later.</p>';
+  } finally {
+    container.removeAttribute("aria-busy");
   }
 })();
