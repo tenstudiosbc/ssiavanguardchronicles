@@ -42,3 +42,8 @@ Use HTML fragments, not a full page with `<html>`, `<head>`, and `<body>`. The l
 - The loader ignores invalid filenames, skips individual articles that fail to load, and shows a useful empty/error message.
 - Publish over GitHub Pages HTTPS; `fetch()` will not reliably work when opening `index.html` directly using `file://`.
 - Only publish trusted HTML you control. HTML inserted into the page can include active markup.
+
+
+## Permalinks and sharing
+
+Each article should have a unique `id` and matching `data-news-slug`, for example `news-lan-multiplayer-112`. The homepage loader adds an **Open update** link and a **Share** button to each article. The permalink uses the homepage URL plus that article's hash, so opening it loads the news list and jumps to the selected update. Share uses the device share sheet when available, otherwise it copies the link or offers a copy prompt.
