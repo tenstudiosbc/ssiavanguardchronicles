@@ -18,7 +18,7 @@ const FACTIONS = [
     headquartered: "Bellemaire South District, Revolutionary Republic of Sandy Staat",
     jurisdictions: "Confederacy of Sierra Liudoxoya member states and cross-border major cases",
     leaderTitle: "Agency Director",
-    currentLeader: "Classified / To Be Updated",
+    currentLeader: "Sarah Basher Al Ahmad",
     parentInstitution: "Confederacy Department of Justice",
     alignment: "Confederacy / Lawful",
     status: "Active",
